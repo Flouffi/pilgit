@@ -1,0 +1,637 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+
+    <!-- <i class="material-icons mr-5" style="font-size: 30px;cursor: pointer;" (click)="drawer.toggle()">
+      dehaze
+    </i> -->
+  
+    <div *ngIf="isAdmin">
+  
+      <a  href="javascript:history.back()" style="color: black;"> <i style="cursor: pointer;" class="material-icons">
+        arrow_back
+      </i></a>
+    </div>
+  
+    <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+  
+    <i style="cursor: pointer;" class="material-icons" (click)="SignOut()">
+        power_settings_new
+        </i>
+  
+      
+  </nav>
+      
+        <!-- Sidebar navigation -->
+        
+        
+            <!-- Main content -->
+      
+      
+            <mat-drawer-container class="example-container" autosize>
+              <mat-drawer #drawer class="example-sidenav" mode="side">
+                <p>Panneau d'administrateur</p>
+                <p (click)="SignOut()">Se déco</p>
+       
+              </mat-drawer>
+      
+          <mat-drawer-container class="example-container" autosize>
+              <mat-drawer #drawer class="example-sidenav" mode="side">
+
+                  <p *ngIf="isAdmin" class="blueadmin mr-2 ml-2 mt-2 mb-2">Menu <div class="yeladmin mr-2 mt-2 mb-2">Administrateur</div>
+                  <br>
+                  <p  style="cursor: pointer;" *ngIf="isAdmin" class="ml-1 blue4 mt-2" routerLink="../dashboard"><span class="material-icons vertical-align-middle padding-bottom-3">dashboard</span>Dashboard</p>
+                  <p *ngIf="isAdmin" style="cursor: pointer;" class="mt-4 ml-1 blue4" routerLink="../manage"> <span class="material-icons vertical-align-middle padding-bottom-3">build</span>Gérer les inscriptions</p>
+                  <p *ngIf="isAdmin" style="cursor: pointer;" class="ml-1 blue4" routerLink="../eve"><span class="material-icons vertical-align-middle padding-bottom-3">today</span>Créer un évènement</p>
+                  <!-- <p *ngIf="isAdmin" style="cursor: pointer;" class="ml-1 blue4" routerLink="../search"><span class="material-icons vertical-align-middle padding-bottom-3">search</span>Moteur de recherche</p> -->
+                  <!-- <p class="ml-1" (click)="SignOut()">Deconnexion</p> -->
+                </mat-drawer>
+            <div class="example-sidenav-content">
+            
+              <div class="mt-2 ml-2">
+                <h1 class="blue" style="margin-left: 10px; margin-top: 10px ">Choisissez </h1> <h1 class="yellow">votre type de grille </h1>
+                <br>
+                <mat-form-field class=" ml-5">
+                  <mat-select  [(ngModel)]="state" >
+                    <mat-option  *ngFor="let result of choix" [value]="result">
+                        {{result.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            
+
+              <div class="ml-2">
+                <h1 class="grey mr-3"><span style="color: red;">Conseil : </span> Indiquer le nom de la grille de manière explicite</h1>
+                <br>
+                <h1 class="grey mr-3"> Exemple : Mercredi+ Tarif 3-12 ans </h1>
+
+              </div>
+           
+
+<div class="neu2 mt-3 mr-3" *ngIf="state.value == 'classique'">
+<h1 class="blue" style="margin-left: 10px; "> Grille Tarifaire : <h1 class="yellow">{{nomTabl}}</h1> </h1>
+<hr>
+<h1 class="grey mr-3"><span style="color: red;">*</span> Indiquer le nom de la grille de manière explicite, exemple : Tarif 3-12 ans</h1>
+<div>
+<br>
+
+<div class="row">
+
+
+<div class="col-4">
+
+
+<div class="col mb-2">
+  <h1 class="bluelow">Etape 1 :   </h1>
+  <button (click)="openDialog(mytemplate3)"class="btn btn-primary ml-3">Nommer la grille</button>
+</div>
+
+<br>
+<div class="col mb-2" *ngIf="!flag">
+  <h1 class="bluelow"> Ajouter une colonne :   </h1>
+  <button (click)="openDialog(mytemplate)" class="btn btn-primary ml-3">Ajouter une colonne</button> 
+</div>
+
+
+
+<br> 
+ <div class="col mb-2">
+  <h1 class="bluelow"> Etape 2 : </h1>
+  <button class="btn btn-primary ml-3" (click)="inserQF()">Inserer les QF</button>
+</div> 
+
+
+
+
+<!-- <mat-form-field >
+        <mat-label>Choissisez la tranche d'âge</mat-label>
+        <mat-select  (selectionChange)="getVal($event.value)" [(ngModel)]="age" required>
+          <mat-option  *ngFor="let result2 of tranche" [value]="result2.value" required>
+              {{result2.value}} ans
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+<div class="mb-1 mt-3">
+ <div class="col">
+
+ <!-- <h1 class="bluelow"> Etape 3 : </h1>
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Tranche âge début</mat-label>
+      <input matInput type="number" min="0" name="name" [(ngModel)]="age" required>
+    </mat-form-field>
+  </form> -->
+  <!-- <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <mat-label>Tranche âge fin</mat-label>
+      <input (change)="ageverif()" min="0" matInput type="number" name="name" [(ngModel)]="age2" required>
+    </mat-form-field>
+  </form> -->
+</div>
+</div>
+</div>
+
+<!-- <div class="col-6">
+
+  <h1 class="bluelow">Les QF enregistrées dans la base de donnée :  </h1>
+
+  <div *ngFor="let q of tabQF">
+    QF1 : {{q.QF1}}
+    <br>
+    QF2 : {{q.QF2}}
+    <br>
+    QF3 :  {{q.QF3}}
+    <br>
+    QF4 :  {{q.QF4}}
+    <br>
+    QF5 : {{q.QF5}}
+    <br>
+    QF6 : {{q.QF6}}
+    <br>
+    QF7 : {{q.QF7}}
+    <br>  
+    QF8 : {{q.QF8}}
+  </div>
+
+</div> -->
+
+
+
+
+
+</div>
+
+</div>
+   <br>
+
+
+<div class="col mb-2">
+  <h1 class="bluelow">Etape 3 :   </h1>
+
+</div>
+
+        
+    
+    <div class=" neu2 row mt-1">
+    <mat-table style="display: table;border-radius: 20px;" class="mat-table" [dataSource]="dataSource"  >
+        <!-- All columns -->
+         <ng-container *ngFor="let col of displayedFields;let i=index" [matColumnDef]="col"> 
+            <th class="mr-4  text-center" mat-header-cell *matHeaderCellDef>
+              <hr class="hr2">
+              <h1 class="bluelow mr-3">{{displayedHead[i]}}</h1>
+              <br>
+              <!-- <div class="mr-4">
+                <i class="material-icons"  style="cursor: pointer;color: #ffc400 "  (click)="add()">
+                  add
+                  </i>
+                        <i class="material-icons" style="cursor: pointer;color: #ffc400 " (click)="openDialog2(mytemplate2)">
+                    delete
+                    </i>
+              </div> -->
+              
+            </th>
+            <td mat-cell  *matCellDef="let element;let i = index">  
+    
+    
+                <mat-form-field class="">
+              <input  class="{{col}}" matInput id="{{col}}{{i}}">
+            </mat-form-field>
+            </td>  
+    
+    
+    <ng-template #mytemplate2 >
+        <h1 style="text-align: center;">Êtes-vous sûr de vouloir supprimer cette colonne ? </h1>
+      
+        <div style="text-align: center;">
+            <button style="margin-right:5px" class="btn btn-primary" (click)="deleteCol(col,i)" >Supprimer</button>
+            <button class="btn btn-primary"  (click)="this.dialog.closeAll()">Annuler</button>
+          </div>
+      </ng-template>
+    
+          </ng-container>
+          <!---column delete-->
+        <ng-container matColumnDef="delete">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let element;let i=index;">
+              <i class="material-icons" style="cursor: pointer;color: red "   (click)="delete(i)">
+                  close
+                  </i>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </mat-table>
+    </div>
+
+
+    <div class="row ml-2">
+      <div class="col mb-2">
+        <h1 class="bluelow">Etape 4 (facultatif) : </h1>
+          <button (click)="openDialogDeg(mytemplateDeg)" class="btn btn-primary ml-3 mt-2">Ajouter une dégressivité</button> 
+        </div>
+    </div>
+  
+    <button [disabled]="dis" class="btn btn-primary float-right mr-4 mb-3" (click)="TabBDD()">Valider mon tableau</button>
+  </div>
+
+
+  <div class="neu2 mt-3 mr-3" *ngIf="state.value == 'mercredi+'">
+    <h1 class="blue" style="margin-left: 10px; "> Grille Tarifaire : <h1 class="yellow">{{nomTabl}}</h1> </h1>
+    <hr>
+   
+    <div>
+    <br>
+    
+    <div class="row">
+    
+    
+    <div class="col-4">
+    
+    
+    <div class="col mb-2">
+      <h1 class="bluelow">Etape 1 :   </h1>
+      <button (click)="openDialog(mytemplate3)"class="btn btn-primary ml-3">Nommer la grille</button>
+    </div>
+    
+    <!-- <br>
+    <div class="col mb-2">
+      <h1 class="bluelow"> Etape 2 :   </h1>
+      <button (click)="openDialog(mytemplate)" class="btn btn-primary ml-3">Ajouter une colonne</button> 
+    </div> -->
+    
+    
+    
+    <br> 
+     <div class="col mb-2">
+      <h1 class="bluelow"> Etape 2 : </h1>
+      <button class="btn btn-primary ml-3" (click)="inserQF2()">Inserer les QF</button>
+    </div> 
+    
+    
+    
+    
+    <!-- <mat-form-field >
+            <mat-label>Choissisez la tranche d'âge</mat-label>
+            <mat-select  (selectionChange)="getVal($event.value)" [(ngModel)]="age" required>
+              <mat-option  *ngFor="let result2 of tranche" [value]="result2.value" required>
+                  {{result2.value}} ans
+              </mat-option>
+            </mat-select>
+          </mat-form-field> -->
+    <!-- <div class="mb-1 mt-3">
+     <div class="col">
+    
+     <h1 class="bluelow"> Etape 3 : </h1>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Tranche âge début</mat-label>
+          <input matInput type="number" min="0" name="name" [(ngModel)]="age" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Tranche âge fin</mat-label>
+          <input (change)="ageverif()" min="0" matInput type="number" name="name" [(ngModel)]="age2" required>
+        </mat-form-field>
+      </form>
+    </div>
+    </div> -->
+    </div>
+    
+    <!-- <div class="col-6">
+    
+      <h1 class="bluelow">Les QF enregistrées dans la base de donnée :  </h1>
+    
+      <div *ngFor="let q of tabQF">
+        QF1 : {{q.QF1}}
+        <br>
+        QF2 : {{q.QF2}}
+        <br>
+        QF3 :  {{q.QF3}}
+        <br>
+        QF4 :  {{q.QF4}}
+        <br>
+        QF5 : {{q.QF5}}
+        <br>
+        QF6 : {{q.QF6}}
+        <br>
+        QF7 : {{q.QF7}}
+        <br>  
+        QF8 : {{q.QF8}}
+      </div>
+    
+    </div> -->
+    
+    
+    
+    
+    
+    </div>
+    
+    </div>
+       <br>
+    
+    
+    <div class="col mb-2">
+      <h1 class="bluelow">Etape 3 :   </h1>
+    
+    </div>
+    
+            
+        
+        <div class=" neu2 row mt-1">
+        <mat-table style="display: table;border-radius: 20px;" class="mat-table" [dataSource]="dataSource2"  >
+            <!-- All columns -->
+             <ng-container *ngFor="let col2 of displayedFields2;let i=index" [matColumnDef]="col2"> 
+                <th class=" text-center" mat-header-cell *matHeaderCellDef>
+                  <hr class="hr2">
+                  <h1 class="bluelow">{{displayedHead2[i]}}</h1>
+                  <!-- <br> -->
+                  <!-- <div class="mr-4">
+                    <i class="material-icons"  style="cursor: pointer;color: #ffc400 "  (click)="add()">
+                      add
+                      </i>
+                            <i class="material-icons" style="cursor: pointer;color: #ffc400 " (click)="openDialog2(mytemplate2)">
+                        delete
+                        </i>
+                  </div> -->
+                  
+                </th>
+                <td mat-cell  *matCellDef="let element;let i = index">  
+        
+        
+                    <mat-form-field class="">
+                  <input  class="{{col2}}" matInput id="{{col2}}{{i}}">
+                </mat-form-field>
+                </td>  
+        
+        
+        <ng-template #mytemplate2 >
+            <h1 style="text-align: center;">Êtes-vous sûr de vouloir supprimer cette colonne ? </h1>
+          
+            <div style="text-align: center;">
+                <button style="margin-right:5px" class="btn btn-primary" (click)="deleteCol(col2,i)" >Supprimer</button>
+                <button class="btn btn-primary"  (click)="this.dialog.closeAll()">Annuler</button>
+              </div>
+          </ng-template>
+        
+              </ng-container>
+              <!---column delete-->
+            <ng-container matColumnDef="delete">
+              <th mat-header-cell mat-sort-header *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let element;let i=index;">
+                  <i class="material-icons" style="cursor: pointer;color: red "   (click)="delete(i)">
+                      close
+                      </i>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+          </mat-table>
+        </div>
+    
+    
+        <div class="row ml-2">
+          <div class="col mb-2">
+            <h1 class="bluelow">Etape 4 (facultatif) : </h1>
+              <button (click)="openDialogDeg(mytemplateDeg)" class="btn btn-primary ml-3 mt-2">Ajouter une dégressivité</button> 
+            </div>
+        </div>
+      
+        <button [disabled]="dis" class="btn btn-primary float-right mr-4 mb-3" (click)="TabBDD2()">Valider mon tableau</button>
+      </div>
+
+    
+      
+    
+     
+      
+    
+    <br>
+
+    
+        
+    
+    
+    <ng-template #mytemplate>
+        <h1 style="text-align: center;">Ajout d'une colonne</h1>
+        <!-- <mat-form-field>
+            <mat-label>Choix prédéfini</mat-label>
+            <mat-select [(ngModel)]="preNom">
+              <mat-option *ngFor="let food of foods"[value]="food.value">
+                {{food.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button style="margin-left:5px" class="btn btn-primary" (click)="addColumnDialog3(preNom)">Valider</button>
+    <h1>OU </h1> -->
+    <mat-form-field>
+        <input style="margin-right:5px"  matInput type="text" [(ngModel)]="nomCol" placeholder="Saisir">
+        <button class="btn btn-primary" matSuffix (click)="addColumnDialog()">Valider</button>
+    </mat-form-field>
+    </ng-template>
+    
+    <ng-template #mytemplate3>
+        <h1 style="text-align: center;">Changer le nom de la grille</h1>
+      
+        <div style="text-align: center;">
+    
+            <input  type="text" [(ngModel)]="nomTabl" placeholder="Nom du tableau">
+            <br>
+            <button style="margin-right:5px" class="btn btn-primary mt-2" (click)="changeNom()" >Valider</button>
+       
+          </div>
+      </ng-template>
+      <ng-template #mytemplate4>
+        <h1 style="text-align: center;">Le tableau a été enregistré</h1>
+    
+      </ng-template>
+    
+      <ng-template #mytemplate5>
+        <h1 style="text-align: center;">Mon évènement</h1>
+        <mat-form-field>
+      
+          <mat-label>Choix prédéfini</mat-label>
+          <mat-select [(ngModel)]="preNom">
+            <mat-option *ngFor="let food of foods2"[value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+         
+        </mat-form-field>
+        <mat-form-field style="margin-left:10px">
+          <span *ngIf="(preNom === 'Date de début' || preNom === 'Date de fin')">
+            <input type="date" matInput>
+          </span>
+          <span *ngIf="(preNom === 'Heure de début' || preNom === 'Heure de fin')">
+            <input type="time" matInput>
+          </span>
+          <span  *ngIf="(preNom !== 'Date de début' || preNom !== 'Date de fin' || preNom !== 'Heure de début' || preNom !== 'Heure de fin')">
+          <input type="text" matInput placeholder="Saisir">
+        </span>
+        </mat-form-field>
+       
+        <br>
+        <mat-form-field>
+          <mat-label>Choix prédéfini</mat-label>
+          <mat-select [(ngModel)]="preNom2">
+            <mat-option *ngFor="let food of foods2"[value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left:10px">
+          <span *ngIf="(preNom2 === 'Date de début' || preNom2 === 'Date de fin')">
+            <input type="date" matInput>
+          </span>
+          <span  *ngIf="(preNom2 !== 'Date de début' || preNom2 !== 'Date de fin')">
+          <input type="text" matInput placeholder="Saisir">
+        </span>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <mat-label>Choix prédéfini</mat-label>
+          <mat-select [(ngModel)]="preNom3">
+            <mat-option *ngFor="let food of foods2"[value]="food.value">
+              {{food.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field style="margin-left:10px">
+          <span *ngIf="(preNom2 === 'Date de début' || preNom2 === 'Date de fin')">
+            <input type="date" matInput>
+          </span>
+          <span  *ngIf="(preNom2 !== 'Date de début' || preNom2 !== 'Date de fin')">
+          <input type="text" matInput placeholder="Saisir">
+        </span>
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-right:10px" *ngIf="champs > 0">
+            <input type="text" matInput placeholder="Saisie libre">
+        </mat-form-field>
+        <mat-form-field  *ngIf="champs > 0">
+            <input type="text" matInput placeholder="Saisie libre">
+        </mat-form-field>
+        <br>
+        <mat-form-field style="margin-right:10px" *ngIf="champs > 1">
+            <input type="text" matInput placeholder="Saisie libre">
+        </mat-form-field>
+        <mat-form-field  *ngIf="champs > 1">
+            <input type="text" matInput placeholder="Saisie libre">
+        </mat-form-field>
+    
+        <br>
+        <mat-form-field style="margin-right:10px" *ngIf="champs > 2">
+            <input type="text" matInput placeholder="Saisie libre">
+        </mat-form-field>
+        <mat-form-field  *ngIf="champs > 2">
+            <input type="text" matInput placeholder="Saisie libre">
+        </mat-form-field>
+        <br>
+        <mat-checkbox>Evenement récurrent</mat-checkbox>
+        <br>
+    <button mat-raised-button *ngIf="champs !== 3" (click)="champsPlus()">Ajouter des champs</button>
+    <button style="margin-left: 5px" (click)="this.dialog.closeAll()" mat-raised-button color="primary" (click)="champsPlus()">Valider</button>
+    
+    
+    
+      </ng-template>
+    
+    
+      <ng-template  #mytemplate6>
+    
+        <div [@enterAnimation] *ngIf="this.etape == 0">
+    
+          <h1 style="text-align: center;">Créer une inscription</h1>
+         
+          <h1>Entrez le nom de l'inscription </h1>
+    
+          <input [(ngModel)]="nameEvent" matInput placeholder="Saisir" type="text">
+          
+        <button (click)="valid()" mat-raised-button type="button">Suivant</button>
+    
+      </div>
+    
+      <div [@enterAnimation] *ngIf="this.etape == 1">
+    
+          <h1 style="text-align: center;">Choisissez votre grille tarifaire</h1>
+    
+    
+    <mat-form-field>
+        <mat-label>Mes Tableau</mat-label>
+        <mat-select [(ngModel)]="choixEvent">
+          <mat-option *ngFor="let result2 of results3; let i =index" [value]="result2">
+              {{result2}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+        <button (click)="valid2()" mat-raised-button type="button">Suivant</button>
+    
+      </div>
+    
+      
+    
+        </ng-template>
+        
+        
+        <ng-template #mytemplateArrow>
+            <h1 style="text-align: center;">Combien de ligne souhaitez vous ajoutez ?</h1>
+        
+            <input matInput type="number" [(ngModel)]="numberRow">
+          <button (click)="addRow(numberRow)" mat-raised-button type="button">Valider</button>
+          </ng-template>
+
+          <ng-template #mytemplatehelp>
+            <h1 style="text-align: center;">Aide</h1>
+            <hr>
+
+            <h1 class="bluelow">Dans un premier temps, je nomme ma grille forfaitaire</h1>
+            <hr>
+            <h1 class="bluelow">Puis , j'indique la tranche d'âge pour ma grille, exemple : 10 et 12 donnera 10-12 ans</h1>
+            <hr>
+            <h1 class="bluelow">Enfin, je rempli toute ma grille et je valide en bas à droite.</h1>
+            <br>
+            <button class="btn btn-primary float-right mt-3"(click)="this.dialog.closeAll()">Ok</button>
+          </ng-template>
+
+
+             
+        <ng-template #mytemplateDeg>
+          <h1>Quel est la dégressivité ?</h1>
+          <h2 class="yellowlow mb-2">Indiquer le pourcentage(%) à appliquer à partir de 2 , 3 ou 4 enfants (sur le total des tarifs)</h2>
+          <br>
+          <input min="0" [(ngModel)]="deg2" class="mt-2" placeholder="À partir de 2 enfants" type="number">
+          <br>
+          <input min="0" [(ngModel)]="deg3" class="mt-2" placeholder="À partir de 3 enfants" type="number">
+          <br>
+          <input min="0" [(ngModel)]="deg4" class="mt-2" placeholder="À partir de 4 enfants" type="number">
+          <br>
+
+          <button (click)="getDeg()">Valider</button>
+        </ng-template>
+    
+    
+          <div *ngFor="let item of list; let j = index;" >
+              <div>{{item[j]}}</div>
+           </div>
+    
+    
+           
+    
+           <!-- <div *ngFor="let item of resultsGetBdd | keyvalue">
+            <pre>
+              {{item[0]}}
+            </pre>
+           </div> -->
+    
+
+            </div>
+
+                    
+
+
+      
+          
+        
+          </mat-drawer-container>
+      

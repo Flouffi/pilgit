@@ -1,0 +1,29 @@
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand" href="#">
+      <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+  
+    </a>
+  </nav>
+
+
+  <div  class="bg" style="margin-top: 2%;margin-bottom: 1%;" >
+      <div class="container truc justify-content-between">
+      <h1 class="blue">Merci !</h1><h1 class="yellow"> Pour votre inscription</h1>
+      <hr>
+      <div class="row mt-3">
+          <div class="col">
+        <p style="color: grey;">Nous avons envoyer un mail à :  <strong>{{user.email}}</strong></p>
+        <p style="color: grey;" >Merci de vérifier votre adresse mail et cliquer sur le lien dans le mail</p>
+        <input type="button" class="btn btn-primary mb-3" value="Renvoyer le mail de confirmation" (click)="authService.SendVerificationMail()"> 
+<br>
+        <button (click)="goToHome()" class="btn btn-warning mb-3">Retour à l'accueil</button>
+          </div>
+<br>
+
+
+
+  </div>
+</div>
+
+</div>

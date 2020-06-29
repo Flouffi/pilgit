@@ -1,0 +1,1827 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+
+    <!-- <i class="material-icons mr-5" style="font-size: 30px;cursor: pointer;" (click)="drawer.toggle()">
+      dehaze
+    </i> -->
+  
+    <div *ngIf="isAdmin">
+  
+        
+            <a  href="javascript:history.back()" style="color: black;"> <i style="cursor: pointer;" class="material-icons">
+              arrow_back
+            </i></a>
+          
+    </div>
+  
+    <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+  
+    <i style="cursor: pointer;" class="material-icons" (click)="SignOut()">
+        power_settings_new
+        </i>
+  
+      
+  </nav>
+  
+
+  <mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+      <p>Panneau d'administrateur</p>
+      <p (click)="SignOut()">Se déco</p>
+    </mat-drawer>
+
+<mat-drawer-container class="example-container" autosize>
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+
+        <p *ngIf="isAdmin" class="blueadmin mr-2 ml-2 mt-2 mb-2">Menu <div class="yeladmin mr-2 mt-2 mb-2">Administrateur</div>
+        <br>
+        <p  style="cursor: pointer;" *ngIf="isAdmin" class="ml-1 blue4 mt-2" routerLink="../dashboard"><span class="material-icons vertical-align-middle padding-bottom-3">dashboard</span>Dashboard</p>
+        <p *ngIf="isAdmin" style="cursor: pointer;" class="mt-4 ml-1 blue4" routerLink="../manage"> <span class="material-icons vertical-align-middle padding-bottom-3">build</span>Gérer les inscriptions</p>
+        <p style="cursor: pointer;"  *ngIf="isAdmin" class="ml-1 blue4" routerLink="../grid"><span class="material-icons vertical-align-middle padding-bottom-3">grid_on</span>Créer une grille</p>
+        <!-- <p  style="cursor: pointer;" *ngIf="isAdmin" class="ml-1 blue4" routerLink="../search"><span class="material-icons vertical-align-middle padding-bottom-3">search</span>Moteur de recherche</p> -->
+        <!-- <p class="ml-1" (click)="SignOut()">Deconnexion</p> -->
+      </mat-drawer>
+
+  
+      <div class="mt-2 ml-2">
+        <h1 class="blue" style="margin-left: 10px; margin-top: 20px ">Choisissez le type </h1> <h1 class="yellow">d'évènement </h1>
+        <br>
+      </div>
+      
+        <mat-form-field class=" ml-5">
+          <mat-select (selectionChange)="resetEve()"  [(ngModel)]="state" >
+            <mat-option  *ngFor="let result of choix" [value]="result">
+                {{result.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+
+
+     
+
+<div >
+  <div class="example-sidenav-content">   
+    <div class="neu2" *ngIf="state.value == 'classique'">
+      <div class="mt-2 ml-2">
+        
+        <div class="ml-2 mt-2">
+          <br>
+          <h1 class="grey mr-3"><span style="color: red;">Conseil :</span> Indiquer le nom de l'évènement de manière explicite </h1>
+          <br>
+          <h1 class="grey mr-3">Exemple : Mercredi+ Vacances été 10-12 ans Belencontre</h1>
+
+        </div>
+
+        <br>
+        <h1 class="blue" style="margin-left: 10px; margin-top: 10px ">Création </h1> <h1 class="yellow">d'évènement </h1>
+        <hr>
+      </div>
+
+        <div class="mt-3">
+        <h1 class="bluelow ml-3"> Nom de <h1 class="yellowlow"> l'évènement : </h1> </h1>
+      </div>
+        <br>
+                <mat-form-field class="ml-5">
+                  <mat-label> Quel est le nom de l'évènement ? </mat-label>
+              
+                    <input [(ngModel)]="nameEve" matInput type="text">
+          
+                </mat-form-field>
+                <br>
+        <h1 class="bluelow ml-3">Grille tarifaire :</h1>
+        <br>
+        <mat-form-field class=" ml-5">
+            <mat-select (selectionChange)="getTableau(choixTab)" [(ngModel)]="choixTab" >
+              <mat-option  *ngFor="let result of nameBdd" [value]="result">
+                  {{result}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button style="margin-left:60px" class="btn btn-primary" (click)="getTab2(choixTab)">Voir</button>
+
+
+    <div class="mt-2 mb-4" *ngIf="results2 && results3" ngFor="let result of results2" >
+       <h1 class="bluelow ml-3"> Nom de la grille : <h1 class="yellowlow">{{choixTab}} </h1> </h1>
+       <br>
+       <h1 class="bluelow ml-3"> Tranche d'âge : </h1> <h1 class="yellowlow"> {{results2}} ans</h1>
+       <br>
+       <!-- <h1 class="bluelow ml-3">Valeur : {{results3 | json }}</h1> -->
+    </div>
+
+        <table class="table" *ngIf="data2">
+          <thead>
+            <tr class="text-center">
+              <th  *ngFor="let thecol of columnsToDisplay | keyvalue;let i = index" scope="col">{{columnsToDisplay[i]}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let data of data2">
+            <tr class="text-center">
+              <td>{{data[0]}}</td>
+              <td>{{data[1]}}</td>
+              <td class="colo 3" *ngIf="data[2]">{{data[2]}}</td>
+              <td *ngIf="data[3]">{{data[3]}}</td>
+              <td *ngIf="data[4]">{{data[4]}}</td>
+              <td *ngIf="data[5]">{{data[5]}}</td>
+              <td *ngIf="data[6]">{{data[6]}}</td>
+              <td *ngIf="data[7]">{{data[7]}}</td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table>
+
+        
+        <br>
+        <h1 class="bluelow ml-3"> Lieu de <h1 class="yellowlow"> l'accueil  : </h1> </h1>
+<br>
+          <form class="example-form">
+                    <mat-form-field class="ml-5 mt-2" >
+                      <mat-label>Lieu de l'évènement</mat-label>
+                      <mat-select name="zero"  [(ngModel)]="place">
+                        <mat-option *ngFor="let plac of places" [value]="plac.viewValue">
+                          {{plac.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                </form>
+
+              <!-- <br> -->
+<div class="mt-2 mb-2">
+  <!-- <mat-checkbox class="ml-1 mr-1" [checked]="defcheck"></mat-checkbox> <h1 class="bluelow ml-3"> Lieu d'accueil <h1 class="yellowlow"> supplémentaires </h1> </h1> -->
+
+  <!-- <div class="row mt-3 ml-4">
+    <section class="ml-1" *ngFor="let item of places">
+      <mat-checkbox class="ml-1 mr-1" name="{{item.viewValue}}" [checked]="false" (change)="toggle5($event)">{{item.value}}</mat-checkbox>
+    </section>
+  </div>
+</div> -->
+
+<!-- <br>
+
+<h1 class="bluelow ml-3"> Lieu d'accueil <h1 class="yellowlow"> supplémentaire  : </h1> </h1>
+              <br>
+<div class="row mt-3 ml-4">
+  <section class="ml-1" *ngFor="let item of placesup">
+    <mat-checkbox class="ml-1 mr-1" name="{{item}}" [checked]="false" (change)="toggle5($event)">{{item}}</mat-checkbox>
+  </section>
+</div> -->
+              <br>
+
+        <h1 class="bluelow ml-3"> Mois de <h1 class="yellowlow"> l'évènement : </h1> </h1>
+<br>
+        <!-- <mat-form-field class="ml-5 mt-2">
+          <mat-label> Quel est le mois de l'évènement ? </mat-label>
+          <mat-select name="first"  [(ngModel)]="choixMonth">
+            <mat-option *ngFor="let month of months" [value]="month.value">
+              {{month.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+        <div class="row m-3 ml-4">
+          <section class="ml-1" *ngFor="let item of months">
+            <mat-checkbox class="ml-1 mr-1" name="{{item.value}}" [checked]="false" (change)="toggle2($event)">{{item.viewValue}}</mat-checkbox>
+          </section>
+        </div>
+
+        <br>
+
+        <h1 class="bluelow ml-3"> Semaine de <h1 class="yellowlow"> l'évènement : </h1> </h1>
+        <br>
+                <!-- <mat-form-field class="ml-5 mt-2">
+                  <mat-label> Quel est la semaine de l'évènement ? </mat-label>
+                  <mat-select name="second"  [(ngModel)]="choixWeek">
+                    <mat-option *ngFor="let week of weeks" [value]="week.value">
+                      {{week.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+
+                <div class="row m-3 ml-4">
+                  <section class="ml-1" *ngFor="let item of weeks">
+                    <mat-checkbox class="ml-1 mr-1" name="{{item.value}}" [checked]="false" (change)="toggle4($event)">{{item.viewValue}}</mat-checkbox>
+                  </section>
+                </div>
+
+                <br>
+                <div >
+                <h1 class="bluelow ml-3"> Jour(s) de <h1 class="yellowlow"> l'évènement : </h1> </h1>
+        <br>
+          
+                  <div class="row m-3 ml-4">
+                  <section class="ml-1" *ngFor="let item of days">
+                    <mat-checkbox class="ml-1 mr-1" name="{{item.value}}" [checked]="false" (change)="toggle($event)">{{item.viewValue}}</mat-checkbox>
+                  </section>
+                </div>
+          <br>
+                <!-- <div class="mt-2 mb-2 ml-2" *ngIf="s1">
+                  <button (click)="checkbtn()" class="btn btn-primary"> Tout cocher</button>
+                </div> -->
+
+                <div class="row">
+                  <div class="col">
+                    <h1 class="bluelow ml-3"> Places  <h1 class="yellowlow">  maximum par session</h1> </h1>
+                    <br>
+                    <section class="ml-1">
+                      <br>
+                      <input min="0" class="ml-4" type="number" (change)="setmaxMax($event)" [(ngModel)]="maxMax"> 
+                    </section>
+                  
+                  </div>
+                </div>
+
+
+                
+
+
+            
+    
+
+          <div *ngIf="s1">
+
+       
+
+
+            <h1 class="yellowlow ml-2">Semaine 1</h1>
+            <br>
+                <div *ngIf="lundi == true">
+                  <div *ngIf="ls1 == true">
+                  <div class="row d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue ml-5">Lundi   <button (click)="ls1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input min="0" max="{{maxMax}}" type="number" name="gml" [(ngModel)]="gml" (change)="toggle3($event,gml)">
+                      </div>
+                    <div class="col text-center">
+                      <mat-checkbox class="mr-2"  [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>                   
+                      <br>
+                        <input  min="0" max="{{maxMax}}" placeholder="Place disponible"    type="number" name="lundimat" [(ngModel)]="q1" (change)="toggle3($event,q1)">
+                    </div>
+                    <div  *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox  name="lundimid" class="mr-2" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="lundimid" [(ngModel)]="q2" (change)="toggle3($event,q2)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}" type="number" name="gsl" [(ngModel)]="gsl" (change)="toggle3($event,gsl)">
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div *ngIf="mardi == true">
+                  <div *ngIf="mas1 == true">
+
+                  
+                  <div class="row  d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue ml-5"> Mardi   <button (click)="mas1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}" type="number" name="gmma" [(ngModel)]="gmma" (change)="toggle3($event,gmma)">
+                      </div>
+                    <div   class="col text-center">
+                      <mat-checkbox class="mr-2" name="mardimat" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>
+                        <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="mardimat" [(ngModel)]="q4" (change)="toggle3($event,q4)">
+                    </div>
+                    <div *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox class="mr-2" name="mardimid" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="mardimid" [(ngModel)]="q5" (change)="toggle3($event,q5)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}" type="number" name="gsma" [(ngModel)]="gsma" (change)="toggle3($event,gsma)">
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div *ngIf="mercredi == true">
+                  <div *ngIf="mes1 == true">
+                  <div class="row  d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue ml-5">Mercredi   <button (click)="mes1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}"  type="number" name="gmme" [(ngModel)]="gmme" (change)="toggle3($event,gmme)">
+                      </div>
+                    <div class="col text-center">
+                      <mat-checkbox class="mr-2"  name="mercredimat" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="mercredimat" [(ngModel)]="q7" (change)="toggle3($event,q7)">
+                    </div>
+                    <div  *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox class="mr-2" name="mercredimid" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="mercredimid" [(ngModel)]="q8" (change)="toggle3($event,q8)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}" type="number" name="gsme" [(ngModel)]="gsme" (change)="toggle3($event,gsme)">
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div *ngIf="jeudi == true">
+                  <div *ngIf="js1 == true">
+                  <div class="row  d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue  ml-5"> Jeudi  <button (click)="js1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input min="0"  max="{{maxMax}}" type="number" name="gmj" [(ngModel)]="gmj" (change)="toggle3($event,gmj)">
+                      </div>
+                    <div class="col text-center">
+                      <mat-checkbox class="mr-2"  name="jeudimat" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>
+                      <br>
+                        <input min="0"  max="{{maxMax}}"  type="number" name="jeudimat" [(ngModel)]="q10" (change)="toggle3($event,q10)">
+                    </div>
+                    <div  *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox class="mr-2" name="jeudimid" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input min="0"  max="{{maxMax}}" type="number" name="jeudimid" [(ngModel)]="q11" (change)="toggle3($event,q11)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input min="0"  max="{{maxMax}}" type="number" name="gsj" [(ngModel)]="gsj" (change)="toggle3($event,gsj)">
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div *ngIf="vendredi == true">
+                  <div *ngIf="vs1 == true">
+                  <div class="row  d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue ml-5"> Vendredi  <button (click)="vs1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}" type="number" name="gmv" [(ngModel)]="gmv" (change)="toggle3($event,gmv)">
+                      </div>
+                    <div class="col text-center">
+                      <mat-checkbox class="mr-2" name="vendredimat" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="vendredimat" [(ngModel)]="q13" (change)="toggle3($event,q13)">
+                    </div>
+                    <div  *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox class="mr-2"  name="vendredimid" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="vendredimid" [(ngModel)]="q14" (change)="toggle3($event,q14)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input   min="0" max="{{maxMax}}" type="number" name="gsv" [(ngModel)]="gsv" (change)="toggle3($event,gsv)">
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div *ngIf="samedi == true">
+                  <div *ngIf="ss1 == true">
+                  <div class="row  d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue ml-5">Samedi   <button (click)="ss1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}" type="number" name="gms" [(ngModel)]="gms" (change)="toggle3($event,gms)">
+                      </div>
+                    <div class="col text-center">
+                      <mat-checkbox class="mr-2" name="samedimat" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}" type="number" name="samedimat" [(ngModel)]="q16" (change)="toggle3($event,q16)">
+                    </div>
+                    <div  *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox class="mr-2" name="samedimid" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input  min="0" max="{{maxMax}}"  type="number" name="samedimid" [(ngModel)]="q17" (change)="toggle3($event,q17)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input  min="0" max="{{maxMax}}"  type="number" name="gss" [(ngModel)]="gss" (change)="toggle3($event,gss)">
+                      </div>
+                  </div>
+                </div>
+              </div>
+                <div *ngIf="dimanche == true">
+                  <div *ngIf="ds1 == true">
+                  <div class="row  d-flex justify-content-center">
+                    <div class="col">
+                      <h1 class="blue ml-5">Dimanche   <button (click)="ds1 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                    </div>
+                    <div *ngIf="hasGM" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Matin</h1>
+                        <br>
+                          <input min="0"   max="{{maxMax}}"  type="number" name="gmd" [(ngModel)]="gmd" (change)="toggle3($event,gmd)">
+                      </div>
+                    <div class="col text-center">
+                      <mat-checkbox class="mr-2" name="dimanchemat" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Accueil</h1>
+                      <br>
+                        <input min="0"  max="{{maxMax}}" type="number" name="dimanchemat" [(ngModel)]="q19" (change)="toggle3($event,q19)">
+                    </div>
+                    <div *ngIf="hasCantine" class="col text-center">
+                      <mat-checkbox class="mr-2" name="dimanchemid" [checked]="defcheck" ></mat-checkbox>
+                      <h1 class="yellowlow">Cantine</h1>
+                      <br>
+                        <input min="0"   max="{{maxMax}}"  type="number" name="dimanchemid" [(ngModel)]="q20" (change)="toggle3($event,q20)">
+                    </div>
+                    <div *ngIf="hasGS" class="col text-center">
+                        <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                        <h1 class="yellowlow">Garderie Soir</h1>
+                        <br>
+                          <input min="0"  max="{{maxMax}}"  type="number" name="gsd" [(ngModel)]="gsd" (change)="toggle3($event,gsd)">
+                      </div>
+                  </div>
+                </div>
+                  </div>
+                </div>
+                  <hr>
+                  <div *ngIf="s2">
+                    <h1 class="yellowlow ml-2">Semaine 2</h1>
+                    <div *ngIf="lundi == true">
+                      <div *ngIf="ls2 == true">
+
+                  
+                      <div class="row d-flex justify-content-center">
+                        <div class="col">
+                       <h1 class="blue ml-5">Lundi  <button (click)="ls2 = false" style="color: red; border: none; font-size:30px"> x </button> </h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs2" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="gml2" [(ngModel)]="gml2" (change)="toggle3s2($event,gml2)">
+                          </div>
+                        <div class="col text-center">
+                          <mat-checkbox class="mr-2"  [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>                   
+                          <br>
+                            <input  min="0" max="{{maxMax}}" placeholder="Place disponible"    type="number" name="lundimat2" [(ngModel)]="q1s2" (change)="toggle3s2($event,q1s2)">
+                        </div>
+                        <div  *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox  name="lundimid2" class="mr-2" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="lundimid2" [(ngModel)]="q2s2" (change)="toggle3s2($event,q2s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs2" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gsl2" [(ngModel)]="gsl2" (change)="toggle3s2($event,gsl2)">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div *ngIf="mardi == true">
+                      <div *ngIf="mas2 == true">
+                      <div class="row  d-flex justify-content-center">
+                        <div class="col">
+                          <h1 class="blue ml-5">Mardi <button (click)="mas2 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gmma" [(ngModel)]="gmma2" (change)="toggle3s2($event,gmma2)">
+                          </div>
+                        <div   class="col text-center">
+                          <mat-checkbox class="mr-2" name="mardimat" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>
+                            <br>
+                            <input  min="0" max="{{maxMax}}"  type="number" name="mardimat" [(ngModel)]="q4s2" (change)="toggle3s2($event,q4s2)">
+                        </div>
+                        <div *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox class="mr-2" name="mardimid" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="mardimid" [(ngModel)]="q5s2" (change)="toggle3s2($event,q5s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="gsma" [(ngModel)]="gsma2" (change)="toggle3s2($event,gsma2)">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div *ngIf="mercredi == true">
+                      <div *ngIf="mes2 == true">
+                      <div class="row  d-flex justify-content-center">
+                        <div class="col">
+                          <h1 class="blue ml-5">Mercredi <button (click)="mes2 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gmme" [(ngModel)]="gmme2" (change)="toggle3s2($event,gmme2)">
+                          </div>
+                        <div class="col text-center">
+                          <mat-checkbox class="mr-2"  name="mercredimat" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="mercredimat" [(ngModel)]="q7s2" (change)="toggle3s2($event,q7s2)">
+                        </div>
+                        <div  *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox class="mr-2" name="mercredimid" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="mercredimid" [(ngModel)]="q8s2" (change)="toggle3s2($event,q8s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gsme" [(ngModel)]="gsme2" (change)="toggle3s2($event,gsme2)">
+                          </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div *ngIf="jeudi == true">
+                      <div *ngIf="js2 == true">
+                      <div class="row  d-flex justify-content-center">
+                        <div class="col">
+                          <h1 class="blue  ml-5">Jeudi  <button (click)="js2 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gmj" [(ngModel)]="gmj2" (change)="toggle3s2($event,gmj2)">
+                          </div>
+                        <div class="col text-center">
+                          <mat-checkbox class="mr-2"  name="jeudimat" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="jeudimat" [(ngModel)]="q10s2" (change)="toggle3s2($event,q10s2)">
+                        </div>
+                        <div  *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox class="mr-2" name="jeudimid" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="jeudimid" [(ngModel)]="q11s2" (change)="toggle3s2($event,q11s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gsj" [(ngModel)]="gsj2" (change)="toggle3s2($event,gsj2)">
+                          </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div *ngIf="vendredi == true">
+                      <div *ngIf="vs2 == true">
+                      <div class="row  d-flex justify-content-center">
+                        <div class="col">
+                          <h1 class="blue ml-5">Vendredi  <button (click)="vs2 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gmv2" [(ngModel)]="gmv2" (change)="toggle3s2($event,gmv2)">
+                          </div>
+                        <div class="col text-center">
+                          <mat-checkbox class="mr-2" name="vendredimat" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>
+                          <br>
+                            <input   min="0" max="{{maxMax}}" type="number" name="vendredimat" [(ngModel)]="q13s2" (change)="toggle3s2($event,q13s2)">
+                        </div>
+                        <div  *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox class="mr-2"  name="vendredimid" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="vendredimid" [(ngModel)]="q14s2" (change)="toggle3s2($event,q14s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input   min="0" max="{{maxMax}}" type="number" name="gsv" [(ngModel)]="gsv2" (change)="toggle3s2($event,gsv2)">
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+                    <div *ngIf="samedi == true">
+                      <div *ngIf="ss2 == true">
+                      <div class="row  d-flex justify-content-center">
+                        <div class="col">
+                          <h1 class="blue ml-5">Samedi  <button (click)="ss2 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gms" [(ngModel)]="gms2" (change)="toggle3s2($event,gms2)">
+                          </div>
+                        <div class="col text-center">
+                          <mat-checkbox class="mr-2" name="samedimat" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="samedimat" [(ngModel)]="q16s2" (change)="toggle3s2($event,q16s2)">
+                        </div>
+                        <div  *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox class="mr-2" name="samedimid" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="samedimid" [(ngModel)]="q17s2" (change)="toggle3s2($event,q17s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="gss" [(ngModel)]="gss2" (change)="toggle3s2($event,gss2)">
+                          </div>
+                      </div>
+                    </div>
+                    </div>
+                    <div *ngIf="dimanche == true">
+                      <div *ngIf="ds2 == true">
+                      <div class="row  d-flex justify-content-center">
+                        <div class="col">
+                          <h1 class="blue ml-5">Dimanche  <button (click)="ds2 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                        </div>
+                        <div *ngIf="hasGM" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gmd" [(ngModel)]="gmd2" (change)="toggle3s2($event,gmd2)">
+                          </div>
+                        <div class="col text-center">
+                          <mat-checkbox class="mr-2" name="dimanchemat" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Accueil</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" min="0" max="{{maxMax}}" type="number" name="dimanchemat" [(ngModel)]="q19s2" (change)="toggle3s2($event,q19s2)">
+                        </div>
+                        <div *ngIf="hasCantine" class="col text-center">
+                          <mat-checkbox class="mr-2" name="dimanchemid" [checked]="defcheck" ></mat-checkbox>
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input  min="0" max="{{maxMax}}" type="number" name="dimanchemid" [(ngModel)]="q20s2" (change)="toggle3s2($event,q20s2)">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="gsd" [(ngModel)]="gsd2" (change)="toggle3s2($event,gsd2)">
+                          </div>
+                      </div>
+                    </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div *ngIf="s3">
+                      <h1 class="yellowlow ml-2">Semaine 3</h1>
+                      <div *ngIf="lundi == true">
+                        <div *ngIf="ls3 == true">
+  
+                    
+                        <div class="row d-flex justify-content-center">
+                          <div class="col">
+                         <h1 class="blue ml-5">Lundi  <button (click)="ls3 = false" style="color: red; border: none; font-size:30px"> x </button> </h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs3" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="gml3" [(ngModel)]="gml3" (change)="toggle3s3($event,gml3)">
+                            </div>
+                          <div class="col text-center">
+                            <mat-checkbox class="mr-2"  [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>                   
+                            <br>
+                              <input  min="0" max="{{maxMax}}" placeholder="Place disponible"    type="number" name="lundimat3" [(ngModel)]="q1s3" (change)="toggle3s3($event,q1s3)">
+                          </div>
+                          <div  *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox  name="lundimid3" class="mr-2" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="lundimid3" [(ngModel)]="q2s3" (change)="toggle3s3($event,q2s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs3" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gsl2" [(ngModel)]="gsl3" (change)="toggle3s3($event,gsl3)">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div *ngIf="mardi == true">
+                        <div *ngIf="mas3 == true">
+                        <div class="row  d-flex justify-content-center">
+                          <div class="col">
+                            <h1 class="blue ml-5">Mardi <button (click)="mas3 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="gmma" [(ngModel)]="gmma3" (change)="toggle3s3($event,gmma3)">
+                            </div>
+                          <div   class="col text-center">
+                            <mat-checkbox class="mr-2" name="mardimat" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>
+                              <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="mardimat" [(ngModel)]="q4s3" (change)="toggle3s3($event,q4s3)">
+                          </div>
+                          <div *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox class="mr-2" name="mardimid" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="mardimid" [(ngModel)]="q5s3" (change)="toggle3s3($event,q5s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gsma" [(ngModel)]="gsma3" (change)="toggle3s3($event,gsma3)">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div *ngIf="mercredi == true">
+                        <div *ngIf="mes3 == true">
+                        <div class="row  d-flex justify-content-center">
+                          <div class="col">
+                            <h1 class="blue ml-5">Mercredi <button (click)="mes3 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gmme" [(ngModel)]="gmme3" (change)="toggle3s3($event,gmme3)">
+                            </div>
+                          <div class="col text-center">
+                            <mat-checkbox class="mr-2"  name="mercredimat" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>
+                            <br>
+                              <input   min="0" max="{{maxMax}}" type="number" name="mercredimat" [(ngModel)]="q7s3" (change)="toggle3s3($event,q7s3)">
+                          </div>
+                          <div  *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox class="mr-2" name="mercredimid" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="mercredimid" [(ngModel)]="q8s3" (change)="toggle3s3($event,q8s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gsme" [(ngModel)]="gsme3" (change)="toggle3s3($event,gsme3)">
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                      <div *ngIf="jeudi == true">
+                        <div *ngIf="js3 == true">
+                        <div class="row  d-flex justify-content-center">
+                          <div class="col">
+                            <h1 class="blue  ml-5">Jeudi  <button (click)="js3 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gmj" [(ngModel)]="gmj3" (change)="toggle3s3($event,gmj3)">
+                            </div>
+                          <div class="col text-center">
+                            <mat-checkbox class="mr-2"  name="jeudimat" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="jeudimat" [(ngModel)]="q10s3" (change)="toggle3s3($event,q10s3)">
+                          </div>
+                          <div  *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox class="mr-2" name="jeudimid" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="jeudimid" [(ngModel)]="q11s3" (change)="toggle3s3($event,q11s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="gsj3" [(ngModel)]="gsj3" (change)="toggle3s3($event,gsj3)">
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                      <div *ngIf="vendredi == true">
+                        <div *ngIf="vs3 == true">
+                        <div class="row  d-flex justify-content-center">
+                          <div class="col">
+                            <h1 class="blue ml-5">Vendredi  <button (click)="vs3 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gmv" [(ngModel)]="gmv3" (change)="toggle3s3($event,gmv3)">
+                            </div>
+                          <div class="col text-center">
+                            <mat-checkbox class="mr-2" name="vendredimat" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="vendredimat" [(ngModel)]="q13s3" (change)="toggle3s3($event,q13s3)">
+                          </div>
+                          <div  *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox class="mr-2"  name="vendredimid" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="vendredimid" [(ngModel)]="q14s3" (change)="toggle3s3($event,q14s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gsv3" [(ngModel)]="gsv3" (change)="toggle3s3($event,gsv3)">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div *ngIf="samedi == true">
+                        <div *ngIf="ss3 == true">
+                        <div class="row  d-flex justify-content-center">
+                          <div class="col">
+                            <h1 class="blue ml-5">Samedi  <button (click)="ss3 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gms" [(ngModel)]="gms3" (change)="toggle3s3($event,gms3)">
+                            </div>
+                          <div class="col text-center">
+                            <mat-checkbox class="mr-2" name="samedimat" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="samedimat" [(ngModel)]="q16s3" (change)="toggle3s3($event,q16s3)">
+                          </div>
+                          <div  *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox class="mr-2" name="samedimid" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="samedimid" [(ngModel)]="q17s3" (change)="toggle3s3($event,q17s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gss" [(ngModel)]="gss3" (change)="toggle3s3($event,gss3)">
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                      <div *ngIf="dimanche == true">
+                        <div *ngIf="ds3 == true">
+                        <div class="row  d-flex justify-content-center">
+                          <div class="col">
+                            <h1 class="blue ml-5">Dimanche  <button (click)="ds3 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                          </div>
+                          <div *ngIf="hasGM" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Matin</h1>
+                              <br>
+                                <input min="0" max="{{maxMax}}"  type="number" name="gmd" [(ngModel)]="gmd3" (change)="toggle3s3($event,gmd3)">
+                            </div>
+                          <div class="col text-center">
+                            <mat-checkbox class="mr-2" name="dimanchemat" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Accueil</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}" type="number" name="dimanchemat" [(ngModel)]="q19s3" (change)="toggle3s3($event,q19s3)">
+                          </div>
+                          <div *ngIf="hasCantine" class="col text-center">
+                            <mat-checkbox class="mr-2" name="dimanchemid" [checked]="defcheck" ></mat-checkbox>
+                            <h1 class="yellowlow">Cantine</h1>
+                            <br>
+                              <input  min="0" max="{{maxMax}}"  type="number" name="dimanchemid" [(ngModel)]="q20s3" (change)="toggle3s3($event,q20s3)">
+                          </div>
+                          <div *ngIf="hasGS" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Garderie Soir</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="gsd" [(ngModel)]="gsd3" (change)="toggle3s3($event,gsd3)">
+                            </div>
+                        </div>
+                      </div>
+                        </div>
+                      </div>               
+                      <hr>
+                      <div *ngIf="s4">
+                        <h1 class="yellowlow ml-2">Semaine 4</h1>
+                        <div *ngIf="lundi == true">
+                          <div *ngIf="ls4 == true">
+    
+                      
+                          <div class="row d-flex justify-content-center">
+                            <div class="col">
+                           <h1 class="blue ml-5">Lundi  <button (click)="ls4 = false" style="color: red; border: none; font-size:30px"> x </button> </h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs4" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}"  type="number" name="gml2" [(ngModel)]="gml4" (change)="toggle3s4($event,gml4)">
+                              </div>
+                            <div class="col text-center">
+                              <mat-checkbox class="mr-2"  [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>                   
+                              <br>
+                                <input  min="0" max="{{maxMax}}" placeholder="Place disponible"    type="number" name="lundimat2" [(ngModel)]="q1s4" (change)="toggle3s4($event,q1s4)">
+                            </div>
+                            <div  *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox  name="lundimid2" class="mr-2" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="lundimid2" [(ngModel)]="q2s4" (change)="toggle3s4($event,q2s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs2" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gsl2" [(ngModel)]="gsl4" (change)="toggle3s4($event,gsl4)">
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                        <div *ngIf="mardi == true">
+                          <div *ngIf="mas4 == true">
+                          <div class="row  d-flex justify-content-center">
+                            <div class="col">
+                              <h1 class="blue ml-5">Mardi <button (click)="mas4 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}"  type="number" name="gmma" [(ngModel)]="gmma4" (change)="toggle3s4($event,gmma4)">
+                              </div>
+                            <div   class="col text-center">
+                              <mat-checkbox class="mr-2" name="mardimat" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>
+                                <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="mardimat" [(ngModel)]="q4s4" (change)="toggle3s4($event,q4s4)">
+                            </div>
+                            <div *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox class="mr-2" name="mardimid" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="mardimid" [(ngModel)]="q5s4" (change)="toggle3s4($event,q5s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gsma" [(ngModel)]="gsma4" (change)="toggle3s4($event,gsma4)">
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                        <div *ngIf="mercredi == true">
+                          <div *ngIf="mes4 == true">
+                          <div class="row  d-flex justify-content-center">
+                            <div class="col">
+                              <h1 class="blue ml-5">Mercredi <button (click)="mes4 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gmme" [(ngModel)]="gmme4" (change)="toggle3s4($event,gmme4)">
+                              </div>
+                            <div class="col text-center">
+                              <mat-checkbox class="mr-2"  name="mercredimat" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="mercredimat" [(ngModel)]="q7s4" (change)="toggle3s4($event,q7s4)">
+                            </div>
+                            <div  *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox class="mr-2" name="mercredimid" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="mercredimid" [(ngModel)]="q8s4" (change)="toggle3s4($event,q8s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input   min="0" max="{{maxMax}}" type="number" name="gsme" [(ngModel)]="gsme4" (change)="toggle3s4($event,gsme4)">
+                              </div>
+                          </div>
+                        </div>
+                        </div>
+                        <div *ngIf="jeudi == true">
+                          <div *ngIf="js4 == true">
+                          <div class="row  d-flex justify-content-center">
+                            <div class="col">
+                              <h1 class="blue  ml-5">Jeudi  <button (click)="js4 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gmj" [(ngModel)]="gmj4" (change)="toggle3s4($event,gmj4)">
+                              </div>
+                            <div class="col text-center">
+                              <mat-checkbox class="mr-2"  name="jeudimat" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="jeudimat" [(ngModel)]="q10s4" (change)="toggle3s4($event,q10s4)">
+                            </div>
+                            <div  *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox class="mr-2" name="jeudimid" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input min="0" max="{{maxMax}}"  type="number" name="jeudimid" [(ngModel)]="q11s4" (change)="toggle3s4($event,q11s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gsj" [(ngModel)]="gsj4" (change)="toggle3s4($event,gsj4)">
+                              </div>
+                          </div>
+                        </div>
+                        </div>
+                        <div *ngIf="vendredi == true">
+                          <div *ngIf="vs4 == true">
+                          <div class="row  d-flex justify-content-center">
+                            <div class="col">
+                              <h1 class="blue ml-5">Vendredi  <button (click)="vs4 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gmv" [(ngModel)]="gmv4" (change)="toggle3s4($event,gmv4)">
+                              </div>
+                            <div class="col text-center">
+                              <mat-checkbox class="mr-2" name="vendredimat" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>
+                              <br>
+                                <input   min="0" max="{{maxMax}}" type="number" name="vendredimat" [(ngModel)]="q13s4" (change)="toggle3s4($event,q13s4)">
+                            </div>
+                            <div  *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox class="mr-2"  name="vendredimid" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="vendredimid" [(ngModel)]="q14s4" (change)="toggle3s4($event,q14s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gsv" [(ngModel)]="gsv4" (change)="toggle3s4($event,gsv4)">
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                        <div *ngIf="samedi == true">
+                          <div *ngIf="ss4 == true">
+                          <div class="row  d-flex justify-content-center">
+                            <div class="col">
+                              <h1 class="blue ml-5">Samedi  <button (click)="ss4 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}"  type="number" name="gms" [(ngModel)]="gms4" (change)="toggle3s4($event,gms4)">
+                              </div>
+                            <div class="col text-center">
+                              <mat-checkbox class="mr-2" name="samedimat" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="samedimat" [(ngModel)]="q16s4" (change)="toggle3s4($event,q16s4)">
+                            </div>
+                            <div  *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox class="mr-2" name="samedimid" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="samedimid" [(ngModel)]="q17s4" (change)="toggle3($event,q17s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}"  type="number" name="gss" [(ngModel)]="gss4" (change)="toggle3($event,gss4)">
+                              </div>
+                          </div>
+                        </div>
+                        </div>
+                        <div *ngIf="dimanche == true">
+                          <div *ngIf="ds4 == true">
+                          <div class="row  d-flex justify-content-center">
+                            <div class="col">
+                              <h1 class="blue ml-5">Dimanche  <button (click)="ds4 = false" style="color: red; border: none; font-size:30px"> x </button></h1>
+                            </div>
+                            <div *ngIf="hasGM" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}"  type="number" name="gmd" [(ngModel)]="gmd4" (change)="toggle3s4($event,gmd4)">
+                              </div>
+                            <div class="col text-center">
+                              <mat-checkbox class="mr-2" name="dimanchemat" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Accueil</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}" type="number" name="dimanchemat" [(ngModel)]="q19s4" (change)="toggle3s4($event,q19s4)">
+                            </div>
+                            <div *ngIf="hasCantine" class="col text-center">
+                              <mat-checkbox class="mr-2" name="dimanchemid" [checked]="defcheck" ></mat-checkbox>
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input  min="0" max="{{maxMax}}"  type="number" name="dimanchemid" [(ngModel)]="q20s4" (change)="toggle3s4($event,q20s4)">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <mat-checkbox class="mr-2"  name="gs" [checked]="defcheck" ></mat-checkbox>
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input  min="0" max="{{maxMax}}" type="number" name="gsd" [(ngModel)]="gsd4" (change)="toggle3s4($event,gsd4)">
+                              </div>
+                          </div>
+                        </div>
+                          </div>
+                        </div>
+                </div>
+  <br>
+
+         
+
+
+              <button *ngIf="bugTab && nameEve && place && arrayDay && arrayWeek && arrayMonth" class="btn btn-primary float-right mr-3 mb-1" (click)="testEve()">Valider mon évènement</button>
+                 <br>
+                 <br>
+            </div>
+
+          </div>
+
+
+          <div class="neu2" *ngIf="state.value == 'mercredi+'">
+            
+            <h1 class="blue" style="margin-left: 10px; margin-top: 10px ">Création </h1> <h1 class="yellow">d'évènement </h1>
+            <hr>
+            <br>
+            <div class="mt-3">
+            <h1 class="bluelow ml-3"> Nom de <h1 class="yellowlow"> l'évènement : </h1> </h1>
+          </div>
+            <br>
+                    <mat-form-field class="ml-5">
+                      <mat-label> Quel est le nom de l'évènement ? </mat-label>
+                  
+                        <input [(ngModel)]="nameEve" matInput type="text">
+              
+                    </mat-form-field>
+                    <br>
+            <h1 class="bluelow ml-3">Grille tarifaire :</h1>
+            <br>
+            <mat-form-field class=" ml-5">
+                <mat-select   [(ngModel)]="choixTab" >
+                  <mat-option  *ngFor="let result of nameBdd" [value]="result">
+                      {{result}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button style="margin-left:60px" class="btn btn-primary" (click)="getTab2(choixTab)">Voir</button>
+    
+    
+        <div class="mt-2 mb-4" *ngIf="results2 && results3" ngFor="let result of results2" >
+           <h1 class="bluelow ml-3"> Nom de la grille : <h1 class="yellowlow">{{choixTab}} </h1> </h1>
+           <br>
+           <h1 class="bluelow ml-3"> Tranche d'âge : </h1> <h1 class="yellowlow"> {{results2}} ans</h1>
+           <br>
+        </div>
+    
+            <table class="table" *ngIf="data2">
+              <thead>
+                <tr class="text-center">
+                  <th  *ngFor="let thecol of columnsToDisplay | keyvalue;let i = index" scope="col">{{columnsToDisplay[i]}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <ng-container *ngFor="let data of data2">
+                <tr class="text-center">
+                  <td>{{data[0]}}</td>
+                  <td>{{data[1]}}</td>
+                  <td class="colo 3" *ngIf="data[2]">{{data[2]}}</td>
+                  <td *ngIf="data[3]">{{data[3]}}</td>
+                  <td *ngIf="data[4]">{{data[4]}}</td>
+                  <td *ngIf="data[5]">{{data[5]}}</td>
+                  <td *ngIf="data[6]">{{data[6]}}</td>
+                  <td *ngIf="data[7]">{{data[7]}}</td>
+                </tr>
+              </ng-container>
+              </tbody>
+            </table>
+    
+            
+            <br>
+            <h1 class="bluelow ml-3"> Lieu de <h1 class="yellowlow"> l'accueil  : </h1> </h1>
+    <br>
+              <form class="example-form">
+                        <mat-form-field class="ml-5 mt-2" >
+                          <mat-label>Lieu de l'évènement</mat-label>
+                          <mat-select name="zero"  [(ngModel)]="place">
+                            <mat-option *ngFor="let plac of places" [value]="plac.viewValue">
+                              {{plac.value}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                   </form>
+    <div class="mt-2 mb-2">
+
+                  <br>
+    
+
+              <div class="row">
+                <div class="col">
+            <h1 class="bluelow ml-3"> Date de  <h1 class="yellowlow"> début </h1> </h1>
+    <br>
+
+            <div class="row m-3 ml-4">
+              <section class="ml-1">
+                <input [(ngModel)]="datedebut" matInput class="ml-1 mr-1" type="date" >
+              </section>
+            </div>
+          </div>
+            <br>
+            <div class="col">
+            <h1 class="bluelow ml-3"> Date de  <h1 class="yellowlow"> fin </h1> </h1>
+            <br>
+        
+                    <div class="row m-3 ml-4">
+                      <section class="ml-1">
+                        <input [(ngModel)]="datefin" matInput class="ml-1 mr-1" type="date" >
+                      </section>
+                    </div>
+                  </div>
+                  </div>
+              
+                      <!-- <div class="row m-3 ml-4">
+                      <section class="ml-1" *ngFor="let item of days">
+                        <mat-checkbox class="ml-1 mr-1" name="{{item.value}}" [checked]="defcheck" (change)="toggle($event)">{{item.viewValue}}</mat-checkbox>
+                      </section>
+                    </div> -->
+              <br>
+
+
+              <div class="row">
+                <div class="col">
+            <h1 class="bluelow ml-3"> Nombre de  <h1 class="yellowlow"> période </h1> </h1>
+    <br>
+
+            <div class="row m-3 ml-4">
+              <section class="ml-1">
+                <input (change)="mercredicount()" [(ngModel)]="mercrediplus" class="ml-1 mr-1" type="number" min="0" max="8">
+              </section>
+            </div>
+          </div>
+            <br>
+
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col">
+                      <h1 class="bluelow ml-3"> Places  <h1 class="yellowlow">  maximum par session</h1> </h1>
+                      <br>
+                      <section class="ml-1">
+                        <input class="ml-1 mr-1" min="0" type="number" (change)="setmaxMax($event)" [(ngModel)]="maxMax"> 
+                      </section>
+                    
+                    </div>
+                  </div>
+
+<!-- <br>
+                  <div *ngIf="this.mercrediplus && this.datefin && this.place && this.choixTab && this.nameEve" class="row">
+                    <div class="col ml-4">
+                     <button (click)="mercredifast()" class="btn btn-primary">Mercredi + rapide</button>
+                    </div>
+                   
+                  </div>
+                  <br>
+
+                  <br>
+                  <div *ngIf="this.mercrediplus && this.datefin && this.place && this.choixTab && this.nameEve" class="row">
+                    <div class="col ml-4">
+                     <button (click)="mercredimul()" class="btn btn-primary">Ajouter une période</button>
+                    </div>
+                   
+                  </div> -->
+                  <br>
+              
+              
+                  <!-- <div class="ml-2 mt-2 mb-2" *ngIf="s1">
+                    <button (click)="checkbtn()" class="btn btn-primary"> Tout cocher</button>
+                  </div> -->
+    
+              <div *ngIf="s1">
+                <h1 class="yellow ml-3">Période 1</h1>
+                <br>
+                 
+                <div class=" col ml-2 mt-2 mb-2">
+               
+              <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date1" type="date" >
+    
+            </div>
+       
+      
+            <div class=" col ml-2 mt-2 mb-2">
+         
+             
+              
+              <h1 class="bluelow ml-3"> Date de fin </h1>  
+              <input   [(ngModel)]="date1f" type="date" >
+            
+          
+            </div>
+                      
+                      
+                
+                  
+                 
+              
+               
+                      <div class="row d-flex justify-content-center">
+                    
+                        
+                        <div *ngIf="hasGM" class="col text-center">
+                            <h1 class="yellowlow">Garderie Matin</h1>
+                            <br>
+                              <input max="{{maxMax}}" min="0" type="number" name="gml" [(ngModel)]="m1gm" (change)="togglemercredi()">
+                          </div>
+                        <div  *ngIf="hasCantine" class="col text-center">
+                          <h1 class="yellowlow">Cantine</h1>
+                          <br>
+                            <input max="{{maxMax}}"  min="0" type="number" name="lundimid" [(ngModel)]="m1cant" (change)="togglemercredi()">
+                        </div>
+                        <div *ngIf="hasGS" class="col text-center">
+                            <h1 class="yellowlow">Garderie Soir</h1>
+                            <br>
+                              <input max="{{maxMax}}"  min="0" type="number" name="gsl" [(ngModel)]="m1gs" (change)="togglemercredi()">
+                          </div>
+                          <div *ngIf="hasAccueilAM" class="col text-center">
+                            <h1 class="yellowlow">Accueil Matin</h1>
+                            <br>
+                              <input max="{{maxMax}}"  min="0" type="number" name="gsl" [(ngModel)]="m1am" (change)="togglemercredi()">
+                          </div>
+                          <div *ngIf="hasAccueilAM" class="col text-center">
+                            <h1 class="yellowlow">Accueil Après-midi</h1>
+                            <br>
+                              <input max="{{maxMax}}"  min="0" type="number" name="gsl" [(ngModel)]="m1aam" (change)="togglemercredi()">
+                          </div>
+                      </div>
+    
+                    </div>
+                      <hr *ngIf="s2">
+                      <div *ngIf="s2">
+                        <h1 class="yellow ml-3">Période 2</h1>
+                 
+                        <br>
+                 
+                        <div class=" col ml-2 mt-2 mb-2">
+                       
+                      <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date2" type="date" >
+            
+                    </div>
+               
+              
+                    <div class=" col ml-2 mt-2 mb-2">
+                 
+                     
+                      
+                      <h1 class="bluelow ml-3"> Date de fin </h1>  
+                      <input   [(ngModel)]="date2f" type="date" >
+                    
+                  
+                    </div>
+                              
+    
+                      
+                          <div class="row d-flex justify-content-center">
+                         
+                            <div *ngIf="hasGM" class="col text-center">
+                                <h1 class="yellowlow">Garderie Matin</h1>
+                                <br>
+                                  <input max="{{maxMax}}"  min="0"  type="number" name="gml2" [(ngModel)]="m2gm" (change)="togglemercredi2()">
+                              </div>
+                            <div  *ngIf="hasCantine" class="col text-center">
+                              <h1 class="yellowlow">Cantine</h1>
+                              <br>
+                                <input max="{{maxMax}}" min="0" type="number" name="lundimid2" [(ngModel)]="m2cant" (change)="togglemercredi2()">
+                            </div>
+                            <div *ngIf="hasGS" class="col text-center">
+                                <h1 class="yellowlow">Garderie Soir</h1>
+                                <br>
+                                  <input max="{{maxMax}}"  min="0" type="number" name="gsl2" [(ngModel)]="m2gs" (change)="togglemercredi2()">
+                              </div>
+                              <div *ngIf="hasAccueilAM" class="col text-center">
+                                <h1 class="yellowlow">Accueil Matin</h1>
+                                <br>
+                                  <input max="{{maxMax}}"  min="0" type="number" name="gsl" [(ngModel)]="m2am" (change)="togglemercredi2()">
+                              </div>
+                              <div *ngIf="hasAccueilAM" class="col text-center">
+                                <h1 class="yellowlow">Accueil Après-midi</h1>
+                                <br>
+                                  <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m2aam" (change)="togglemercredi2()">
+                              </div>
+                          </div>
+             
+                        </div>
+                        <hr *ngIf="s3">
+                        <div *ngIf="s3">
+                          <h1 class="yellow ml-3">Période 3</h1>
+                          <br>
+                 
+                          <div class=" col ml-2 mt-2 mb-2">
+                         
+                        <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date3" type="date" >
+              
+                      </div>
+                 
+                
+                      <div class=" col ml-2 mt-2 mb-2">
+                   
+                       
+                        
+                        <h1 class="bluelow ml-3"> Date de fin </h1>  
+                        <input   [(ngModel)]="date3f" type="date" >
+                      
+                    
+                      </div>
+                                
+                      
+      
+                        
+                            <div class="row d-flex justify-content-center">
+                             
+                              <div *ngIf="hasGM" class="col text-center">
+                                  <h1 class="yellowlow">Garderie Matin</h1>
+                                  <br>
+                                    <input max="{{maxMax}}"  min="0" type="number" name="gml3" [(ngModel)]="m3gm" (change)="togglemercredi3()">
+                                </div>
+                              <div  *ngIf="hasCantine" class="col text-center">
+                                <h1 class="yellowlow">Cantine</h1>
+                                <br>
+                                  <input max="{{maxMax}}"  min="0"  type="number" name="lundimid3" [(ngModel)]="m3cant" (change)="togglemercredi3()">
+                              </div>
+                              <div *ngIf="hasGS" class="col text-center">
+                                  <h1 class="yellowlow">Garderie Soir</h1>
+                                  <br>
+                                    <input max="{{maxMax}}"  min="0"  type="number" name="gsl2" [(ngModel)]="m3gs" (change)="togglemercredi3()">
+                                </div>
+                                <div *ngIf="hasAccueilAM" class="col text-center">
+                                  <h1 class="yellowlow">Accueil Matin</h1>
+                                  <br>
+                                    <input max="{{maxMax}}"  min="0" type="number" name="gsl" [(ngModel)]="m3am" (change)="togglemercredi3()">
+                                </div>
+                                <div *ngIf="hasAccueilAM" class="col text-center">
+                                  <h1 class="yellowlow">Accueil Après-midi</h1>
+                                  <br>
+                                    <input max="{{maxMax}}"  min="0" type="number" name="gsl" [(ngModel)]="m3aam" (change)="togglemercredi3()">
+                                </div>
+                            </div>
+                
+                     
+                          </div>               
+                          <hr *ngIf="s4">
+                          <div *ngIf="s4">
+                            <h1 class="yellow ml-3">Période 4</h1>
+                            <br>
+                 
+                            <div class=" col ml-2 mt-2 mb-2">
+                           
+                          <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date4" type="date" >
+                
+                        </div>
+                   
+                  
+                        <div class=" col ml-2 mt-2 mb-2">
+                     
+                         
+                          
+                          <h1 class="bluelow ml-3"> Date de fin </h1>  
+                          <input   [(ngModel)]="date4f" type="date" >
+                        
+                      
+                        </div>
+                                  
+                           
+        
+                          
+                              <div class="row d-flex justify-content-center">
+                                
+                                <div *ngIf="hasGM" class="col text-center">
+                                    <h1 class="yellowlow">Garderie Matin</h1>
+                                    <br>
+                                      <input max="{{maxMax}}" min="0"  type="number" name="gml2" [(ngModel)]="m4gm" (change)="togglemercredi4()">
+                                  </div>
+                                <div  *ngIf="hasCantine" class="col text-center">
+                                  <h1 class="yellowlow">Cantine</h1>
+                                  <br>
+                                    <input max="{{maxMax}}" min="0" type="number" name="lundimid2" [(ngModel)]="m4cant" (change)="togglemercredi4()">
+                                </div>
+                                <div *ngIf="hasGS" class="col text-center">
+                                    <h1 class="yellowlow">Garderie Soir</h1>
+                                    <br>
+                                      <input max="{{maxMax}}"  min="0" type="number" name="gsl2" [(ngModel)]="m4gs" (change)="togglemercredi4()">
+                                  </div>
+
+                                  <div *ngIf="hasAccueilAM" class="col text-center">
+                                    <h1 class="yellowlow">Accueil Matin</h1>
+                                    <br>
+                                      <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m4am" (change)="togglemercredi4()">
+                                  </div>
+                                  <div *ngIf="hasAccueilAM" class="col text-center">
+                                    <h1 class="yellowlow">Accueil Après-midi</h1>
+                                    <br>
+                                      <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m4aam" (change)="togglemercredi4()">
+                                  </div>
+                              </div>
+                    
+                      
+                            </div>
+                            <hr *ngIf="s5">
+                            <div *ngIf="s5">
+                              <h1 class="yellow ml-3">Période 5</h1>
+                              <br>
+                 
+                              <div class=" col ml-2 mt-2 mb-2">
+                             
+                            <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date5" type="date" >
+                  
+                          </div>
+                     
+                    
+                          <div class=" col ml-2 mt-2 mb-2">
+                       
+                           
+                            
+                            <h1 class="bluelow ml-3"> Date de fin </h1>  
+                            <input   [(ngModel)]="date5f" type="date" >
+                          
+                        
+                          </div>
+                                    
+                          
+          
+                            
+                                <div class="row d-flex justify-content-center">
+                                 
+                                  <div *ngIf="hasGM" class="col text-center">
+                                      <h1 class="yellowlow">Garderie Matin</h1>
+                                      <br>
+                                        <input max="{{maxMax}}" min="0"  type="number" name="gml2" [(ngModel)]="m5gm" (change)="togglemercredi5()">
+                                    </div>
+              
+                                  <div  *ngIf="hasCantine" class="col text-center">
+                                    <h1 class="yellowlow">Cantine</h1>
+                                    <br>
+                                      <input max="{{maxMax}}" min="0" type="number" name="lundimid2" [(ngModel)]="m5cant" (change)="togglemercredi5()">
+                                  </div>
+                                  <div *ngIf="hasGS" class="col text-center">
+                                      <h1 class="yellowlow">Garderie Soir</h1>
+                                      <br>
+                                        <input max="{{maxMax}}" min="0" type="number" name="gsl2" [(ngModel)]="m5gs" (change)="togglemercredi5()">
+                                    </div>
+                                    <div *ngIf="hasAccueilAM" class="col text-center">
+                                      <h1 class="yellowlow">Accueil Matin</h1>
+                                      <br>
+                                        <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m5am" (change)="togglemercredi5()">
+                                    </div>
+                                    <div *ngIf="hasAccueilAM" class="col text-center">
+                                      <h1 class="yellowlow">Accueil Après-midi</h1>
+                                      <br>
+                                        <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m5aam" (change)="togglemercredi5()">
+                                    </div>
+                                </div>
+                   
+                          
+                              </div>
+                              <hr *ngIf="s6">
+                              <div *ngIf="s6">
+                                <h1 class="yellow ml-3">Période 6</h1>
+                          
+                                <br>
+                 
+                <div class=" col ml-2 mt-2 mb-2">
+               
+              <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date6" type="date" >
+    
+            </div>
+       
+      
+            <div class=" col ml-2 mt-2 mb-2">
+         
+             
+              
+              <h1 class="bluelow ml-3"> Date de fin </h1>  
+              <input   [(ngModel)]="date6f" type="date" >
+            
+          
+            </div>
+                      
+            
+                              
+                                  <div class="row d-flex justify-content-center">
+                                  
+                                    <div *ngIf="hasGM" class="col text-center">
+                                        <h1 class="yellowlow">Garderie Matin</h1>
+                                        <br>
+                                          <input max="{{maxMax}}" min="0"  type="number" name="gml2" [(ngModel)]="m6gm" (change)="togglemercredi6()">
+                                      </div>
+
+                                    <div  *ngIf="hasCantine" class="col text-center">
+                                      <h1 class="yellowlow">Cantine</h1>
+                                      <br>
+                                        <input max="{{maxMax}}" min="0" type="number" name="lundimid2" [(ngModel)]="m6cant" (change)="togglemercredi6()">
+                                    </div>
+                                    <div *ngIf="hasGS" class="col text-center">
+                                        <h1 class="yellowlow">Garderie Soir</h1>
+                                        <br>
+                                          <input max="{{maxMax}}" min="0" type="number" name="gsl2" [(ngModel)]="m6gs" (change)="togglemercredi6()">
+                                      </div>
+                                      <div *ngIf="hasAccueilAM" class="col text-center">
+                                        <h1 class="yellowlow">Accueil Matin</h1>
+                                        <br>
+                                          <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m6am" (change)="togglemercredi6()">
+                                      </div>
+                                      <div *ngIf="hasAccueilAM" class="col text-center">
+                                        <h1 class="yellowlow">Accueil Après-midi</h1>
+                                        <br>
+                                          <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m6aam" (change)="togglemercredi6()">
+                                      </div>
+                                  </div>
+                         
+                          
+                                </div>
+                                <hr *ngIf="s7">
+                                <div *ngIf="s7">
+                                  <h1 class="yellow ml-3">Période 7</h1>
+                           
+                                  <br>
+                 
+                                  <div class=" col ml-2 mt-2 mb-2">
+                                 
+                                <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date7" type="date" >
+                      
+                              </div>
+                         
+                        
+                              <div class=" col ml-2 mt-2 mb-2">
+                           
+                               
+                                
+                                <h1 class="bluelow ml-3"> Date de fin </h1>  
+                                <input   [(ngModel)]="date7f" type="date" >
+                              
+                            
+                              </div>
+                                        
+              
+                                
+                                    <div class="row d-flex justify-content-center">
+                                    
+                                      <div *ngIf="hasGM" class="col text-center">
+                                          <h1 class="yellowlow">Garderie Matin</h1>
+                                          <br>
+                                            <input max="{{maxMax}}" min="0"  type="number" name="gml2" [(ngModel)]="m7gm" (change)="togglemercredi7()">
+                                        </div>
+                                      <div  *ngIf="hasCantine" class="col text-center">
+                                        <h1 class="yellowlow">Cantine</h1>
+                                        <br>
+                                          <input max="{{maxMax}}"  min="0" type="number" name="lundimid2" [(ngModel)]="m7cant" (change)="togglemercredi7()">
+                                      </div>
+                                      <div *ngIf="hasGS" class="col text-center">
+                                          <h1 class="yellowlow">Garderie Soir</h1>
+                                          <br>
+                                            <input max="{{maxMax}}"  min="0" type="number" name="gsl2" [(ngModel)]="m7gs" (change)="togglemercredi7()">
+                                        </div>
+                                        <div *ngIf="hasAccueilAM" class="col text-center">
+                                          <h1 class="yellowlow">Accueil Matin</h1>
+                                          <br>
+                                            <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m7am" (change)="togglemercredi7()">
+                                        </div>
+                                        <div *ngIf="hasAccueilAM" class="col text-center">
+                                          <h1 class="yellowlow">Accueil Après-midi</h1>
+                                          <br>
+                                            <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m7aam" (change)="togglemercredi7()">
+                                        </div>
+                                    </div>
+                         
+                            
+                                  </div>
+                                  <hr *ngIf="s8">
+                                  <div *ngIf="s8">
+                                    <h1 class="yellow ml-3">Période 8</h1>
+                            
+                                    <br>
+                 
+                                    <div class=" col ml-2 mt-2 mb-2">
+                                   
+                                  <h1 class="bluelow ml-3"> Date de  début </h1> <input   [(ngModel)]="date8" type="date" >
+                        
+                                </div>
+                           
+                          
+                                <div class=" col ml-2 mt-2 mb-2">
+                             
+                                 
+                                  
+                                  <h1 class="bluelow ml-3"> Date de fin </h1>  
+                                  <input   [(ngModel)]="date8f" type="date" >
+                                
+                              
+                                </div>
+                                          
+                
+                                  
+                                      <div class="row d-flex justify-content-center">
+                                        
+                                        <div *ngIf="hasGM" class="col text-center">
+                                            <h1 class="yellowlow">Garderie Matin</h1>
+                                            <br>
+                                              <input max="{{maxMax}}" min="0"  type="number" name="gml2" [(ngModel)]="m8gm" (change)="togglemercredi8()">
+                                          </div>
+                                        <div  *ngIf="hasCantine" class="col text-center">
+                                          <h1 class="yellowlow">Cantine</h1>
+                                          <br>
+                                            <input max="{{maxMax}}" min="0" type="number" name="lundimid2" [(ngModel)]="m8cant" (change)="togglemercredi8()">
+                                        </div>
+                                        <div *ngIf="hasGS" class="col text-center">
+                                            <h1 class="yellowlow">Garderie Soir</h1>
+                                            <br>
+                                              <input max="{{maxMax}}"  min="0" type="number" name="gsl2" [(ngModel)]="m8gs" (change)="togglemercredi8()">
+                                          </div>
+                                          <div *ngIf="hasAccueilAM" class="col text-center">
+                                            <h1 class="yellowlow">Accueil Matin</h1>
+                                            <br>
+                                              <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m8am" (change)="togglemercredi8()">
+                                          </div>
+                                          <div *ngIf="hasAccueilAM" class="col text-center">
+                                            <h1 class="yellowlow">Accueil Après-midi</h1>
+                                            <br>
+                                              <input max="{{maxMax}}" min="0" type="number" name="gsl" [(ngModel)]="m8aam" (change)="togglemercredi8()">
+                                          </div>
+                                      </div>
+                            
+                              
+                                    </div>
+                    </div>
+      <br>
+    
+             
+    
+    
+                  <button class="btn btn-primary float-right mr-3 mb-1" (click)="testEve2()">Valider mon évènement</button>
+                     <br>
+                     <br>
+                </div>
+    
+              </div>

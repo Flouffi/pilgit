@@ -1,0 +1,28 @@
+
+<nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand" href="#">
+      <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+  
+    </a>
+  </nav>
+
+  <div  class="bg" style="margin-top: 2%;margin-bottom: 1%;" >
+    <div class="container truc justify-content-between">
+          <h1 class="blue">M'inscrire</h1><h1 class="yellow"> au PIL</h1>
+          <p style="color: grey;" >Merci d'entrez un mail valide ainsi qu'un mot de passe pour vous inscrire sur le PIL</p>
+          <div class="row text-center">
+            <div class="col">
+          <input type="email" placeholder="Adresse mail" #userEmail required>
+          <br>
+          <input type="password" class="mt-2" placeholder="Mot de passe" #userPwd required>
+          <br>
+          <input type="button" class="btn btn-primary mt-3 mb-2" value="M'inscrire" (click)="authService.SignUp(userEmail.value, userPwd.value)">
+        </div>
+      </div>
+      <div class="redirectToLogin" style="margin-top: 20px;">
+        <input type="button" class="btn btn-primary float-right" value="Dejà un compte ?" (click)="goToHome()">
+      </div>
+  </div>
+  
+  
+  

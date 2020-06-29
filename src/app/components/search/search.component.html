@@ -1,0 +1,248 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+
+    <!-- <i class="material-icons mr-5" style="font-size: 30px;cursor: pointer;" (click)="drawer.toggle()">
+      dehaze
+    </i> -->
+  
+    <div *ngIf="isAdmin">
+  
+      <a  href="javascript:history.back()" style="color: black;"> <i style="cursor: pointer;" class="material-icons">
+        arrow_back
+      </i></a>
+    </div>
+  
+    <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+  
+    <i style="cursor: pointer;" class="material-icons" (click)="SignOut()">
+        power_settings_new
+        </i>
+  
+      
+  </nav>
+      
+            <mat-drawer-container class="example-container" autosize>
+      
+          <mat-drawer-container class="example-container" autosize>
+              <mat-drawer #drawer class="example-sidenav" mode="side">
+
+                  <p *ngIf="isAdmin" class="blueadmin mr-2 ml-2 mt-2 mb-2">Menu <div class="yeladmin mr-2 mt-2 mb-2">Administrateur</div>
+                  <br>
+                  <p  style="cursor: pointer;" *ngIf="isAdmin" class="ml-1 blue4 mt-2" routerLink="../dashboard"><span class="material-icons vertical-align-middle padding-bottom-3">dashboard</span>Dashboard</p>
+                  <p *ngIf="isAdmin" style="cursor: pointer;" class="mt-4 ml-1 blue4" routerLink="../manage"> <span class="material-icons vertical-align-middle padding-bottom-3">build</span>Gérer les inscriptions</p>
+                  <p style="cursor: pointer;"  *ngIf="isAdmin" class="ml-1 blue4" routerLink="../grid"><span class="material-icons vertical-align-middle padding-bottom-3">grid_on</span>Créer une grille</p>
+                  <p *ngIf="isAdmin" style="cursor: pointer;" class="ml-1 blue4" routerLink="../eve"><span class="material-icons vertical-align-middle padding-bottom-3">today</span>Créer un évènement</p>
+                  <!-- <p class="ml-1" (click)="SignOut()">Deconnexion</p> -->
+                </mat-drawer>
+
+            <div class="example-sidenav-content">
+              <!-- <h1 class="blue">Moteur de <h1 class="yellow">recherche</h1> </h1> -->
+              <br>
+              <!-- <h1 class="grey2 ml-4">Par responsable : </h1>
+              <div class="neu2 text-center">
+                <form class="example-form">
+                  <mat-form-field class="example-full-width" >
+                    <mat-label>Nom à rechercher</mat-label>
+              <input matInput  type="text" name="name" [(ngModel)]="search" required>
+                  </mat-form-field>
+              </form>
+              <form class="example-form">
+                <mat-form-field  class="example-full-width" >
+                  <mat-label>Prénom à rechercher</mat-label>
+            <input matInput  type="text" name="surname" [(ngModel)]="search2" required>
+                </mat-form-field>
+            </form>
+                <button  class="btn btn-primary" (click)="getData(search,search2)">Rechercher</button>
+                <div class="mt-3" *ngIf="!result">
+                 <h1 class="grey2"> Aucun <h1 class="grey2">résultat</h1> </h1>
+                </div>
+                <div class="neu2 mb-2" >
+                  <div *ngIf="result && allResult.isAdmin === false">
+                  <h1 class="blue">{{allResult.responsable.nom}}<h1 class="yellow"> {{allResult.responsable.prenom}}</h1></h1>
+                  <br>
+                  <h1 class="grey ml-3">{{allResult.responsable.age}} ans<h1 class="grey"> {{allResult.responsable.sexe}}</h1></h1>
+                  <h1 class="grey ml-3">Quotient Familial : {{allResult.responsable.qf}}</h1>
+                  <h1 class="grey ml-3" *ngIf="allResult2 === false">QF pas validé</h1>
+                
+                  <h1 class="grey ml-3" *ngIf="allResult2 === true">QF validé</h1>
+                  <br>
+                  <div class="row mt-3">
+                  <h1 class="grey mb-2 ml-5">Enfant(s) : </h1>
+                  <div class="col">
+                  <h1 *ngIf="allResult.member" class="blue5 mb-2">{{allResult.member.prenomMember}} <h1 class="yel5 mb-2">{{allResult.member.nomMember}}</h1></h1>
+                </div>
+                <div class="col">
+                  <h1 *ngIf="allResult.member2" class="blue5 mb-2">{{allResult.member2.prenomMember}} <h1 class="yel5 mb-2">{{allResult.member2.nomMember}}</h1></h1>
+                </div>
+                <div class="col">
+                  <h1 *ngIf="allResult.member3"class="blue5 mb-2">{{allResult.member3.prenomMember}} <h1 class="yel5 mb-2">{{allResult.member3.nomMember}}</h1></h1>
+                </div>
+                <div class="col">
+                  <h1 *ngIf="allResult.member4" class="blue5 mb-2">{{allResult.member4.prenomMember}} <h1 class="yel5 mb-2">{{allResult.member4.nomMember}}</h1></h1>
+                </div>
+                  </div>
+             <br>
+
+                <button *ngIf="allResult.pdf" class="btn btn-primary mt-2 mb-2"><a style="text-decoration: none;color: white;" href="{{result}}">Voir le PDF</a></button>
+                <div *ngIf="!allResult.pdf">
+                  <h1 class="grey ml-3">Pas de PDF trouvé</h1>
+
+                </div>
+                <br>
+                <button class="btn btn-primary mb-3" id="{{allResult.uid}}" (click)="openDialog(myTemplate,$event)">Changer le statut du quotient familial</button>
+                <br>
+            
+                </div>
+                
+              </div>
+              <br>
+              </div> -->
+
+
+              <div class="neu2 mb-2 text-center">
+                <h1 class="blue ml-2 ml-2">Gestion <h1 class="yellow">de Quotient Familial</h1> </h1>
+                <hr>
+                <div>
+    
+            
+    
+                  <div class="row ml-2">
+                    <div class="col-12 text-center" *ngFor="let q of allqf">
+                    <h1 class="bluelow">QF1 : {{q.QF1}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF2 :  {{q.QF2}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF3 :  {{q.QF3}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF4 :  {{q.QF4}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF5 :  {{q.QF5}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF6 :  {{q.QF6}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF7 :  {{q.QF7}} </h1>
+                    <br>
+                    <h1 class="bluelow">QF8 :  {{q.QF8}} </h1>
+                    <br>
+                    <button (click)="openDialog3(myTemplate3)" class="btn btn-primary mt-5">Modifier  </button>
+                  </div>
+    
+                </div>
+    
+               
+    
+    
+                </div>
+                <br>
+              </div>
+    
+
+              <br>
+
+               
+            </div>
+
+                    
+            <ng-template #myTemplate>
+
+
+              <div class="neu3">
+                <h1 class="ml-2 mt-3">Changement de de statut</h1>
+          <hr>
+
+          <br>
+          <mat-form-field class="ml-5 mt-2">
+            <mat-label> Choisir </mat-label>
+            <mat-select  name="second"  [(ngModel)]="formQF">
+              <mat-option  *ngFor="let s of statut" [value]="s.value">
+                {{s.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+  <button class="btn btn-primary" (click)="majQF()">Valider</button>
+          <br>
+
+
+              </div>
+            </ng-template>
+
+            <ng-template #myTemplate3>
+              <div class="mb-2">
+                <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+              </div>
+
+              <div class="neu3 text-center">
+                <h1 class="ml-2 mt-3 text-center">Gestion des QF</h1>
+          <hr>
+          <h1 class="bluelow">Indiquez le QF comme ceci : 0-300</h1>
+
+          <div class="row">
+            <div class="col mb-2" *ngFor="let q of allqf">
+
+           
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF1</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf1" required value="{{q.QF1}}" >
+              </mat-form-field>
+            </form>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF2</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf2" required>
+              </mat-form-field>
+            </form>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF3</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf3" required>
+              </mat-form-field>
+            </form>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF4</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf4" required>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="col mb-2">
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF5</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf5" required>
+              </mat-form-field>
+            </form>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF6</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf6" required>
+              </mat-form-field>
+            </form>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF7</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf7" required>
+              </mat-form-field>
+            </form>
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>QF8</mat-label>
+                <input matInput type="text" name="name" [(ngModel)]="qf8" required>
+              </mat-form-field>
+            </form>
+          </div>
+          </div>
+
+          <div class="row float-right mr-2 mb-2 mt-2">
+            <button *ngIf="qf1&&qf2&&qf3&&qf4&&qf5&&qf6&&qf7&&qf8" (click)="majQf()" class="btn btn-primary">Valider</button>
+          </div>
+
+
+
+              </div>
+            </ng-template>
+
+      
+          
+        
+          </mat-drawer-container>
+      

@@ -1,0 +1,3452 @@
+<nav class="navbar navbar-light bg-light justify-content-between">
+
+  <!-- <i class="material-icons mr-5" style="font-size: 30px;cursor: pointer;" (click)="drawer.toggle()">
+    dehaze
+  </i> -->
+
+  <div *ngIf="isAdmin">
+<!-- 
+      <i style="cursor: pointer;" class="material-icons" (click)="drawer.toggle()">
+          menu
+          </i> -->
+  </div>
+
+  <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+
+  <i style="cursor: pointer;" class="material-icons" (click)="SignOut()">
+      power_settings_new
+      </i>
+
+    
+</nav>
+
+
+<!-- Sidebar navigation -->
+
+
+<!-- Main content -->
+
+
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <p>Panneau d'administrateur</p>
+    <p (click)="SignOut()">Se déco</p>
+
+  </mat-drawer>
+
+  <mat-drawer-container class="example-container" autosize>
+
+
+    <mat-drawer #drawer class="example-sidenav" mode="side">
+
+      <p *ngIf="isAdmin" class="blueadmin mr-2 ml-2 mt-2">Menu <div class="yeladmin mr-2 mt-2">Administrateur</div>
+      <br>
+      <p *ngIf="isAdmin" style="cursor: pointer;" class="mt-4 ml-1 blue4" routerLink="../manage"> <span class="material-icons vertical-align-middle padding-bottom-3">build</span>Gérer les inscriptions</p>
+      <p *ngIf="isAdmin" style="cursor: pointer;" class="ml-1 blue4" routerLink="../eve"><span class="material-icons vertical-align-middle padding-bottom-3">today</span>Créer un évènement</p>
+      <p *ngIf="isAdmin" style="cursor: pointer;" class="ml-1 blue4" routerLink="../grid"><span class="material-icons vertical-align-middle padding-bottom-3">grid_on</span>Créer une grille</p>
+      <!-- <p *ngIf="isAdmin" style="cursor: pointer;" class="ml-1 blue4" routerLink="../search"><span class="material-icons vertical-align-middle padding-bottom-3">search</span>Moteur de recherche</p> -->
+      <p *ngIf="!isAdmin" class="blue2">Ma famille</p>
+      <br>
+      <p *ngIf="!isAdmin" class="blue2">Mes informations</p>
+      <br>
+      <p *ngIf="!isAdmin" class="blue2">Mes inscriptions</p>
+      <!-- <p class="ml-1" (click)="SignOut()">Deconnexion</p> -->
+    </mat-drawer>
+
+    <div class="example-sidenav-content">
+
+    </div>
+
+    <div *ngIf="isLoaded" class="neu2">
+      <div class="row">
+        <div class="col mt-3">
+          <h1 class="bluefin hello mt-2 ml-3">Bonjour,</h1>
+          <h2 class="bluefin hello" *ngIf="profil.responsable"> {{profil.responsable.prenom}}</h2>
+        </div>
+
+      </div>
+      <hr>
+      <div *ngIf="isAdmin == true">
+        <div class="row ">
+          <div class="col">
+           
+            <p style="cursor: pointer" class="bluefin2 hello float-right" (click)="openDialog(myTemplatehome)">Modifier la page d'accueil
+            <i style="cursor: pointer;font-size: 30px;color:#ffc400" class="material-icons "  (click)="openDialog(myTemplatehome)">
+              loop
+            </i> </p>
+          </div>
+
+             
+ 
+        </div>
+ 
+        <div class="row h-50 mt-4">
+          <div class="col" routerLink="/search"  style="outline: none;">
+            <div class="neuchart">
+              <br>
+              <h1  class="blue mb-3 ml-3 mr-5 marg mt-2">Gestion des  <h1 class="yellow">quotients </h1></h1>
+              <img   class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/7.png">
+              <hr class="hr2">
+              <h1 *ngIf="flag == true">Attention, il n'y a pas de QF défini</h1>  
+              <hr>
+             
+              <div class="ml-3 mt-3 mb-3">
+
+              <p class="grey mb-3">Gestion des quotients familiaux pris en charge par le centre</p>   <hr class="hr2">
+            </div> 
+            </div>  
+          </div>
+          <div class="col mr-3" (click)="openDialog(myTemplateAcc)">
+            <div class="neuchart">
+              <br>
+              <h1 class="blue mb-3 ml-3 mr-5 marg mt-2">Mes lieux <h1 class="yellow">d'accueil </h1></h1>
+              <img  class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/22.png">
+              <hr class="hr2">
+              <hr>
+             
+              <div class="ml-3 mt-3 mb-3">
+ 
+              <p class="grey mb-3">Liste des lieux d'accueils enregistrés</p>   <hr class="hr2">
+            </div>  
+            </div>
+          </div>
+          
+        </div>
+        <div class="row h-50">
+                <div class="col" routerLink="/grid" style="outline: none;">
+                  <div class="neuchart">
+                    <br>
+                    <h1 class="blue mb-3 ml-3 mr-5 marg mt-2">Je crée une  <h1 class="yellow">grille </h1></h1>
+                    <img  class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/1.png">
+                    <hr class="hr2">
+                    <hr>
+                   
+                    <div class="ml-3 mt-3 mb-3">
+                   <p class="grey mb-3"> Création d'une grille avec les tarifs du centre social</p>
+                <hr class="hr2">
+                  </div>  
+                  </div>
+    
+    
+                  </div>
+    
+    
+                 <div class="col  mr-3" (click)="openDialog(myTemplateAcc2)" style="outline: none;">
+                      <div class="neuchart">
+                        <br>
+                  <h1  class="blue mb-3 ml-3 mr-5 marg mt-2" >Je gère les <h1 class="yellow">grilles </h1></h1>
+                  <img class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/19.png">
+                  <hr class="hr2">
+                  <hr>
+                    
+                 
+                  <div class="ml-3 mt-3 mb-3">
+                    <p class="grey mb-3">Gestion des grilles forfaitaires de la base de donnée</p>   <hr class="hr2">
+                </div> 
+                      </div>
+                    </div>
+          </div>
+
+
+          <div class="row h-50">
+            <div class="col " routerLink="/eve" style="outline: none;">
+              <div class="neuchart">
+                <br>
+                <h1 class="blue mb-3 ml-3 mr-5 marg mt-2">Je crée un <h1 class="yellow">évènement </h1></h1>
+                <img   class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/18.png">
+                <hr class="hr2">
+                <hr>
+               
+                <div class="ml-3 mt-3 mb-3">
+    
+                <p class="grey mb-3">Création d'évènement pour l'inscription des enfants au centre</p>   <hr class="hr2">
+              </div> 
+              </div>
+            </div>
+            <div class="col  mr-3" routerLink="/manage" style="outline: none;">
+                <div class="neuchart">
+                  <br>
+            <h1 class="blue mb-3 ml-3 mr-5 marg mt-2">Je gère les <h1 class="yellow">inscriptions </h1></h1>
+            <img   class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/16.png">
+            <hr class="hr2">
+            <hr>
+           
+            <div class="ml-3 mt-3 mb-3">
+
+            <p class="grey mb-3">Gestion des inscriptions des enfants sur la plateforme</p>   <hr class="hr2">
+          </div> 
+                </div>
+              </div>
+   
+          </div>
+
+
+          <div class="row h-50">
+            <div class="col" routerLink="/moteur" style="outline: none;">
+              <div class="neuchart">
+                <br>
+                <h1 class="blue mb-3 ml-3 mr-5 marg mt-2">Moteur de <h1 class="yellow">recherche </h1></h1>
+                <img   class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/9.png">
+                <hr class="hr2">
+                <hr>
+           
+                <div class="ml-3 mt-3 mb-3">
+    
+                <p class="grey mb-3">Retrouvez les parents inscrits sur le PIL </p>   <hr class="hr2">
+              </div> 
+              </div>
+            </div>
+
+            <div class="col mr-3" (click)="openDialog(stat)" style="outline: none;">
+              <div class="neuchart">
+                <br>
+                <h1 class="blue mb-3 ml-3 mr-5 marg mt-2">Stats   <h1 class="yellow"> générales </h1></h1>
+                <img   class="mb-3 ml-5 float-right mr-5" style="height: 11%;width: 11%;" src="../../../assets/dash/14.png">
+                <hr class="hr2">
+                <hr>
+           
+                <div class="ml-3 mt-3 mb-3">
+    
+                <p class="grey mb-3">Les statistiques du PIL </p>   <hr class="hr2">
+              </div> 
+              </div>
+            </div>
+
+        
+  
+   
+          </div>
+
+      
+
+      </div>
+   
+
+
+      <div class="mb-4" *ngIf="isAdmin === false && profil.responsable.prenom !== ''">
+
+        <div class="row  d-flex justify-content-between neu2">
+          <div class="col mb-3 mt-4">
+            <h1 class="blue mr-2" style="margin-left:10px">Ma <h1 class="yellow">Famille</h1></h1>
+            
+          </div>
+          <div class="col">
+            <i *ngIf="!this.maFamille" (click)="this.maFamille = !this.maFamille"
+              class="material-icons float-right ml-2 mt-2" style="font-size: 75px">
+              keyboard_arrow_down
+            </i>
+            <i *ngIf="this.maFamille" (click)="this.maFamille = !this.maFamille"
+              class="material-icons float-right ml-2 mt-2" style="font-size: 75px">
+              keyboard_arrow_up
+            </i>
+          </div>
+        </div>
+        <div [@enterAnimation] *ngIf="maFamille" class="neu2 mb-3 mt-2">
+          <br>
+          <h1 class="bluefin2 hello ml-3 mt-3 mb-3">Responsables légaux</h1>
+          <hr>
+          <div class="row  d-flex justify-content-start">
+
+            
+          <div class="col-2 text-center neunew">
+            <h1 class="bluefin2 hello">{{profil.responsable.prenom}}</h1>
+
+            <div>
+              <img class="photo" *ngIf="profil.responsable.sexe == 'Femme'" width="200px" height="200px"
+                src="../../../assets/graph/professional-woman-01.png">
+              <img class="photo" *ngIf="profil.responsable.sexe == 'Homme'" width="200px" height="200px"
+                src="../../../assets/graph/sweater-man-01.png">
+            </div>
+            <div class="row-fluid">
+              <div class="col">
+                <h1 class="bluefin hello">{{profil.responsable.age}} <h1 class="bluefin hello">ans</h1>
+                </h1>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="profil.responsable2" class="col-2  text-center neunew">
+            <h1 class="bluefin2 hello">{{profil.responsable2.prenomMember}}</h1>
+
+            <div>
+              <img class="photo" *ngIf="profil.responsable2.sexeMember == 'Femme'" width="200px" height="200px"
+                src="../../../assets/graph/professional-woman-01.png">
+              <img class="photo" *ngIf="profil.responsable2.sexeMember == 'Homme'" width="200px" height="200px"
+                src="../../../assets/graph/sweater-man-01.png">
+            </div>
+            <div class="row-fluid">
+              <div class="col">
+                <h1 class="bluefin hello">{{profil.responsable2.ageMember}} <h1 class="bluefin hello">ans</h1>
+                </h1>
+              </div>
+            </div>
+
+          </div>
+
+          <div *ngIf="!profil.responsable2" class="col-2 text-center neunew" (click)="addresponsable(myTemplate2bis)">
+            <br>
+            <h1 class="bluefin2 hello mt-5">Ajouter un responsable légal</h1>
+
+            <div class="mt-3">
+              <svg class="mb-3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                y="0px" viewBox="0 0 128 128"
+                style="enable-background:new 0 0 128 128;width: 100px;height: 100px;margin-bottom: 30px"
+                xml:space="preserve">
+                <g id="_x31_">
+                  <path id="icon" style="fill-rule:evenodd;clip-rule:evenodd;fill:#525d7d;" d="M64,0C28.654,0,0,28.654,0,64
+                     c0,35.345,28.654,64,64,64s64-28.655,64-64C128,28.654,99.346,0,64,0z M94.545,68.364H68.364v26.182h-8.727V68.364H33.455v-8.727
+                     h26.182V33.455h8.727v26.182h26.182V68.364z" />
+                </g>
+                <g id="Layer_1">
+                </g>
+              </svg>
+            </div>
+
+
+          </div>
+        </div>
+
+        <br>
+          <h1 class="bluefin2 hello ml-3 mt-3 mb-3">Enfants</h1>
+          <hr>
+          <div class="row  d-flex justify-content-start">
+
+            <div *ngIf="profil.member" class="col-2 text-center neunew">
+              <h1 class="bluefin hello">{{profil.member.prenomMember}}</h1>
+              <div>
+                <img class="photo" *ngIf="profil.member.sexeMember == 'Garçon'"
+                  src="../../../assets/graph/teenage-boy-01.png" width="200px" height="200px"
+                  style="margin-bottom:-4px">
+                <img class="photo" *ngIf="profil.member.sexeMember == 'Fille'" style="margin-bottom:-4px" width="200px"
+                  height="200px" src="../../../assets/graph/woman-03.png">
+              </div>
+              <div class="row-fluid">
+                <div class="col">
+                  <h1 class="bluefin hello">{{profil.member.ageMember}} <h1 class="bluefin hello">ans</h1>
+                  </h1>
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="profil.member2" class="col-2 text-center neunew">
+              <h1 class="bluefin hello">{{profil.member2.prenomMember}}</h1>
+              <div>
+                <img class="photo" *ngIf="profil.member2.sexeMember == 'Garçon'"
+                  src="../../../assets/graph/teenage-boy-01.png" width="200px" height="200px"
+                  style="margin-bottom:-4px">
+
+                <img class="photo" *ngIf="profil.member2.sexeMember == 'Fille'" style="margin-bottom:-4px" width="200px"
+                  height="200px" src="../../../assets/graph/woman-03.png">
+
+              </div>
+
+              <div class="row-fluid">
+                <div class="col">
+                  <h1 class="bluefin hello">{{profil.member2.ageMember}} <h1 class="bluefin hello">ans</h1>
+                  </h1>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="profil.member3" class="col-2 text-center neunew">
+              <h1 class="bluefin hello">{{profil.member3.prenomMember}}</h1>
+              <div>
+                <img class="photo" *ngIf="profil.member3.sexeMember == 'Garçon'"
+                  src="../../../assets/graph/teenage-boy-01.png" width="200px" height="200px">
+
+                <img class="photo" *ngIf="profil.member3.sexeMember == 'Fille'" style="margin-bottom:-4px" width="200px"
+                  height="200px" src="../../../assets/graph/woman-03.png">
+              </div>
+
+              <div class="row-fluid">
+                <div class="col">
+                  <h1 class="bluefin hello">{{profil.member3.ageMember}} <h1 class="bluefin hello">ans</h1>
+                  </h1>
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="profil.member4" class="col-2 text-center neunew">
+                <h1 class="bluefin hello">{{profil.member4.prenomMember}}</h1>
+                <div>
+                  <img class="photo" *ngIf="profil.member4.sexeMember == 'Garçon'"
+                    src="../../../assets/graph/teenage-boy-01.png" width="200px" height="200px">
+  
+                  <img class="photo" *ngIf="profil.member4.sexeMember == 'Fille'" style="margin-bottom:-4px" width="200px"
+                    height="200px" src="../../../assets/graph/woman-03.png">
+                </div>
+  
+                <div class="row-fluid">
+                  <div class="col">
+                    <h1 class="bluefin hello">{{profil.member4.ageMember}} <h1 class="bluefin hello">ans</h1>
+                    </h1>
+                  </div>
+                </div>
+  
+              </div>
+
+             
+                <div class="col-2 text-center neunew" (click)="addEnfant(myTemplate2)">
+                  <br>
+                  <h1 class="bluefin2 hello mt-5">Ajouter un enfant à la famille</h1>
+      
+                  <div class="mt-3">
+                    <svg class="mb-3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                      y="0px" viewBox="0 0 128 128"
+                      style="enable-background:new 0 0 128 128;width: 100px;height: 100px;margin-bottom: 30px"
+                      xml:space="preserve">
+                      <g id="_x31_">
+                        <path id="icon" style="fill-rule:evenodd;clip-rule:evenodd;fill:#525d7d;" d="M64,0C28.654,0,0,28.654,0,64
+                           c0,35.345,28.654,64,64,64s64-28.655,64-64C128,28.654,99.346,0,64,0z M94.545,68.364H68.364v26.182h-8.727V68.364H33.455v-8.727
+                           h26.182V33.455h8.727v26.182h26.182V68.364z" />
+                      </g>
+                      <g id="Layer_1">
+                      </g>
+                    </svg>
+                  </div>
+      
+      
+                </div>
+           
+
+              
+
+              
+
+          </div>
+
+          <ng-template *ngIf="profil.responsable.member4;else add" class="col">
+            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 64 64"
+              style="enable-background:new 0 0 64 64;" xml:space="preserve">
+              <style type="text/css">
+                .st0 {
+                  fill: #A99BE0;
+                }
+
+                .st1 {
+                  fill: #DCDCD2;
+                }
+
+                .st2 {
+                  fill: #F0F0E6;
+                }
+
+                .st3 {
+                  fill: #C8C8BE;
+                }
+
+                .st4 {
+                  fill: #785AE6;
+                }
+
+                .st5 {
+                  fill: #CB783F;
+                }
+
+                .st6 {
+                  fill: #DC8C50;
+                }
+
+                .st7 {
+                  fill: #8296DC;
+                }
+
+                .st8 {
+                  fill: #6E82C8;
+                }
+
+                .st9 {
+                  fill: #96AAF0;
+                }
+
+                .st10 {
+                  fill: #F0BE8C;
+                }
+
+                .st11 {
+                  fill: #FFFFFA;
+                }
+
+                .st12 {
+                  fill: #AABEFF;
+                }
+
+                .st13 {
+                  fill: #FFCF9B;
+                }
+
+                .st14 {
+                  fill: #FA8CB4;
+                }
+
+                .st15 {
+                  fill: #E678A0;
+                }
+
+                .st16 {
+                  fill: #FFA0C8;
+                }
+
+                .st17 {
+                  fill: #ffc400;
+                }
+
+                .st18 {
+                  fill: #ffc400;
+                }
+
+                .st19 {
+                  fill: #FFFA96;
+                }
+
+                .st20 {
+                  fill: #A2BAFF;
+                }
+
+                .st21 {
+                  fill: #FFB4BE;
+                }
+
+                .st22 {
+                  fill: #FFC8D2;
+                }
+
+                .st23 {
+                  fill: #F0A0AA;
+                }
+
+                .st24 {
+                  fill: #C88C5A;
+                }
+
+                .st25 {
+                  fill: #E1A271;
+                }
+
+                .st26 {
+                  fill: #C8788C;
+                }
+
+                .st27 {
+                  fill: #DC8C96;
+                }
+
+                .st28 {
+                  fill: #AAD2FF;
+                }
+
+                .st29 {
+                  fill: #96BEF0;
+                }
+
+                .st30 {
+                  fill: #BEE6FF;
+                }
+
+                .st31 {
+                  fill: #BE6432;
+                }
+
+                .st32 {
+                  fill: #968CD2;
+                }
+
+                .st33 {
+                  fill: #DCC864;
+                }
+
+                .st34 {
+                  fill: #8D7BD4;
+                }
+
+                .st35 {
+                  fill: #D2648C;
+                }
+
+                .st36 {
+                  fill: #B4AAF0;
+                }
+
+                .st37 {
+                  fill: #746DA3;
+                }
+
+                .st38 {
+                  fill: #8278B4;
+                }
+
+                .st39 {
+                  fill: #DCAA78;
+                }
+
+                .st40 {
+                  fill: #DC8CAA;
+                }
+
+                .st41 {
+                  fill: #B47846;
+                }
+
+                .st42 {
+                  fill: #CC6A8E;
+                }
+
+                .st43 {
+                  fill: #B46478;
+                }
+
+                .st44 {
+                  fill: #FFDCAA;
+                }
+
+                .st45 {
+                  fill: #B4C8FF;
+                }
+
+                .st46 {
+                  fill: #C8DCFF;
+                }
+
+                .st47 {
+                  fill: #826EC8;
+                }
+
+                .st48 {
+                  fill: #E86A6A;
+                }
+
+                .st49 {
+                  fill: #C85A82;
+                }
+
+                .st50 {
+                  fill: #C87882;
+                }
+
+                .st51 {
+                  fill: #F0A0D2;
+                }
+
+                .st52 {
+                  fill: #FFB4DC;
+                }
+
+                .st53 {
+                  fill: #DC8CBE;
+                }
+
+                .st54 {
+                  fill: #DC9696;
+                }
+
+                .st55 {
+                  fill: #BE7846;
+                }
+
+                .st56 {
+                  fill: #BE6464;
+                }
+
+                .st57 {
+                  fill: #FFA09B;
+                }
+
+                .st58 {
+                  fill: #FF96BE;
+                }
+
+                .st59 {
+                  fill: #E18C71;
+                }
+
+                .st60 {
+                  fill: #DC6E96;
+                }
+
+                svg {
+                  width: 200px;
+                  height: 200px;
+                  margin-bottom: 10px
+                }
+              </style>
+              <g>
+                <path class="st32" d="M31.5,6.5c0,0,4-3,10,0s7,11,6,14s5,15-5,14s-7-7-7-7L31.5,6.5z" />
+                <g>
+                  <path class="st0" d="M41.5,8.5c4.292,2.146,6.017,6.844,6.29,10.446c0.321-3.618-1.139-9.871-6.29-12.446c-6-3-10,0-10,0
+                       l0.34,1.784C32.913,7.656,36.51,6.005,41.5,8.5z" />
+                </g>
+                <g>
+                  <path class="st4" d="M43.603,35.058c-0.293,0-0.597-0.013-0.914-0.039c-0.275-0.023-0.48-0.264-0.458-0.54
+                       c0.023-0.275,0.261-0.474,0.54-0.458c1.96,0.16,3.306-0.196,4.12-1.09c1.563-1.716,0.934-5.274,0.428-8.134
+                       c-0.331-1.871-0.617-3.487-0.293-4.457c0.898-2.697,0.027-10.506-5.75-13.395c-3.638-1.819-6.486-1.379-8.234-0.688
+                       c-0.258,0.1-0.547-0.025-0.649-0.282c-0.101-0.257,0.025-0.547,0.282-0.649c1.587-0.625,4.874-1.363,9.049,0.725
+                       c6.167,3.083,7.364,11.266,6.25,14.605c-0.243,0.729,0.036,2.301,0.33,3.966c0.544,3.075,1.221,6.902-0.673,8.981
+                       C46.751,34.571,45.399,35.058,43.603,35.058z" />
+                </g>
+                <path class="st18" d="M46.5,39.5c0,0,2,1,4,2s4,2,4,10s0,11,0,11h-37c0,0,0-9,0-13s1-7,6-10H46.5z" />
+                <path class="st33" d="M17.5,62.5h37c0,0,0-0.611,0-2h-37C17.5,61.706,17.5,62.5,17.5,62.5z" />
+                <path class="st17" d="M50.5,41.5c-2-1-4-2-4-2h-23c-5,3-6,6-6,10c0,0.575,0,1.26,0,2c0-4,1-7,6-10h23c0,0,2,1,4,2s4,2,4,10
+                     c0-0.633,0-1.29,0-2C54.5,43.5,52.5,42.5,50.5,41.5z" />
+                <g>
+                  <path class="st33"
+                    d="M21.5,63c-0.276,0-0.5-0.224-0.5-0.5c0-0.904-0.49-2.129-0.964-3.314C19.526,57.913,19,56.596,19,55.5
+                       c0-2.072,1.953-6.978,2.036-7.186c0.103-0.257,0.395-0.381,0.65-0.279c0.256,0.103,0.381,0.394,0.279,0.65
+                       C21.945,48.735,20,53.619,20,55.5c0,0.904,0.49,2.129,0.964,3.314C21.474,60.087,22,61.404,22,62.5C22,62.776,21.776,63,21.5,63z" />
+                </g>
+                <g>
+                  <path class="st33" d="M45.5,63c-0.276,0-0.5-0.224-0.5-0.5v-13c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v13
+                       C46,62.776,45.776,63,45.5,63z" />
+                </g>
+                <polygon class="st10" points="29.445,32.5 29.445,43.5 31.215,44.5 32.445,45.5 38.5,41.5 38.5,29.74 	" />
+                <path class="st13" d="M21.5,13.5v14c0,3.866,3.134,7,7,7h5c3.314,0,6-2.686,6-6v0h2c1.657,0,3-1.343,3-3v-1c0-1.657-1.343-3-3-3h-2
+                     v-8H21.5z" />
+                <path class="st32"
+                  d="M34.544,13.474c0,0,3.965,4.035,3.912,10.035c0,0,2.009-0.982,2.035-3.982v-6.053H34.544z" />
+                <path class="st10"
+                  d="M21.5,22.866c1.668,0.075,3.663-0.032,6-0.366c3.675-0.525,6.622-4.239,7.963-8H21.5V22.866z" />
+                <g>
+                  <path class="st4" d="M41.5,29h-2c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5h2c1.378,0,2.5-1.122,2.5-2.5v-1
+                       c0-1.378-1.122-2.5-2.5-2.5h-1.811c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5H41.5c1.93,0,3.5,1.57,3.5,3.5v1
+                       C45,27.43,43.43,29,41.5,29z" />
+                </g>
+                <g>
+                  <path class="st4" d="M33.5,35h-5c-4.136,0-7.5-3.364-7.5-7.5v-10c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v10
+                       c0,3.584,2.916,6.5,6.5,6.5h5c0.276,0,0.5,0.224,0.5,0.5S33.776,35,33.5,35z" />
+                </g>
+                <g>
+                  <path class="st4" d="M31.5,26c-0.276,0-0.5-0.224-0.5-0.5v-3c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v3
+                       C32,25.776,31.776,26,31.5,26z" />
+                </g>
+                <g>
+                  <path class="st4" d="M23.5,26c-0.276,0-0.5-0.224-0.5-0.5v-3c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v3
+                       C24,25.776,23.776,26,23.5,26z" />
+                </g>
+                <g>
+                  <path class="st4" d="M38.5,46c-0.276,0-0.5-0.224-0.5-0.5V31.74c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5V45.5
+                       C39,45.776,38.776,46,38.5,46z" />
+                </g>
+                <g>
+                  <path class="st4" d="M29.444,46c-0.276,0-0.5-0.224-0.5-0.5v-11c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5v11
+                       C29.944,45.776,29.721,46,29.444,46z" />
+                </g>
+                <path class="st2" d="M32.5,45.5l8-9l6,3C46.5,39.5,44.5,49.5,32.5,45.5z" />
+                <path class="st11"
+                  d="M45.908,41.204C46.353,40.225,46.5,39.5,46.5,39.5l-6-3l-1.231,1.385L45.908,41.204z" />
+                <g>
+                  <path class="st4" d="M26.5,28c-1.739,0-2.892-1.292-2.892-2.146c0-0.243,0.088-0.461,0.249-0.616C23.969,25.129,24.172,25,24.5,25
+                       c0.289,0,1.034-1.186,1.526-2.658c0.087-0.262,0.371-0.404,0.632-0.316c0.262,0.087,0.403,0.37,0.316,0.632
+                       c-0.321,0.964-1.173,3.155-2.327,3.331c0.042,0.094,0.123,0.223,0.258,0.363C25.093,26.547,25.624,27,26.5,27
+                       c0.276,0,0.5,0.224,0.5,0.5S26.776,28,26.5,28z" />
+                </g>
+                <g>
+                  <path class="st4" d="M28.5,31c-2.472,0-2.5-1.439-2.5-1.5c0-0.276,0.224-0.5,0.5-0.5c0.268,0,0.487,0.211,0.5,0.476
+                       C27.028,29.66,27.376,30,28.5,30c2.23,0,2.506-0.566,2.508-0.572c0-0.276,0.22-0.464,0.496-0.464S32,29.224,32,29.5
+                       C32,29.852,31.748,31,28.5,31z M27,29.5h0.01H27z" />
+                </g>
+                <g>
+                  <path class="st4"
+                    d="M31.5,24.041c-0.125,0-0.25-0.046-0.346-0.14c-0.199-0.191-0.206-0.508-0.014-0.707l1-1.041
+                       c0.191-0.2,0.508-0.206,0.707-0.014c0.199,0.191,0.206,0.508,0.014,0.707l-1,1.041C31.762,23.99,31.631,24.041,31.5,24.041z" />
+                </g>
+                <g>
+                  <path class="st4"
+                    d="M23.5,24.041c-0.131,0-0.262-0.051-0.36-0.154l-1-1.041c-0.191-0.199-0.185-0.516,0.014-0.707
+                       c0.199-0.192,0.516-0.186,0.707,0.014l1,1.041c0.191,0.199,0.185,0.516-0.014,0.707C23.75,23.995,23.625,24.041,23.5,24.041z" />
+                </g>
+                <g>
+                  <path class="st4" d="M34.5,22c-0.209,0-0.404-0.132-0.474-0.342c-0.35-1.05-1.013-1.651-1.972-1.788
+                       c-0.737-0.106-1.39,0.102-1.396,0.104c-0.265,0.087-0.545-0.054-0.632-0.316c-0.087-0.262,0.054-0.545,0.316-0.632
+                       c0.035-0.012,0.873-0.287,1.854-0.146c0.938,0.134,2.181,0.67,2.778,2.462c0.087,0.262-0.054,0.545-0.316,0.632
+                       C34.605,21.992,34.552,22,34.5,22z" />
+                </g>
+                <g>
+                  <path class="st4" d="M21.5,21.326c-0.087,0-0.176-0.023-0.256-0.071c-0.237-0.142-0.314-0.449-0.173-0.686
+                       c1.162-1.947,3.418-1.58,3.515-1.562c0.272,0.047,0.454,0.307,0.407,0.579c-0.047,0.271-0.299,0.455-0.577,0.407
+                       c-0.079-0.013-1.683-0.256-2.486,1.089C21.835,21.239,21.67,21.326,21.5,21.326z" />
+                </g>
+                <path class="st2" d="M27.5,36.5l5,9c0,0-5,2-8-1c-2.55-2.55-1-5-1-5L27.5,36.5z" />
+                <g>
+                  <path class="st11" d="M28.426,38.167L27.5,36.5l-4,3c0,0-0.623,0.993-0.424,2.37L28.426,38.167z" />
+                </g>
+                <g>
+                  <path class="st33" d="M24.5,44.5c-0.876-0.876-1.262-1.738-1.399-2.496C22.923,43.24,23.02,45.02,24.5,46.5c3,3,8-1,8-1
+                       S27.5,47.5,24.5,44.5z" />
+                  <path class="st33" d="M46.5,39.5c0,0-2,10-14,6C47.5,52.565,46.5,39.5,46.5,39.5z" />
+                </g>
+                <g>
+                  <path class="st4" d="M30.182,41.827c-0.176,0-0.346-0.093-0.438-0.257l-2.403-4.325L23.8,39.9c-0.221,0.165-0.534,0.121-0.7-0.1
+                       c-0.166-0.221-0.121-0.534,0.1-0.7l4-3c0.115-0.086,0.263-0.121,0.404-0.089c0.141,0.03,0.262,0.12,0.333,0.246l2.681,4.827
+                       c0.134,0.241,0.047,0.546-0.194,0.68C30.347,41.807,30.264,41.827,30.182,41.827z" />
+                </g>
+                <g>
+                  <path class="st4" d="M54.5,63h-37c-0.276,0-0.5-0.224-0.5-0.5v-13c0-4.126,1.044-7.31,6.243-10.429L27.2,36.1
+                       c0.115-0.086,0.263-0.121,0.404-0.089c0.141,0.03,0.262,0.12,0.333,0.246l1.667,3c0.134,0.241,0.047,0.546-0.194,0.68
+                       c-0.241,0.135-0.545,0.047-0.68-0.194l-1.388-2.499L23.8,39.9c-4.858,2.918-5.8,5.726-5.8,9.6V62h36V51.5
+                       c0-7.691-1.809-8.595-3.724-9.553l-9.657-4.829l-7.746,8.713c-0.184,0.207-0.5,0.226-0.706,0.042
+                       c-0.207-0.183-0.225-0.5-0.042-0.706l8-9c0.151-0.17,0.396-0.215,0.597-0.115l10,5C52.826,42.104,55,43.191,55,51.5v11
+                       C55,62.776,54.776,63,54.5,63z" />
+                </g>
+                <circle class="st20" cx="31.5" cy="50.5" r="1.5" />
+                <circle class="st20" cx="30.5" cy="56.5" r="1.5" />
+                <g>
+                  <path class="st4" d="M38.475,32.354c-0.096,0-0.194-0.028-0.279-0.086c-0.229-0.154-0.289-0.465-0.134-0.694
+                       C38.675,30.665,39,29.602,39,28.5c0-0.276,0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5c0,1.302-0.384,2.559-1.111,3.634
+                       C38.793,32.277,38.635,32.354,38.475,32.354z" />
+                </g>
+                <path class="st28" d="M40.799,37.848l-2.598-1.5l2.25-3.897c0.414-0.717,1.332-0.963,2.049-0.549v0
+                     c0.717,0.414,0.963,1.332,0.549,2.049L40.799,37.848z" />
+                <g>
+                  <path class="st4" d="M40.799,38.348c-0.087,0-0.173-0.023-0.25-0.067l-2.598-1.5c-0.239-0.138-0.321-0.444-0.183-0.683l2.25-3.897
+                       c0.267-0.463,0.698-0.794,1.214-0.932c0.516-0.137,1.055-0.067,1.518,0.2c0.462,0.267,0.793,0.698,0.932,1.214
+                       c0.139,0.516,0.067,1.055-0.2,1.518l-2.25,3.897c-0.066,0.115-0.176,0.199-0.304,0.233C40.886,38.342,40.842,38.348,40.799,38.348
+                       z M38.884,36.165l1.731,1l2-3.464c0.134-0.231,0.169-0.501,0.1-0.759c-0.069-0.258-0.234-0.474-0.466-0.607
+                       c-0.231-0.133-0.5-0.168-0.759-0.1c-0.258,0.069-0.474,0.235-0.607,0.466L38.884,36.165z" />
+                </g>
+                <path class="st32"
+                  d="M40.5,35.5c3.376,1.266,2,7-1,9s-6,2-7,5c0,0-2-4,1-6C35.361,42.26,32.5,32.5,40.5,35.5z" />
+                <g>
+                  <path class="st4" d="M32.5,50c-0.188,0-0.362-0.106-0.447-0.276c-0.76-1.52-1.494-4.864,1.17-6.64
+                       c0.23-0.153,0.541-0.091,0.693,0.139c0.153,0.23,0.091,0.54-0.139,0.693c-1.712,1.142-1.539,3.085-1.214,4.292
+                       c0.874-1.356,2.281-1.975,3.753-2.623c0.945-0.416,1.922-0.846,2.907-1.502c1.738-1.159,2.958-3.783,2.72-5.85
+                       c-0.091-0.791-0.446-1.826-1.619-2.266c-1.329-0.499-2.408-0.652-3.205-0.455c-0.27,0.064-0.539-0.098-0.605-0.365
+                       c-0.066-0.268,0.097-0.539,0.365-0.605c1.011-0.251,2.253-0.09,3.796,0.489c1.284,0.481,2.086,1.578,2.26,3.087
+                       c0.281,2.443-1.106,5.429-3.159,6.797c-1.057,0.705-2.12,1.172-3.059,1.585c-1.763,0.775-3.155,1.388-3.745,3.157
+                       c-0.064,0.192-0.237,0.326-0.438,0.34C32.523,50,32.512,50,32.5,50z" />
+                </g>
+                <path class="st32" d="M34.5,6.5c4.371,2.428,0,13-7,14s-11,0-12-2c0,0,3-1,4-4S25.5,1.5,34.5,6.5z" />
+                <path class="st0"
+                  d="M16.846,19.814c0.932-0.604,2.1-1.651,2.654-3.314c1-3,6-13,15-8c0.952,0.529,1.467,1.456,1.653,2.575
+                     C36.437,9.077,35.977,7.321,34.5,6.5c-9-5-14,5-15,8s-4,4-4,4C15.754,19.008,16.204,19.451,16.846,19.814z" />
+                <g>
+                  <path class="st34" d="M35.729,13.38c-0.054,0-0.108-0.009-0.162-0.027c-0.262-0.089-0.401-0.374-0.312-0.635
+                       c0.726-2.123,0.845-4.756-0.999-5.781c-0.242-0.134-0.329-0.438-0.194-0.68c0.134-0.241,0.439-0.329,0.68-0.194
+                       c1.994,1.108,2.553,3.782,1.459,6.979C36.131,13.25,35.937,13.38,35.729,13.38z" />
+                </g>
+                <g>
+                  <path class="st4" d="M21.417,21.367c-0.008,0-0.017,0-0.025,0c-3.364-0.163-5.557-1.077-6.339-2.643
+                       c-0.064-0.129-0.07-0.28-0.015-0.414s0.166-0.237,0.303-0.284c0.028-0.009,2.779-0.968,3.685-3.684
+                       c0.811-2.434,3.227-7.048,7.134-8.906c2.151-1.024,4.465-1.082,6.876-0.17c0.258,0.098,0.389,0.386,0.291,0.645
+                       s-0.387,0.389-0.645,0.291c-2.146-0.812-4.197-0.765-6.094,0.138c-3.611,1.717-5.906,6.193-6.615,8.32
+                       c-0.796,2.389-2.736,3.592-3.722,4.067c0.825,0.941,2.633,1.518,5.189,1.642c0.275,0.014,0.488,0.248,0.475,0.524
+                       C21.903,21.159,21.682,21.367,21.417,21.367z" />
+                </g>
+              </g>
+            </svg>
+            <h1 class="bluelow">{{profil.responsable.prenom}}</h1>
+          </ng-template>
+
+          <ng-template #add>
+            <!-- <div class="col neunew text-center mt-2" (click)="addEnfant(myTemplate2)">
+         
+              <svg class="mb-3" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+                y="0px" viewBox="0 0 128 128"
+                style="enable-background:new 0 0 128 128;width: 100px;height: 100px;margin-bottom: 30px"
+                xml:space="preserve">
+                <g id="_x31_">
+                  <path id="icon" style="fill-rule:evenodd;clip-rule:evenodd;fill:#525d7d;" d="M64,0C28.654,0,0,28.654,0,64
+                     c0,35.345,28.654,64,64,64s64-28.655,64-64C128,28.654,99.346,0,64,0z M94.545,68.364H68.364v26.182h-8.727V68.364H33.455v-8.727
+                     h26.182V33.455h8.727v26.182h26.182V68.364z" />
+                </g>
+                <g id="Layer_1">
+                </g>
+              </svg>
+              <br>
+              <h1 class="bluefin hello mb-3">Ajouter un membre</h1>
+        
+            </div> -->
+          </ng-template>
+
+        </div>
+
+
+
+
+
+        <div class="row d-flex justify-content-between neu2">
+          <div class="col mb-3 mt-4">
+            <h1 (click)="this.mesInfo = !this.mesInfo" class="blue" style="margin-left:10px">Mes<h1 class="yellow">
+                Informations</h1>
+            </h1>
+          </div>
+          <div class="col">
+            <i *ngIf="!this.mesInfo" (click)="this.mesInfo = !this.mesInfo"
+              class="material-icons float-right  ml-2 mt-2" style="font-size: 75px">
+              keyboard_arrow_down
+            </i>
+            <i *ngIf="this.mesInfo" (click)="this.mesInfo = !this.mesInfo" class="material-icons float-right  ml-2 mt-2"
+              style="font-size: 75px">
+              keyboard_arrow_up
+            </i>
+          </div>
+
+        </div>
+        <div [@enterAnimation] *ngIf="mesInfo">
+
+<img src="../../../assets/phone.png">
+
+          <div class="row-fluid d-flex justify-content-start neu2" *ngIf="taille">
+            <div class="col mt-4">
+              <h1 class="bluefin2 hello ml-2">{{profil.responsable.prenom}} <h1 class="bluefin2 hello">{{profil.responsable.nom}} </h1></h1>
+              <br>
+              <h1 class="bluefin2 hello ml-2">{{profil.email}}</h1> 
+              <br>
+              <h1 class="bluefin2 hello ml-2">{{profil.responsable.tel}}</h1>
+              <br>
+              <h1 class="bluefin2 hello ml-2">{{profil. responsable.adresse}}</h1>
+              <br>
+              <button class="btn btn-primary float-right mb-3" (click)="openDialog(myTemplate7)">Modification de mes informations</button>
+            </div>
+          </div>
+
+          <br>
+          <h1 class="bluefin2 hello ml-4">Profil complété à : {{taille}} %</h1>
+          <div class="row-fluid text-center d-flex justify-content-center" *ngIf="taille">
+            <div class="col">
+              <mat-progress-bar mode="determinate" value="{{taille}}"></mat-progress-bar>
+            </div>
+          </div>
+          <br>
+            
+          
+
+          <div *ngIf="hasProfil == false">
+            <div *ngIf="taille == 0">
+              <button (click)="openDialog(myTemplate)" class="btn btn-primary ml-5 mb-3 mt-3">Ajouter mes
+                informations</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row d-flex justify-content-between neu2">
+          <div class="col mb-3 mt-4">
+            <h1 class="blue" (click)="this.monQF = !this.monQF" style="margin-left:10px">Mon</h1>
+            <h1 class="yellow"> Quotient Familial</h1>
+          </div>
+          <div class="col">
+            <i *ngIf="!this.monQF" (click)="this.monQF = !this.monQF" class="material-icons float-right ml-2 mt-2"
+              style="font-size: 75px">
+              keyboard_arrow_down
+            </i>
+            <i *ngIf="this.monQF" (click)="this.monQF = !this.monQF" class="material-icons float-right ml-2 mt-2"
+              style="font-size: 75px">
+              keyboard_arrow_up
+            </i>
+          </div>
+        </div>
+
+        <div *ngIf="monQF" class="mt-2 ml-5">
+
+          <div class="row text-center">
+            <h1 class="bluefin2 hello"> 
+              <span *ngIf="profil.responsable.validQF"><img width="45px" height="45px" src="../../../assets/graph/vert.png">Votre QF : Validé</span>
+            <span *ngIf="!profil.responsable.validQF"><img width="45px" height="45px" src="../../../assets/graph/orange.png">Votre QF : En attente de validation par nos équipes</span>
+          </h1>
+          </div>
+          <div class="row text-center">
+            <h1 class="bluefin2 hello">
+              <span *ngIf="profil.pdfnew"><img width="45px" height="45px" src="../../../assets/graph/orange.png">Votre PDF : En attente de validation par nos équipes</span>
+              <span *ngIf="profil.refusPDF"><img width="45px" height="45px" src="../../../assets/graph/rouge.png">Votre PDF : Refusé <a (click)="openDialogwhy(myTemplatewhy)" style="cursor:pointer"class="page-link">Pourquoi ?</a> </span>  
+              <span *ngIf="!profil.pdfnew && !profil.refusPDF"><img width="45px" height="45px" src="../../../assets/graph/vert.png">Votre PDF : Validé </span>
+            </h1>          
+          </div>
+          
+          <hr>
+    
+
+          <div [@enterAnimation] class="row mt-3 mb-3">
+          
+            <div class="col-md text-center">
+              <h1 class="bluefin2 hello"> Votre Quotient Familial :</h1>
+              <h1 class="bluefin2 hello"> {{profil.responsable.qf}}</h1>
+              <br>
+              <button class="btn btn-primary ml-1 mt-1" (click)="majQf(myTemplate5)">Mettre à jour mon QF</button>
+            </div>
+            <div class="col-md  text-center">
+              <h1 class="bluefin2 hello">Ajouter mon attestation </h1>
+              <h1 class="bluefin2 hello">CAF</h1>
+              <br>
+              <input id="file-input" class="text-center mt-2 ml-5" type="file" (change)="uploadFile()" />
+              <br>
+              
+            </div>
+           
+          </div>
+          <br>
+          <div class="row mt-3 ml-3 text-center">
+            <h1 class="bluefin3 hello"><span style="color: red;">*</span>  Attention tout quotient familial est <em class="bluefin3">validé </em> si vous ramenez votre attestation CAF soit directement au centre <span class="bluefin3 hello" style="text-decoration: underline;">ou</span> en le renseignant sur le PIL</h1>
+
+          </div>
+          <div class="row mt-3 ml-3 text-center">
+          <h1 class="bluefin3 hello"><span style="color: red;">*</span>  Tout changement de quotient familial doit ensuite être validé par nos équipes </h1>
+          </div>
+          <div *ngIf="profil.pdf" class="row mt-3 ml-3 text-center">
+            <img src="../../../assets/graph/caf.png">
+            <h1 class="bluefin2 hello mt-5 ml-4"><a [href]="profil.pdf" target="_blank">Voir mon Attestion CAF</a> </h1>
+          </div>
+        </div>
+
+
+
+        <div class="row d-flex justify-content-between neu2">
+          <div class="col mt-4 mb-3">
+            <h1 class="blue mb-5" (click)="this.enCours = !this.enCours" style="margin-left:10px">Les Évenements</h1>
+            <h1 class="yellow"> En cours</h1>
+          </div>
+          <div class="col">
+            <i *ngIf="!this.enCours" (click)="this.enCours = !this.enCours" class="material-icons float-right ml-2 mt-2"
+              style="font-size: 75px">
+              keyboard_arrow_down
+            </i>
+            <i *ngIf="this.enCours" (click)="this.enCours = !this.enCours" class="material-icons float-right ml-2 mt-2"
+              style="font-size: 75px">
+              keyboard_arrow_up
+            </i>
+          </div>
+        </div>
+        <div class="mb-5">
+
+          <div [@enterAnimation] *ngIf="enCours === true">
+
+            <img class="ml-2 mt-2" src="../../../assets/mail.png">
+
+<div class="row">
+  
+<br>
+
+<div class="col text-center">
+
+<br>
+              <h1 class="bluefin2 hello ml-3"> Activités/Vacances  : <h1 class="yelfin3 hello"> en cours </h1> </h1>
+              <br>
+                      <mat-form-field class="ml-5 mt-2">
+                        <mat-label> Choisir </mat-label>
+                        <mat-select name="first"  [(ngModel)]="choixMonth"  required>
+                          <mat-option (onSelectionChange)="resetEve()" *ngFor="let month of tabInscri" [value]="month.value">
+                            {{month.value}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                        <button *ngIf="choixMonth" class="btn btn-primary ml-2" (click)="getEve(choixMonth)">Valider</button>
+             
+                    </div>
+
+
+                    <div class="col text-center">
+
+                      <br>
+                                    <h1 class="bluefin2 hello ml-3"> Mercredi  <h1 class="yelfin3 hello"> + </h1> </h1>
+                                    <br>
+                                            <mat-form-field class="ml-5 mt-2">
+                                              <mat-label> Choisir </mat-label>
+                                              <mat-select name="first"  [(ngModel)]="choixMonth2"  required>
+                                                <mat-option (onSelectionChange)="resetEve()" *ngFor="let m of tabInscri2" [value]="m.value">
+                                                  {{m.value}}
+                                                </mat-option>
+                                              </mat-select>
+                                            </mat-form-field>
+                                            <button *ngIf="choixMonth2" class="btn btn-primary ml-2" (click)="getEve2(choixMonth2)">Valider</button>
+                               
+                      
+                                          </div>
+
+            <div *ngIf="dataEve">
+
+              <!-- <div class="col">
+                <br>
+                  <h1 class="bluelow ml-3"> Lieu de  <h1 class="yellowlow"> l'inscription : </h1> </h1>
+                  <br>
+                  <mat-form-field class="ml-5 mt-2">
+                      <mat-label> Choisir </mat-label>
+                      <mat-select name="first"  [(ngModel)]="choixPlace">
+                        <mat-option   *ngFor="let month of places" [value]="month.viewValue">
+                          {{month.value}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                 
+                   
+              </div> -->
+          
+              <br>
+            </div>
+          </div>
+            <hr>
+     <div class="row">
+<div *ngIf="go" class="col">
+  <h1 class="ml-4 bluefin2 hello"><u>Résultat de la recherche : </u></h1>
+            <div class="row mt-2 ml-2 d-flex justify-content-between text-center">
+              <div style="cursor: pointer;" class="col neu3 ml-5 mr-5 mt-3 mb-2 text-center"   *ngIf="dataEve">
+                <br>
+                <h1 class="bluefin2 hello ml-2 mr-2 mb-2 mt-2">Nom de l'évènement : {{choixMonth}}</h1>
+                <div (click)="openDialog2(myTemplate6,eve.IdDoc,eve.Nom)" class="col ml-2"
+                 *ngFor="let i = index;let eve of dataEve" >
+                  <h1 class="bluefin2 hello"> Lieu : {{eve.Lieu}}</h1>
+                  <br>
+                  <h1 class="yelfin3 hello">{{eve.Mois}}</h1>
+                  <br>
+                  <h1 class="yelfin3 hello">{{eve.Semaine}}</h1>
+                  <br>
+                  <button (click)="openDialog2(myTemplate6,eve.IdDoc,eve.Nom)" class="btn btn-primary btn-lg mt-2 mb-2 ml-2">Voir</button>
+                </div>
+              </div>
+              </div>
+              </div>
+              <div class="col" *ngIf="go2 == true">
+                <h1 class="ml-4 bluefin2 hello"><u>Résultat de la recherche : </u></h1>
+                <div  class="row mt-2 ml-2 d-flex justify-content-between text-center">
+                  <div style="cursor: pointer;" class="col neu3 ml-5 mr-5 mt-3 mb-2 text-center"   *ngIf="dataEve">
+                    <br>
+                    <h1 *ngIf="go2" class="bluefin2 hello ml-2 mr-2 mb-2 mt-2">Nom de l'évènement : {{choixMonth2}}</h1>
+                    <div (click)="openDialog2bis(myTemplateMer,eve.IdDoc,eve.Nom)" class="col ml-2"
+                     *ngFor="let i = index;let eve of dataEve" >
+                      <h1 class="bluefin2 hello"> Lieu : {{eve.Lieu}}</h1>
+                      <br>
+                      <h1 class="bluefin2 hello">Nombre de périodes : {{eve.mercredi}}</h1>
+                      <br>
+                      <button (click)="openDialog2bis(myTemplateMer,eve.IdDoc,eve.Nom)" class="btn btn-primary btn-lg mt-2 mb-2 float-right">Voir</button>
+                    </div>
+                  </div>
+                  </div>
+                  </div>
+         
+            </div>
+
+        
+        </div>
+      </div>
+        <br>
+      </div>
+
+      
+  
+   
+
+      <div *ngIf="isAdmin == false && profil.responsable.prenom === '' ">
+        <h1 class="blue">Nous allons créer votre profil</h1>
+        <H1 class="yellow"> sur le PIL</H1>
+        <BR>
+        <button (click)="openDialog(myTemplate3)" class="btn btn-primary ml-5 mb-3 mt-3 text-center">Créer mon
+          profil</button>
+      </div>
+
+    
+    </div>
+
+    <div  *ngIf="isAdmin === false && isLoaded && profil.responsable.prenom !== ''" class="neu2 mt-4 mb-4">
+      <br>
+          <h1 class="blue ml-5 mt-4">Les Inscriptions de <h1 class="yellow"> Ma famille</h1></h1>
+          <hr>
+          <div class=" ml-4 mt-3 mb-4" *ngFor="let eve3 of dataEve3">
+            <h1 class="greyfin3 hello mb-4 ml-2 mt-2">
+             {{eve3.prenom}} , {{eve3.eve}},  {{eve3.Lieu}}, pour : {{eve3.total}} € 
+            </h1>
+             <br>
+
+           
+             
+
+              <ng-template #myTemplate7>
+                <div class="neu2">
+
+                  <div class="ml-3 mt-2">
+                    <br>
+                    <div class="mt-2">
+
+                 
+                <h1 class="bluefin2 hello ml-3 mt-2">Détail de <h1 class="yelfin3 hello">l'inscription</h1></h1>
+              </div>
+                <hr>
+                <div class="mb-1" *ngFor="let e of eve3.periode; let i = index">
+                <div *ngIf="e === 'gml'">
+                  Lundi  Garderie Matin 
+                </div>
+                <div *ngIf="e === 'lundimat'">
+                  Lundi Accueil 
+                </div>
+                <div *ngIf="e === 'lundimid'">
+                  Lundi Cantine 
+                </div>
+                <div *ngIf="e === 'gsl'">
+                  Lundi Garderie Soir 
+                </div>
+                <div *ngIf="e === 'gmma'">
+                  Mardi Garderie Matin
+                </div>
+                <div *ngIf="e === 'mardimat'">
+                  Mardi Accueil 
+                </div>
+                <div *ngIf="e === 'mardimid'">
+                  Mardi Cantine
+                </div>
+                <div *ngIf="e === 'gsma'">
+                  Mardi Garderie Soir
+                </div>
+                <div *ngIf="e === 'gmme'">
+                  Mercredi Garderie Matin 
+                </div>
+                <div *ngIf="e === 'mercredimat'">
+                  Mercredi Accueil 
+                </div>
+                <div *ngIf="e === 'mercredimid'">
+                  Mercredi Cantine 
+                </div>
+                <div *ngIf="e === 'gsme'">
+                  Mercredi Garderie Soir
+                </div>
+                <div *ngIf="e === 'gmj'">
+                  Jeudi Garderie Matin
+                </div>
+                <div *ngIf="e === 'jeudimat'">
+                  Jeudi Accueil 
+                </div>
+                <div *ngIf="e === 'jeudimid'">
+                  Jeudi Cantine 
+                </div>
+                <div *ngIf="e === 'gsj'">
+                  Jeudi Garderie Soir 
+                </div>
+                <div *ngIf="e === 'gmv'">
+                  Vendredi Garderie Matin 
+                </div>
+                <div *ngIf="e === 'vendredimat'">
+                  Vendredi Accueil 
+                </div>
+                <div *ngIf="e === 'vendredimid'">
+                  Vendredi Cantine 
+                </div>
+                <div *ngIf="e === 'gsv'">
+                  Vendredi Garderie Soir 
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+              </ng-template>
+
+
+
+              <div class="row d-flex justify-content-center">
+             <div class="col mt-2" *ngIf="eve3.IsValid === 'wait'"><img width="45px" height="45px" src="../../../assets/graph/orange.png"><h1 class="grey hello mt-2">Pré-inscrit, en attente de paiement</h1></div>
+             <div class="col" *ngIf="eve3.IsValid === 'yes'"><img width="45px" height="45px" src="../../../assets/graph/vert.png"><h1 class="grey hello  ">Payé</h1></div>
+             <div class="col" *ngIf="eve3.IsValid === 'no'"><img width="45px" height="45px" src="../../../assets/graph/rouge.png"><h1 class="grey hello ">Refusé</h1></div>
+              
+
+                <!-- <div class="col">
+
+     
+                <button (click)="openDialog(myTemplate7)" class="btn btn-primary float-right mr-3">Détails</button>
+              </div> -->
+            </div>
+        </div>
+        <br>
+
+      </div>
+
+  </mat-drawer-container>
+
+  <ng-template #myTemplate>
+
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-3">Compléter mon profil</h1>
+
+      <hr>
+
+      <div class="ml-3">
+
+
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="sexe">
+          <mat-radio-button class="example-radio-button" *ngFor="let season of sexes" [value]="season">
+            {{season}}
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Prénom du responsable</mat-label>
+            <input matInput type="text" name="name" [(ngModel)]="prenom" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nom du responsable</mat-label>
+            <input matInput type="text" name="surname" [(ngModel)]="nom" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Âge du responsable</mat-label>
+            <input matInput type="text" name="ages" [(ngModel)]="age" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nombre(s) d'enfant(s)</mat-label>
+            <input matInput type="text" name="nbenf" [(ngModel)]="enfant" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Mon Quotient Familial</mat-label>
+            <input matInput type="text" name="quotient" [(ngModel)]="qf" required>
+          </mat-form-field>
+        </form>
+        <br>
+        <mat-checkbox required>Je confirme être le responsable de ce compte et à ce titre <br>j'exerce la
+          "responsabilité parentale"
+          concernant les données <br>que je fourni</mat-checkbox>
+
+        <br>
+      </div>
+    </div>
+    <br>
+    <button (click)="addToArray2()" class="btn btn-primary mt-3 float-right">Valider</button>
+  </ng-template>
+
+  <ng-template #myTemplate2>
+
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-3 text-center">Ajouter un membre</h1>
+      <hr>
+
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="sexe2">
+        <mat-radio-button class="example-radio-button" *ngFor="let season of sexes2" [value]="season">
+          {{season}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Prénom du membre de la famille</mat-label>
+          <input matInput type="text" name="name2" [(ngModel)]="prenom2" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nom du membre de la famille</mat-label>
+          <input matInput type="text" name="name2" [(ngModel)]="nom2" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Âge du membre de la famille</mat-label>
+          <input matInput type="number" min="0" max="99" name="ages" [(ngModel)]="age2" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+
+          <input matInput type="text" name="nbenf" [(ngModel)]="info">
+          <mat-placeholder>Information particulière du membre de la famille</mat-placeholder>
+        </mat-form-field>
+      </form>
+
+      <mat-checkbox required>Je confirme être le responsable de ce compte et à ce titre <br>j'exerce la "responsabilité
+        parentale"
+        concernant les données <br>que je fourni</mat-checkbox>
+
+    </div>
+    <button (click)="addToBase()" class="btn btn-primary mt-3 float-right">Valider</button>
+
+  </ng-template>
+
+  <ng-template #myTemplate3>
+
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-3">Créer mon profil</h1>
+
+      <hr>
+
+      <div class="ml-3">
+
+
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="sexe">
+          <mat-radio-button class="example-radio-button" *ngFor="let season of sexes" [value]="season">
+            {{season}}
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Prénom du responsable</mat-label>
+            <input matInput type="text" name="name" [(ngModel)]="prenom" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nom du responsable</mat-label>
+            <input matInput type="text" name="surname" [(ngModel)]="nom" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Âge du responsable</mat-label>
+            <input matInput type="text" name="ages" [(ngModel)]="age" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre adresse</mat-label>
+            <input matInput type="text" name="add" [(ngModel)]="adresse" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre téléphone</mat-label>
+            <input matInput type="text" name="tel" [(ngModel)]="telephone" required>
+          </mat-form-field>
+        </form> 
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre Quotient Familiale</mat-label>
+              <mat-select name="first"  [(ngModel)]="qf">
+                <mat-option  *ngFor="let month of quof" [value]="month.viewValue">
+                  {{month.viewValue}}
+                </mat-option>
+              </mat-select>
+      
+          </mat-form-field>
+        </form>
+        <div>
+          <h1 class="bluelow" (click)="caf = !caf"> > Où trouver mon Quotient Famiale ?</h1>
+        </div>
+        <div *ngIf="caf == true">
+          <img style="height: 60%;width: 60%;" src="../../../assets/caf.jpg">
+        </div>
+        <div>
+
+        </div>
+        <br>
+        <mat-checkbox required>Je confirme être le responsable de ce compte et à ce titre <br>j'exerce la
+          "responsabilité parentale"
+          concernant les données <br>que je fourni</mat-checkbox>
+
+        <br>
+      </div>
+    </div>
+    <br>
+    <button (click)="addToArray1()" class="btn btn-primary mt-3 float-right">Valider</button>
+  </ng-template>
+
+  <ng-template #myTemplate4>
+
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-4">Créer mon évènement</h1>
+      <HR>
+      <div class="ml-3">
+
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #myTemplate5>
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-4 blue">Mise à jour du <h1 class="yellow">quotient familiale</h1>
+      </h1>
+      <HR>
+      <div class="ml-3">
+
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre Quotient Familiale</mat-label>
+              <mat-select name="first"  [(ngModel)]="qf">
+                <mat-option  *ngFor="let month of quof" [value]="month.viewValue">
+                  {{month.viewValue}}
+                </mat-option>
+              </mat-select>
+      
+          </mat-form-field>
+          
+          <br>
+          <button class="btn btn-primary float-right mr-3 mt-3" (click)="majQuo()">Valider</button>
+          <br>
+        </form>
+      </div>
+    </div>
+  </ng-template>
+
+
+  
+  <ng-template #stat>
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div>
+      <h1 class="ml-2 mt-4 blue">Statistiques <h1 class="yellow">générales</h1>
+      </h1>
+      <div>
+        <i class="material-icons" style="font-size:20px">
+          report_problem
+      
+        <p class="bluefin3 hello"> Page en construction</p>  </i>
+      <HR>
+
+
+       <div class="row">
+        <div class="col text-center">
+
+          <br>
+                        <h1 class="bluefin3 hello ml-3"> Activités/Vacances  : <h1 class="yelfin4 hello"> en cours </h1> </h1>
+                        <br>
+                                <mat-form-field class="ml-5 mt-2">
+                                  <mat-label> Choisir </mat-label>
+                                  <mat-select name="first"  [(ngModel)]="choixMonth"  required>
+                                    <mat-option (onSelectionChange)="resetEves()" *ngFor="let month of tabInscri" [value]="month.value">
+                                      {{month.value}}
+                                    </mat-option>
+                                  </mat-select>
+                                </mat-form-field>
+                                  <button *ngIf="choixMonth" class="btn btn-primary ml-2" (click)="getEveStat(choixMonth)">Valider</button>
+                       
+                              </div>
+          
+          
+                              <div class="col text-center">
+          
+                                <br>
+                                              <h1 class="bluefin3 hello ml-3"> Mercredi  <h1 class="yelfin4 hello"> + </h1> </h1>
+                                              <br>
+                                                      <mat-form-field class="ml-5 mt-2">
+                                                        <mat-label> Choisir </mat-label>
+                                                        <mat-select name="first"  [(ngModel)]="choixMonth2"  required>
+                                                          <mat-option (onSelectionChange)="resetMer()" *ngFor="let m of tabInscri2" [value]="m.value">
+                                                            {{m.value}}
+                                                          </mat-option>
+                                                        </mat-select>
+                                                      </mat-form-field>
+                                                      <button *ngIf="choixMonth2" class="btn btn-primary ml-2" (click)="getEve2(choixMonth2)">Valider</button>
+                                         
+                                
+                                                    </div>
+
+       </div>
+
+
+
+                                          
+                                                 <ng-template *ngFor="let d of dataEve" ngIf="go2">
+                                                   <div class="row">
+                                                     <div class="col neu3">
+                                                      <div>
+                                                        <h1 class="bluefin3 hello"> Mercredi + : </h1>
+                                                        <h1 class="bluefin2 hello"> <span *ngIf="d.isMercrediplus === true"> OUI </span></h1>
+                                                      </div>
+                                                      <div>
+                                                        <h1 class="bluefin3 hello">  Nom de l'évènement : </h1>
+                                                        <h1 class="bluefin2 hello">{{d.Nom}}</h1> 
+                                                      </div>
+                                                      <div>
+                                                        <h1 class="bluefin3 hello"> Tableau tarifaire de l'évènement : </h1>
+                                                        <h1 class="bluefin2 hello">  {{d.Tableau}} </h1>
+                                                      </div>
+                                                      <div>
+                                                        <h1 class="bluefin3 hello"> Lieu de l'évènement : </h1>
+                                                        <h1 class="bluefin2 hello">  {{d.Lieu}} </h1>
+                                                      </div>
+                                                      <div>
+                                                        <h1 class="bluefin3 hello"> Date de l'évènement : </h1>
+                                                        <h1 class="bluefin2 hello"> {{d.DateDebut | date: 'dd/MM/yyyy'}} au  {{d.DateFin | date: 'dd/MM/yyyy'}}</h1>
+                                                      </div>
+                                                      <div>
+                                                        <h1 class="bluefin3 hello"> Nombre de mercredi : </h1>
+                                                        <h1 class="bluefin2 hello"> {{d.mercredi}}</h1>
+                                                      </div>
+                                                      <div class="neu3 mb-2"  *ngIf="d.Quota1.AAM > -1">
+                                                        <div>   <h1 class="bluefin3 hello ml-1 mb-1"> <u>MERCREDI 1 :</u>   <i class="material-icons" *ngIf="d.Quota1.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota1.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota1.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota1.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota1.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota1.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2"  *ngIf="d.Quota2.AAM > -1">
+                                                        <div>   <h1 class="bluefin3 hello ml-1 mb-1"> <u>MERCREDI 2 :</u>    <i class="material-icons" *ngIf="d.Quota2.AAM == 0" style="font-size:25px;color:red">report_problem</i>  </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota2.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota2.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota2.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota2.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota2.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2" *ngIf="d.Quota3.AAM > -1">
+                                                        <div>   <h1 class="bluefin3 hello ml-1 mb-1"> <u>MERCREDI 3 :</u>    <i class="material-icons" *ngIf="d.Quota3.AAM == 0" style="font-size:25px;color:red">report_problem</i>  </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota3.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota3.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota3.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota3.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota3.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2"  *ngIf="d.Quota4.AAM > -1">
+                                                        <div>   <h1 class="bluefin3 hello ml-1 mb-1"> <u>MERCREDI 4 :</u>    <i class="material-icons" *ngIf="d.Quota4.AAM == 0" style="font-size:25px;color:red">report_problem</i>  </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota4.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota4.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota4.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota4.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota4.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2" *ngIf="d.Quota5.AAM > -1">
+                                                        <div>   <h1 class="bluefin3 hello ml-1 mb-1"> <u>MERCREDI 5 :</u>    <i class="material-icons" *ngIf="d.Quota5.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota5.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota5.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota5.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota5.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota5.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2" *ngIf="d.Quota6.AAM > -1">
+                                                        <div>   <h1 class="bluefin2 hello ml-1 mb-1"> <u>MERCREDI 6 :</u>    <i class="material-icons" *ngIf="d.Quota6.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota6.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota6.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota6.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota6.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota6.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2"  *ngIf="d.Quota7.AAM > -1">
+                                                        <div>   <h1 class="bluefin2 hello ml-1 mb-1"> <u>MERCREDI 7 :</u>  <i class="material-icons" *ngIf="d.Quota7.AAM == 0" style="font-size:25px;color:red">report_problem</i>  </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota7.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota7.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota7.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota7.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota7.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                      <div class="neu3 mb-2"  *ngIf="d.Quota8.AAM > -1">
+                                                        <div>   <h1 class="bluefin2 hello ml-1 mb-1"> <u>MERCREDI 8 :</u>    <i class="material-icons" *ngIf="d.Quota8.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                        <div class="ml-5"> <div> <h1 class="bluefin2 hello"> ACCUEIL APRES-MIDI : {{d.Quota8.AAM}} PLACES</h1></div>
+                                                        <div>     <h1 class="bluefin2 hello"> ACCUEIL MATIN : {{d.Quota8.AM}} PLACES</h1></div>
+                                                        <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota8.CANT}} PLACES</h1></div>
+                                                        <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota8.GM}} PLACES</h1></div>
+                                                        <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota8.GS}} PLACES</h1></div></div>
+                                                       
+                                         
+                                                      </div>
+                                                     </div>
+                                         
+                                                   </div>
+                                                
+                                              
+                                      
+                                                  </ng-template>
+
+                                                  <ng-template *ngFor="let d of dataStat" ngIf="go">
+                                                    {{dataStat[0].Quota1?.length}}
+                                                    <div class="row">
+                                                      <div class="col neu3">
+                                                       <div>
+                                                         <h1 class="bluefin3 hello"> Activité / Vacanes : </h1>
+                                                         <h1 class="bluefin2 hello"> <span *ngIf="d.vac_act === true"> OUI </span></h1>
+                                                       </div>
+                                                       <div>
+                                                         <h1 class="bluefin3 hello">  Nom de l'évènement : </h1>
+                                                         <h1 class="bluefin2 hello">{{d.Nom}}</h1> 
+                                                       </div>
+                                                       <div>
+                                                         <h1 class="bluefin3 hello"> Tableau tarifaire de l'évènement : </h1>
+                                                         <h1 class="bluefin2 hello">  {{d.Tableau}} </h1>
+                                                       </div>
+                                                       <div>
+                                                         <h1 class="bluefin3 hello"> Lieu de l'évènement : </h1>
+                                                         <h1 class="bluefin2 hello">  {{d.Lieu}} </h1>
+                                                       </div>
+                                                       <div>
+                                                         <h1 class="bluefin3 hello"> Semaine : </h1>
+                                                         <h1 class="bluefin2 hello"> {{d.Semaine}}</h1> {{d.Quota1?.length}}
+                                                       </div>
+                                                       <br>
+                                                       <div>
+                                                        <div class="neu3 mb-2"  *ngIf="d.Quota1">
+                                                          <div>   <h1 class="bluefin2 hello ml-2 mb-1 mt-2"> <u>Semaine 1 :</u>   <i class="material-icons" *ngIf="d.Quota1.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                          <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Lundi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota1.gml}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota1.lundimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota1.lundimid}} PLACES</h1></div>
+                                                   
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota1.gsl}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mardi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota1.gmma}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota1.mardimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota1.mardimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota1.gsma}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mercredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota1.gmme}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota1.mercredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota1.mercredimid}} PLACES</h1></div>
+                                             
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota1.gsme}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Jeudi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota1.gmj}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota1.jeudimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota1.jeudimid}} PLACES</h1></div>
+                                          
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota1.gsj}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Vendredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota1.gmv}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota1.vendredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota1.vendredimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota1.gsv}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        </div>
+                                                        <div class="neu3 mb-2"  *ngIf="d.Quota2">
+                                                          <div>   <h1 class="bluefin2 hello ml-2 mb-1"> <u>Semaine 2 :</u>   <i class="material-icons" *ngIf="d.Quota1.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                          <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Lundi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota2.gml2}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota2.lundimat2}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota2.lundimid2}} PLACES</h1></div>
+                                                   
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota2.gsl2}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mardi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota2.gmma}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota2.mardimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota2.mardimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota2.gsma}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mercredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota2.gmme}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota2.mercredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota2.mercredimid}} PLACES</h1></div>
+                                             
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota2.gsme}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Jeudi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota2.gmj}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota2.jeudimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota2.jeudimid}} PLACES</h1></div>
+                                          
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota2.gsj}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Vendredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota2.gmv2}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota2.vendredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota2.vendredimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota2.gsv}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        </div>
+                                                        <div class="neu3 mb-2"  *ngIf="d.Quota3">
+                                                          <div>   <h1 class="bluefin2 hello ml-2 mb-1"> <u>Semaine 3 :</u>   <i class="material-icons" *ngIf="d.Quota1.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                          <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Lundi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota3.gml3}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota3.lundimat3}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota3.lundimid3}} PLACES</h1></div>
+                                                   
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota3.gsl2}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mardi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota3.gmma}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota3.mardimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota3.mardimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota3.gsma}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mercredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota3.gmme}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota3.mercredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota3.mercredimid}} PLACES</h1></div>
+                                             
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota3.gsme}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Jeudi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota3.gmj}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota3.jeudimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota3.jeudimid}} PLACES</h1></div>
+                                          
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota3.gsj3}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Vendredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota3.gmv}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota3.vendredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota3.vendredimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota3.gsv3}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        </div>
+                                                        <div class="neu3 mb-2"  *ngIf="d.Quota4">
+                                                          <div>   <h1 class="bluefin2 hello ml-2 mb-1"> <u>Semaine 4 :</u>   <i class="material-icons" *ngIf="d.Quota1.AAM == 0" style="font-size:25px;color:red">report_problem</i> </h1></div>
+                                                          <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Lundi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota4.gml2}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota4.lundimat2}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota4.lundimid2}} PLACES</h1></div>
+                                                   
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota4.gsl2}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mardi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota4.gmma}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota4.mardimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota4.mardimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota4.gsma}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Mercredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota4.gmme}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota4.mercredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota4.mercredimid}} PLACES</h1></div>
+                                             
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota4.gsme}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Jeudi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota4.gmj}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota4.jeudimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota4.jeudimid}} PLACES</h1></div>
+                                          
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota4.gsj}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <div class="mt-1 mb-1 ml-1">
+                                                          <div class="bluefin2 hello ml-3 mt-1">Vendredi :</div>
+                                                          <div class="ml-5">
+                                                            <div> <h1 class="bluefin2 hello"> GARDERIE MATIN : {{d.Quota4.gmv}} PLACES</h1></div>
+                                                          <div>     <h1 class="bluefin2 hello"> ACCUEIL : {{d.Quota4.vendredimat}} PLACES</h1></div>
+                                                          <div>   <h1 class="bluefin2 hello"> CANTINE : {{d.Quota4.vendredimid}} PLACES</h1></div>
+                                     
+                                                          <div>               <h1 class="bluefin2 hello"> GARDERIE SOIR : {{d.Quota4.gsv}} PLACES</h1></div></div>
+                                                         
+                                                  
+                                                        </div>
+                                                        <br>
+                                                        </div>
+                                                      </div>
+                                                      
+                                                      </div>
+                                          
+                                                    </div> 
+                                                 
+                                               
+                                       
+                                                   </ng-template>
+
+      
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #myTemplate6>
+ 
+    <br>
+    <br>
+
+    <div class="neu3 mt-2">
+      <h1 class="ml-4 mt-4 blue">Inscription</h1>
+      <hr>
+      <div [@enterAnimation] *ngIf="etape == 0">
+        <div>
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="bluefin2 hello">{{result.Nom}} , <h5 class="yelfin3 hello">{{result.Lieu}}</h5>
+              </h5>
+              <hr>
+              <h1 class="greyfin3 hello ml-2">
+                Jours disponibles : {{result.Jour}}
+              </h1>
+              <hr>
+              <h1 class="bluefin2 hello">Quel membre de la famille inscrire ?</h1>
+              <hr class="hr2">
+              <button *ngIf="profil.member" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member.prenomMember,profil.member.ageMember,profil.member.nomMember,$event)">
+                {{profil.member.prenomMember | uppercase}}</button>
+              <button *ngIf="profil.member2" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member2.prenomMember,profil.member2.ageMember,profil.member2.nomMember,$event)">
+                {{profil.member2.prenomMember | uppercase}}</button>
+              <button *ngIf="profil.member3" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member3.prenomMember,profil.member3.ageMember,profil.member3.nomMember,$event)">
+                {{profil.member3.prenomMember | uppercase}}</button>
+                <button *ngIf="profil.member4" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member4.prenomMember,profil.member4.ageMember,profil.member4.nomMember,$event)">
+                {{profil.member4.prenomMember | uppercase}}</button>
+                <button *ngIf="profil.member5" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member5.prenomMember,profil.member5.ageMember,profil.member5.nomMember,$event)">
+                {{profil.member5.prenomMember | uppercase}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="etape == 1">
+         <h1 class="bluefin2 hello ml-3"> Votre QF : {{profil.responsable.qf}}</h1>
+         <hr class="hr2">
+         <h1 class="bluefin2 hello ml-3"> Confirmez votre <h1 class="yelfin3 hello"> Quotient Familial </h1> </h1>
+         <br>
+                 <mat-form-field class="ml-5 mt-2">
+                   <mat-label> Choisir </mat-label>
+                   <mat-select name="first"  [(ngModel)]="choixQF">
+                     <mat-option  *ngFor="let month of Tranche" [value]="month">
+                       {{month}}
+                     </mat-option>
+                   </mat-select>
+                 </mat-form-field>
+         <button class="btn btn-primary ml-2" (click)="this.etape=this.etape+1">Valider</button>
+                 <br>
+  
+      </div>
+      <div [@enterAnimation] *ngIf="etape == 2 && !alreadyOn">
+       
+          <div class="col">
+            <div>
+              <div class="row">
+                <div class="col">
+                    <p class="card-text">
+                        <h1 class="bluefin2 hello"> Inscription pour : {{aInscrire}}</h1>
+                        <br>
+                        <h1 class="bluefin2 hello"> Votre QF : {{profil.responsable.qf}}</h1>
+                        <br>
+                        <h1 class="bluefin2 hello"> Vous avez choisi la tranche : {{choixQF}}</h1>
+               <br>
+
+                      <div >
+                          <br>
+                          <h1 class="greyfin4 hello">Prix pour l'accueil : {{ObjectPrix['Accueil']}} €</h1>
+                          <br>
+                          <h1 class="greyfin4 hello">Prix pour la Garderie du matin : {{ObjectPrix['Prix_GM']}}€</h1>
+                          <br>
+                          <h1 class="greyfin4 hello">Prix pour la Garderie du soir : {{ObjectPrix['Prix_GS']}}€</h1>
+                          <br>
+                          <h1 class="greyfin4 hello">Prix de la cantine : {{ObjectPrix['Prix_Cantine']}}€</h1>
+                      </div>
+                </div>
+      
+                <div class="col colspe">
+                <h1 class="bluefin hello text-center">Prix total : {{total}} €</h1>  
+                </div>
+              </div>
+                <div class="row mt-4 mb-3">
+                  <div class="col  mt-3 text-center">
+                    <h1 class="bluelow">Lundi</h1>
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.gml}}
+                    <br>
+                    <input *ngIf="result.Quota1.gml !== 0" (change)="change($event)" id="{{result.Nom}}" type="checkbox" name="gml" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Accueil</h1>
+                    <br>
+                    Place : {{result.Quota1.lundimat}}
+                    <br>
+                    <input *ngIf="result.Quota1.lundimat !== 0" (change)="change($event)" id="{{result.Nom}}"  type="checkbox" name="lundimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Cantine</h1>
+                    <br>
+                    Place : {{result.Quota1.lundimid}}
+                    <br>
+                    <input *ngIf="result.Quota1.lundimid !== 0" (change)="change($event)" id="{{result.Nom}}"  type="checkbox" name="lundimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Soir</h1>
+                    <br>
+                    Place : {{result.Quota1.gsl}}
+                    <br>
+                    <input *ngIf="result.Quota1.gsl !== 0" (change)="change($event)"  id="{{result.Nom}}" type="checkbox" name="gsl" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                  </div>
+                </div>
+                <hr>
+               <div class="row mt-4 mb-3"> 
+                  <div  class="col  mt-3 text-center">
+                    <h1 class="bluelow">Mardi</h1>
+                  </div>
+                  <div  class="col text-center">
+                    <h1 class="bluelow">Garderie Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.gmma}}
+                    <br>
+                    <input *ngIf="result.Quota1.gmma !== 0" (change)="change($event)" id="{{result.Nom}}" type="checkbox" name="gmma" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Accueil</h1>
+                    <br>
+                    Place : {{result.Quota1.mardimat}}
+                    <br>
+                    <input *ngIf="result.Quota1.mardimat !== 0" (change)="change($event)" id="{{result.Nom}}"  type="checkbox" name="mardimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Cantine</h1>
+                    <br>
+                    Place : {{result.Quota1.mardimid}}
+                    <br>
+                    <input *ngIf="result.Quota1.mardimid !== 0" (change)="change($event)" id="{{result.Nom}}"  type="checkbox" name="mardimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Soir</h1>
+                    <br>
+                    Place : {{result.Quota1.gsma}}
+                    <br>
+                    <input *ngIf="result.Quota1.gsma !== 0" (change)="change($event)" id="{{result.Nom}}"  type="checkbox" name="gsma" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                  </div>
+                </div>
+                <hr>
+                <div class="row mt-4 mb-3">
+                  <div class="col  mt-3 text-center">
+                    <h1 class="bluelow">Mercredi</h1>
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.gmme}}
+                    <br>
+                    <input *ngIf="result.Quota1.gmme !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="gmme" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Accueil</h1>
+                    <br>
+                    Place : {{result.Quota1.mercredimat}}
+                    <br>
+                    <input *ngIf="result.Quota1.mercredimat !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Cantine</h1>
+                    <br>
+                    Place : {{result.Quota1.mercredimid}}
+                    <br>
+                    <input *ngIf="result.Quota1.mercredimid !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Soir</h1>
+                    <br>
+                    Place : {{result.Quota1.gsme}}
+                    <br>
+                    <input *ngIf="result.Quota1.gsme !== 0" (change)="change($event)"id="{{result.Nom}}"   type="checkbox" name="gsme" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                  </div>
+                </div>
+                <hr>
+                <div class="row mt-4 mb-3">
+                  <div  class="col  mt-3 text-center">
+                    <h1 class="bluelow">Jeudi</h1>
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.gmj}}
+                    <br>
+                    <input *ngIf="result.Quota1.gmj !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="gmj" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                  </div>
+                  <div  class="col text-center">
+                    <h1 class="bluelow">Accueil</h1>
+                    <br>
+                    Place : {{result.Quota1.jeudimat}}
+                    <br>
+                    <input *ngIf="result.Quota1.jeudimat !== 0" (change)="change($event)" id="{{result.Nom}}" type="checkbox" name="jeudimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                  </div>
+                  <div  class="col text-center">
+                    <h1 class="bluelow">Cantine</h1>
+                    <br>
+                    Place : {{result.Quota1.jeudimid}}
+                    <br>
+                    <input *ngIf="result.Quota1.jeudimid !== 0" (change)="change($event)" id="{{result.Nom}}" type="checkbox" name="jeudimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                  </div>
+                  <div  class="col text-center">
+                    <h1 class="bluelow">Garderie Soir</h1>
+                    <br>
+                    Place : {{result.Quota1.gsj}}
+                    <br>
+                    <input *ngIf="result.Quota1.gsj !== 0" (change)="change($event)" id="{{result.Nom}}"  type="checkbox" name="gsj" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                  </div>
+                </div>
+                <hr>
+                <div class="row mt-4 mb-3">
+                  <div  class="col  mt-3 text-center">
+                    <h1 class="bluelow">Vendredi</h1>
+                  </div>
+                  <div  class="col text-center">
+                    <h1 class="bluelow">Garderie Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.gmv}}
+                    <br>
+                    <input *ngIf="result.Quota1.gmv !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="gmv" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Accueil </h1>
+                    <br>
+                    Place : {{result.Quota1.vendredimat}}
+                    <br>
+                    <input *ngIf="result.Quota1.vendredimat !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Cantine</h1>
+                    <br>
+                    Place : {{result.Quota1.vendredimid}}
+                    <br>
+                    <input *ngIf="result.Quota1.vendredimid !== 0" (change)="change($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                  </div>
+                  <div  class="col text-center">
+                    <h1 class="bluelow">Garderie Soir</h1>
+                    <br>
+                    Place : {{result.Quota1.gsv}}
+                    <br>
+                    <input *ngIf="result.Quota1.gsv !== 0" (change)="change($event)"id="{{result.Nom}}"   type="checkbox" name="gsv" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu"> 
+                  </div>
+                  <hr>
+                </div>
+                <button *ngIf="semaine2" class="btn btn-primary mb-2 ml-2 float-right" (click)="this.etape=this.etape+1">Semaine suivante</button>
+                <button class="btn btn-success mb-2 ml-2 float-right" (click)="monInsri()">Terminer</button>
+                <button *ngIf="!secu"  class="btn btn-danger mb-2 ml-2 float-right" (click)="cancel()">Annuler</button>
+                
+               
+            </div>
+
+          </div>
+      
+
+      </div>
+
+      <div *ngIf="etape == 3 && !alreadyOn">
+
+        <div class="col">
+          <div>
+            <div class="row">
+              <div class="col">
+                  <p class="card-text">
+                      <h1 class="bluefin2 hello"> Inscription pour : {{aInscrire}} , {{aAge}} ans, votre QF : {{profil.responsable.qf}}</h1>
+                    <br>
+                    <div >
+                        <br>
+                        <h1 class="greyfin3 hello">Prix pour l'accueil : {{ObjectPrix['Accueil']}} €</h1>
+                        <br>
+                        <h1 class="greyfin3 hello">Prix pour la Garderie du matin : {{ObjectPrix['Prix_GM']}}€</h1>
+                        <br>
+                        <h1 class="greyfin3 hello">Prix pour la Garderie du soir : {{ObjectPrix['Prix_GS']}}€</h1>
+                        <br>
+                        <h1 class="greyfin3 hello">Prix de la cantine : {{ObjectPrix['Prix_Cantine']}}€</h1>
+                    </div>
+              </div>
+    
+              <div class="col colspe">
+              <h1 class="bluefin3 hello text-center">Prix total : {{total}} €</h1>  
+              </div>
+            </div>
+              <div class="row mt-4 mb-3">
+                <div class="col  mt-3 text-center">
+                  <h1 class="bluelow">Lundi</h1>
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Garderie Matin</h1>
+                  <br>
+                  Place : {{result.Quota2.gml2}}
+                  <br>
+                  <input *ngIf="result.Quota2.gml2 !== 0" (change)="change2($event)" id="{{result.Nom}}" type="checkbox" name="gml" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Accueil</h1>
+                  <br>
+                  Place : {{result.Quota2.lundimat2}}
+                  <br>
+                  <input *ngIf="result.Quota2.lundimat2 !== 0" (change)="change2($event)" id="{{result.Nom}}"  type="checkbox" name="lundimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Cantine</h1>
+                  <br>
+                  Place : {{result.Quota2.lundimid2}}
+                  <br>
+                  <input *ngIf="result.Quota2.lundimid2 !== 0" (change)="change2($event)" id="{{result.Nom}}"  type="checkbox" name="lundimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Garderie Soir</h1>
+                  <br>
+                  Place : {{result.Quota2.gsl2}}
+                  <br>
+                  <input *ngIf="result.Quota2.gsl2 !== 0" (change)="change2($event)"  id="{{result.Nom}}" type="checkbox" name="gsl" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                </div>
+              </div>
+              <hr>
+             <div class="row mt-4 mb-3"> 
+                <div  class="col  mt-3 text-center">
+                  <h1 class="bluelow">Mardi</h1>
+                </div>
+                <div  class="col text-center">
+                  <h1 class="bluelow">Garderie Matin</h1>
+                  <br>
+                  Place : {{result.Quota2.gmma}}
+                  <br>
+                  <input *ngIf="result.Quota2.gmma !== 0" (change)="change2($event)" id="{{result.Nom}}" type="checkbox" name="gmma" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Accueil</h1>
+                  <br>
+                  Place : {{result.Quota2.mardimat}}
+                  <br>
+                  <input *ngIf="result.Quota2.mardimat !== 0" (change)="change2($event)" id="{{result.Nom}}"  type="checkbox" name="mardimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Cantine</h1>
+                  <br>
+                  Place : {{result.Quota2.mardimid}}
+                  <br>
+                  <input *ngIf="result.Quota2.mardimid !== 0" (change)="change2($event)" id="{{result.Nom}}"  type="checkbox" name="mardimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Garderie Soir</h1>
+                  <br>
+                  Place : {{result.Quota2.gsma}}
+                  <br>
+                  <input *ngIf="result.Quota2.gsma !== 0" (change)="change2($event)" id="{{result.Nom}}"  type="checkbox" name="gsma" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                </div>
+              </div>
+              <hr>
+              <div class="row mt-4 mb-3">
+                <div class="col  mt-3 text-center">
+                  <h1 class="bluelow">Mercredi</h1>
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Garderie Matin</h1>
+                  <br>
+                  Place : {{result.Quota2.gmme}}
+                  <br>
+                  <input *ngIf="result.Quota2.gmme !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="gmme" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Accueil</h1>
+                  <br>
+                  Place : {{result.Quota2.mercredimat}}
+                  <br>
+                  <input *ngIf="result.Quota2.mercredimat !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Cantine</h1>
+                  <br>
+                  Place : {{result.Quota2.mercredimid}}
+                  <br>
+                  <input *ngIf="result.Quota2.mercredimid !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Garderie Soir</h1>
+                  <br>
+                  Place : {{result.Quota2.gsme}}
+                  <br>
+                  <input *ngIf="result.Quota2.gsme !== 0" (change)="change2($event)"id="{{result.Nom}}"   type="checkbox" name="gsme" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                </div>
+              </div>
+              <hr>
+              <div class="row mt-4 mb-3">
+                <div  class="col  mt-3 text-center">
+                  <h1 class="bluelow">Jeudi</h1>
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Garderie Matin</h1>
+                  <br>
+                  Place : {{result.Quota2.gmj}}
+                  <br>
+                  <input *ngIf="result.Quota2.gmj !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="gmj" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                </div>
+                <div  class="col text-center">
+                  <h1 class="bluelow">Accueil</h1>
+                  <br>
+                  Place : {{result.Quota2.jeudimat}}
+                  <br>
+                  <input *ngIf="result.Quota2.jeudimat !== 0" (change)="change2($event)" id="{{result.Nom}}" type="checkbox" name="jeudimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                </div>
+                <div  class="col text-center">
+                  <h1 class="bluelow">Cantine</h1>
+                  <br>
+                  Place : {{result.Quota2.jeudimid}}
+                  <br>
+                  <input *ngIf="result.Quota2.jeudimid !== 0" (change)="change2($event)" id="{{result.Nom}}" type="checkbox" name="jeudimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                </div>
+                <div  class="col text-center">
+                  <h1 class="bluelow">Garderie Soir</h1>
+                  <br>
+                  Place : {{result.Quota2.gsj}}
+                  <br>
+                  <input *ngIf="result.Quota2.gsj !== 0" (change)="change2($event)" id="{{result.Nom}}"  type="checkbox" name="gsj" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+                </div>
+              </div>
+              <hr>
+              <div class="row mt-4 mb-3">
+                <div  class="col  mt-3 text-center">
+                  <h1 class="bluelow">Vendredi</h1>
+                </div>
+                <div  class="col text-center">
+                  <h1 class="bluelow">Garderie Matin</h1>
+                  <br>
+                  Place : {{result.Quota2.gmv2}}
+                  <br>
+                  <input *ngIf="result.Quota2.gmv2 !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="gmv" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Accueil </h1>
+                  <br>
+                  Place : {{result.Quota2.vendredimat}}
+                  <br>
+                  <input *ngIf="result.Quota2.vendredimat !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+                </div>
+                <div class="col text-center">
+                  <h1 class="bluelow">Cantine</h1>
+                  <br>
+                  Place : {{result.Quota2.vendredimid}}
+                  <br>
+                  <input *ngIf="result.Quota2.vendredimid !== 0" (change)="change2($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+                </div>
+                <div  class="col text-center">
+                  <h1 class="bluelow">Garderie Soir</h1>
+                  <br>
+                  Place : {{result.Quota2.gsv}}
+                  <br>
+                  <input *ngIf="result.Quota2.gsv !== 0" (change)="change2($event)"id="{{result.Nom}}"   type="checkbox" name="gsv" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu"> 
+                </div>
+                <hr>
+              </div>
+              <button *ngIf="semaine3" class="btn btn-primary mb-2 ml-2 float-right" (click)="this.etape=this.etape+1">Semaine suivante</button>
+              <button *ngIf="!secu"  class="btn btn-primary mb-2 ml-2 float-right" (click)="cancel()">Annuler</button>
+              <button class="btn btn-success mb-2 ml-2 float-right" (click)="monInsri()">Valider</button>
+          </div>
+
+        </div>
+    
+
+    </div>
+
+    <div *ngIf="etape == 4 && !alreadyOn">
+
+      <div class="col">
+        <div>
+          <div class="row">
+            <div class="col">
+                <p class="card-text">
+                    <h1 class="bluefin2 hello"> Inscription pour : {{aInscrire}} , {{aAge}} ans, votre QF : {{profil.responsable.qf}}</h1>
+                  <br>
+                  <div >
+                      <br>
+                      <h1 class="greyfin3 hello">Prix pour l'accueil : {{ObjectPrix['Accueil']}} €</h1>
+                      <br>
+                      <h1 class="greyfin3 hello">Prix pour la Garderie du matin : {{ObjectPrix['Prix_GM']}}€</h1>
+                      <br>
+                      <h1 class="greyfin3 hello">Prix pour la Garderie du soir : {{ObjectPrix['Prix_GS']}}€</h1>
+                      <br>
+                      <h1 class="greyfin3 hello">Prix de la cantine : {{ObjectPrix['Prix_Cantine']}}€</h1>
+                  </div>
+            </div>
+  
+            <div class="col colspe">
+            <h1 class="bluefin3 hello text-center">Prix total : {{total}} €</h1>  
+            </div>
+          </div>
+            <div class="row mt-4 mb-3">
+              <div class="col  mt-3 text-center">
+                <h1 class="bluelow">Lundi</h1>
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Garderie Matin</h1>
+                <br>
+                Place : {{result.Quota3.gml3}}
+                <br>
+                <input *ngIf="result.Quota3.gml3 !== 0" (change)="change3($event)" id="{{result.Nom}}" type="checkbox" name="gml" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Accueil</h1>
+                <br>
+                Place : {{result.Quota3.lundimat3}}
+                <br>
+                <input *ngIf="result.Quota3.lundimat3 !== 0" (change)="change3($event)" id="{{result.Nom}}"  type="checkbox" name="lundimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Cantine</h1>
+                <br>
+                Place : {{result.Quota3.lundimid3}}
+                <br>
+                <input *ngIf="result.Quota3.lundimid3 !== 0" (change)="change3($event)" id="{{result.Nom}}"  type="checkbox" name="lundimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Garderie Soir</h1>
+                <br>
+                Place : {{result.Quota3.gsl2}}
+                <br>
+                <input *ngIf="result.Quota3.gsl2 !== 0" (change)="change3($event)"  id="{{result.Nom}}" type="checkbox" name="gsl" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+              </div>
+            </div>
+            <hr>
+           <div class="row mt-4 mb-3"> 
+              <div  class="col  mt-3 text-center">
+                <h1 class="bluelow">Mardi</h1>
+              </div>
+              <div  class="col text-center">
+                <h1 class="bluelow">Garderie Matin</h1>
+                <br>
+                Place : {{result.Quota3.gmma}}
+                <br>
+                <input *ngIf="result.Quota3.gmma !== 0" (change)="change3($event)" id="{{result.Nom}}" type="checkbox" name="gmma" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Accueil</h1>
+                <br>
+                Place : {{result.Quota3.mardimat}}
+                <br>
+                <input *ngIf="result.Quota3.mardimat !== 0" (change)="change3($event)" id="{{result.Nom}}"  type="checkbox" name="mardimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Cantine</h1>
+                <br>
+                Place : {{result.Quota3.mardimid}}
+                <br>
+                <input *ngIf="result.Quota3.mardimid !== 0" (change)="change3($event)" id="{{result.Nom}}"  type="checkbox" name="mardimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Garderie Soir</h1>
+                <br>
+                Place : {{result.Quota3.gsma}}
+                <br>
+                <input *ngIf="result.Quota3.gsma !== 0" (change)="change3($event)" id="{{result.Nom}}"  type="checkbox" name="gsma" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+              </div>
+            </div>
+            <hr>
+            <div class="row mt-4 mb-3">
+              <div class="col  mt-3 text-center">
+                <h1 class="bluelow">Mercredi</h1>
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Garderie Matin</h1>
+                <br>
+                Place : {{result.Quota3.gmme}}
+                <br>
+                <input *ngIf="result.Quota3.gmme !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="gmme" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Accueil</h1>
+                <br>
+                Place : {{result.Quota3.mercredimat}}
+                <br>
+                <input *ngIf="result.Quota3.mercredimat !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Cantine</h1>
+                <br>
+                Place : {{result.Quota3.mercredimid}}
+                <br>
+                <input *ngIf="result.Quota3.mercredimid !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Garderie Soir</h1>
+                <br>
+                Place : {{result.Quota3.gsme}}
+                <br>
+                <input *ngIf="result.Quota3.gsme !== 0" (change)="change3($event)"id="{{result.Nom}}"   type="checkbox" name="gsme" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+              </div>
+            </div>
+            <hr>
+            <div class="row mt-4 mb-3">
+              <div  class="col  mt-3 text-center">
+                <h1 class="bluelow">Jeudi</h1>
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Garderie Matin</h1>
+                <br>
+                Place : {{result.Quota3.gmj}}
+                <br>
+                <input *ngIf="result.Quota3.gmj !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="gmj" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+              </div>
+              <div  class="col text-center">
+                <h1 class="bluelow">Accueil</h1>
+                <br>
+                Place : {{result.Quota3.jeudimat}}
+                <br>
+                <input *ngIf="result.Quota3.jeudimat !== 0" (change)="change3($event)" id="{{result.Nom}}" type="checkbox" name="jeudimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+              </div>
+              <div  class="col text-center">
+                <h1 class="bluelow">Cantine</h1>
+                <br>
+                Place : {{result.Quota3.jeudimid}}
+                <br>
+                <input *ngIf="result.Quota3.jeudimid !== 0" (change)="change3($event)" id="{{result.Nom}}" type="checkbox" name="jeudimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+              </div>
+              <div  class="col text-center">
+                <h1 class="bluelow">Garderie Soir</h1>
+                <br>
+                Place : {{result.Quota3.gsj3}}
+                <br>
+                <input *ngIf="result.Quota3.gsj3 !== 0" (change)="change3($event)" id="{{result.Nom}}"  type="checkbox" name="gsj" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+              </div>
+            </div>
+            <hr>
+            <div class="row mt-4 mb-3">
+              <div  class="col  mt-3 text-center">
+                <h1 class="bluelow">Vendredi</h1>
+              </div>
+              <div  class="col text-center">
+                <h1 class="bluelow">Garderie Matin</h1>
+                <br>
+                Place : {{result.Quota3.gmv}}
+                <br>
+                <input *ngIf="result.Quota3.gmv !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="gmv" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Accueil </h1>
+                <br>
+                Place : {{result.Quota3.vendredimat}}
+                <br>
+                <input *ngIf="result.Quota3.vendredimat !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+              </div>
+              <div class="col text-center">
+                <h1 class="bluelow">Cantine</h1>
+                <br>
+                Place : {{result.Quota3.vendredimid}}
+                <br>
+                <input *ngIf="result.Quota3.vendredimid !== 0" (change)="change3($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+              </div>
+              <div  class="col text-center">
+                <h1 class="bluelow">Garderie Soir</h1>
+                <br>
+                Place : {{result.Quota3.gsv3}}
+                <br>
+                <input *ngIf="result.Quota3.gsv3 !== 0" (change)="change3($event)"id="{{result.Nom}}"   type="checkbox" name="gsv" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu"> 
+              </div>
+              <hr>
+            </div>
+            <button *ngIf="semaine4" class="btn btn-primary mb-2 ml-2 float-right" (click)="this.etape=this.etape+1">Semaine suivante</button>
+            <button *ngIf="!secu" class="btn btn-primary mb-2 ml-2 float-right" (click)="cancel()">Annuler</button>
+            <button class="btn btn-success mb-2 ml-2 float-right" (click)="monInsri()">Valider</button>
+        </div>
+
+      </div>
+  
+
+  </div>
+
+  
+  <div *ngIf="etape == 5 && !alreadyOn">
+
+    <div class="col">
+      <div>
+        <div class="row">
+          <div class="col">
+              <p class="card-text">
+                  <h1 class="bluefin2 hello"> Inscription pour : {{aInscrire}} , {{aAge}} ans, votre QF : {{profil.responsable.qf}}</h1>
+                <br>
+                <div >
+                    <br>
+                    <h1 class="greyfin3 hello">Prix pour l'accueil : {{ObjectPrix['Accueil']}} €</h1>
+                    <br>
+                    <h1 class="greyfin3 hello">Prix pour la Garderie du matin : {{ObjectPrix['Prix_GM']}}€</h1>
+                    <br>
+                    <h1 class="greyfin3 hello">Prix pour la Garderie du soir : {{ObjectPrix['Prix_GS']}}€</h1>
+                    <br>
+                    <h1 class="greyfin3 hello">Prix de la cantine : {{ObjectPrix['Prix_Cantine']}}€</h1>
+                </div>
+          </div>
+
+          <div class="col colspe">
+          <h1 class="bluefin3 hello text-center">Prix total : {{total}} €</h1>  
+          </div>
+        </div>
+          <div class="row mt-4 mb-3">
+            <div class="col  mt-3 text-center">
+              <h1 class="bluelow">Lundi</h1>
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Garderie Matin</h1>
+              <br>
+              Place : {{result.Quota4.gml2}}
+              <br>
+              <input *ngIf="result.Quota4.gml2 !== 0" (change)="change4($event)" id="{{result.Nom}}" type="checkbox" name="gml" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Accueil</h1>
+              <br>
+              Place : {{result.Quota4.lundimat2}}
+              <br>
+              <input *ngIf="result.Quota4.lundimat2 !== 0" (change)="change4($event)" id="{{result.Nom}}"  type="checkbox" name="lundimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Cantine</h1>
+              <br>
+              Place : {{result.Quota4.lundimid2}}
+              <br>
+              <input *ngIf="result.Quota4.lundimid2 !== 0" (change)="change4($event)" id="{{result.Nom}}"  type="checkbox" name="lundimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Garderie Soir</h1>
+              <br>
+              Place : {{result.Quota4.gsl2}}
+              <br>
+              <input *ngIf="result.Quota4.gsl2 !== 0" (change)="change4($event)"  id="{{result.Nom}}" type="checkbox" name="gsl" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+            </div>
+          </div>
+          <hr>
+         <div class="row mt-4 mb-3"> 
+            <div  class="col  mt-3 text-center">
+              <h1 class="bluelow">Mardi</h1>
+            </div>
+            <div  class="col text-center">
+              <h1 class="bluelow">Garderie Matin</h1>
+              <br>
+              Place : {{result.Quota4.gmma}}
+              <br>
+              <input *ngIf="result.Quota4.gmma !== 0" (change)="change4($event)" id="{{result.Nom}}" type="checkbox" name="gmma" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Accueil</h1>
+              <br>
+              Place : {{result.Quota4.mardimat}}
+              <br>
+              <input *ngIf="result.Quota4.mardimat !== 0" (change)="change4($event)" id="{{result.Nom}}"  type="checkbox" name="mardimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Cantine</h1>
+              <br>
+              Place : {{result.Quota4.mardimid}}
+              <br>
+              <input *ngIf="result.Quota4.mardimid !== 0" (change)="change4($event)" id="{{result.Nom}}"  type="checkbox" name="mardimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Garderie Soir</h1>
+              <br>
+              Place : {{result.Quota4.gsma}}
+              <br>
+              <input *ngIf="result.Quota4.gsma !== 0" (change)="change4($event)" id="{{result.Nom}}"  type="checkbox" name="gsma" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+            </div>
+          </div>
+          <hr>
+          <div class="row mt-4 mb-3">
+            <div class="col  mt-3 text-center">
+              <h1 class="bluelow">Mercredi</h1>
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Garderie Matin</h1>
+              <br>
+              Place : {{result.Quota4.gmme}}
+              <br>
+              <input *ngIf="result.Quota4.gmme !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="gmme" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Accueil</h1>
+              <br>
+              Place : {{result.Quota4.mercredimat}}
+              <br>
+              <input *ngIf="result.Quota4.mercredimat !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Cantine</h1>
+              <br>
+              Place : {{result.Quota4.mercredimid}}
+              <br>
+              <input *ngIf="result.Quota4.mercredimid !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="mercredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Garderie Soir</h1>
+              <br>
+              Place : {{result.Quota4.gsme}}
+              <br>
+              <input *ngIf="result.Quota4.gsme !== 0" (change)="change4($event)"id="{{result.Nom}}"   type="checkbox" name="gsme" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+            </div>
+          </div>
+          <hr>
+          <div class="row mt-4 mb-3">
+            <div  class="col  mt-3 text-center">
+              <h1 class="bluelow">Jeudi</h1>
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Garderie Matin</h1>
+              <br>
+              Place : {{result.Quota4.gmj}}
+              <br>
+              <input *ngIf="result.Quota4.gmj !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="gmj" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+            </div>
+            <div  class="col text-center">
+              <h1 class="bluelow">Accueil</h1>
+              <br>
+              Place : {{result.Quota4.jeudimat}}
+              <br>
+              <input *ngIf="result.Quota4.jeudimat !== 0" (change)="change4($event)" id="{{result.Nom}}" type="checkbox" name="jeudimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+            </div>
+            <div  class="col text-center">
+              <h1 class="bluelow">Cantine</h1>
+              <br>
+              Place : {{result.Quota4.jeudimid}}
+              <br>
+              <input *ngIf="result.Quota4.jeudimid !== 0" (change)="change4($event)" id="{{result.Nom}}" type="checkbox" name="jeudimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+            </div>
+            <div  class="col text-center">
+              <h1 class="bluelow">Garderie Soir</h1>
+              <br>
+              Place : {{result.Quota4.gsj}}
+              <br>
+              <input *ngIf="result.Quota4.gsj !== 0" (change)="change4($event)" id="{{result.Nom}}"  type="checkbox" name="gsj" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu">
+            </div>
+          </div>
+          <hr>
+          <div class="row mt-4 mb-3">
+            <div  class="col  mt-3 text-center">
+              <h1 class="bluelow">Vendredi</h1>
+            </div>
+            <div  class="col text-center">
+              <h1 class="bluelow">Garderie Matin</h1>
+              <br>
+              Place : {{result.Quota4.gmv}}
+              <br>
+              <input *ngIf="result.Quota4.gmv !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="gmv" value="{{ObjectPrix['Prix_GM']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Accueil </h1>
+              <br>
+              Place : {{result.Quota4.vendredimat}}
+              <br>
+              <input *ngIf="result.Quota4.vendredimat !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimat" value="{{ObjectPrix['Accueil']}}" [disabled]="secu">
+            </div>
+            <div class="col text-center">
+              <h1 class="bluelow">Cantine</h1>
+              <br>
+              Place : {{result.Quota4.vendredimid}}
+              <br>
+              <input *ngIf="result.Quota4.vendredimid !== 0" (change)="change4($event)"id="{{result.Nom}}"  type="checkbox" name="vendredimid" value="{{ObjectPrix['Prix_Cantine']}}" [disabled]="secu">
+            </div>
+            <div  class="col text-center">
+              <h1 class="bluelow">Garderie Soir</h1>
+              <br>
+              Place : {{result.Quota4.gsv}}
+              <br>
+              <input *ngIf="result.Quota4.gsv !== 0" (change)="change4($event)"id="{{result.Nom}}"   type="checkbox" name="gsv" value="{{ObjectPrix['Prix_GS']}}" [disabled]="secu"> 
+            </div>
+            <hr>
+          </div>
+          <button *ngIf="!secu"  class="btn btn-primary mb-2 ml-2 float-right" (click)="cancel()">Annuler</button>
+          <button class="btn btn-success mb-2 ml-2 float-right" (click)="monInsri()">Valider</button>
+      </div>
+
+    </div>
+
+
+</div>
+
+      <div *ngIf="alreadyOn">
+
+       <h1 class="bluefin3 hello ml-2"> Vous avez déjà une inscription pour cette date avec {{aInscrire}}. </h1>
+       <br>
+       <h1 class="bluefin3 hello ml-2"> Contactez le centre social pour modifier votre inscription </h1>
+       <br>
+            <button class="btn btn-primary float-right" (click)="cancel()">Retour</button>
+            <br>
+            <div></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #myTemplateMer>
+    
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+    <br>
+    <br>
+
+    <div class="neu3 mt-2">
+      <h1 class="ml-4 mt-4 blue">Inscription Mercredi <h1 class="yelfin3 hello">+</h1></h1>
+      <hr>
+      <div [@enterAnimation] *ngIf="etape == 0">
+        <div>
+          <div class="card no-border">
+            <div class="card-body">
+              <h5 class="bluefin2 hello">{{result.Nom}} , <h5 class="yelfin3 hello">{{result.Lieu}}</h5>
+              </h5>
+              <hr>
+              <h1 class="greyfin3 hello ml-2">
+                Nombre de mercredi(s) : {{result.mercredi}}
+              </h1>
+              <hr class="hr2">
+              <h1 class="bluefin2 hello ml-3 mt-2 mb-2">
+                Date de début : {{result.DateDebut | date: 'dd/MM/yyyy'}} Date de fin : {{result.DateFin | date: 'dd/MM/yyyy'}}
+              </h1>
+              <hr>
+              <h1 class="bluefin2 hello">Quel membre de la famille inscrire ?</h1>
+              <hr class="hr2">
+              <button *ngIf="profil.member" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member.prenomMember,profil.member.ageMember,profil.member.nomMember,$event)">
+                {{profil.member.prenomMember | uppercase}}</button>
+              <button *ngIf="profil.member2" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member2.prenomMember,profil.member2.ageMember,profil.member2.nomMember,$event)">
+                {{profil.member2.prenomMember | uppercase}}</button>
+              <button *ngIf="profil.member3" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member3.prenomMember,profil.member3.ageMember,profil.member3.nomMember,$event)">
+                {{profil.member3.prenomMember | uppercase}}</button>
+                <button *ngIf="profil.member4" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member4.prenomMember,profil.member4.ageMember,profil.member4.nomMember,$event)">
+                {{profil.member4.prenomMember | uppercase}}</button>
+                <button *ngIf="profil.member5" name="{{result.Tableau}}" class="btn btn-outline-primary ml-2 mt-2"
+                (click)="plusUn(profil.member5.prenomMember,profil.member5.ageMember,profil.member5.nomMember,$event)">
+                {{profil.member5.prenomMember | uppercase}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="etape == 1">
+         <h1 class="bluefin2 hello ml-3"> Votre QF : {{profil.responsable.qf}}</h1>
+         <hr class="hr2">
+         <h1 class="bluefin2 hello ml-3"> Confirmez votre <h1 class="yelfin3 hello"> Quotient Familial </h1> </h1>
+         <br>
+                 <mat-form-field class="ml-5 mt-2">
+                   <mat-label> Choisir </mat-label>
+                   <mat-select name="first"  [(ngModel)]="choixQF">
+                     <mat-option  *ngFor="let month of Tranche" [value]="month">
+                       {{month}}
+                     </mat-option>
+                   </mat-select>
+                 </mat-form-field>
+         <button class="btn btn-primary ml-2" (click)="this.etape=this.etape+1">Valider</button>
+                 <br>
+  
+      </div>
+      <div [@enterAnimation] *ngIf="etape == 2 && !alreadyOn">
+       
+          <div class="col">
+            <div>
+              <div class="row">
+                <div class="col">
+                    <p class="card-text">
+                      <h1 class="bluefin3 hello"> Inscription pour : {{aInscrire}}  {{aAge}} ans</h1>
+                      <br>
+                      <h1 class="bluefin3 hello"> Votre QF : {{profil.responsable.qf}}</h1>
+                      <br>
+                      <h1 class="bluefin3 hello"> Vous avez choisi la tranche : {{choixQF}} € </h1>
+             <br>
+               <br>
+               <div >
+                <div class="neunew ml-2" >
+                  <h1 class="ml-3 bluefin2 hello "> {{result.Nom}}</h1>
+                  <br>
+                  <h1 class="ml-2 greyfin4 hello"> Prix pour l'accueil Matin : {{ObjectPrix['Accueil_Matin']}} €</h1>
+                  <br>
+                  <h1 class="ml-2  greyfin4 hello"> Prix pour l'accueil après-midi : {{ObjectPrix['Accueil_AM']}} €</h1>
+                  <br>
+                  <h1 class="ml-2 greyfin4 hello"> Prix pour la Garderie du matin : {{ObjectPrix['Prix_GM']}}€</h1>
+                  <br>
+                  <h1 class="ml-2 greyfin4 hello"> Prix pour la Garderie du soir : {{ObjectPrix['Prix_GS']}}€</h1>
+                  <br>
+                  <h1 class="ml-2 mb-2 greyfin4 hello"> Prix de la cantine : {{ObjectPrix['Prix_Cantine']}}€</h1>
+                  <br>
+              </div>
+               </div>
+              
+                      
+                </div>
+      <hr>
+                <div class="col colspe">
+                <h1 class="bluefin2 hello text-center">Prix total : {{total}} €</h1>  
+                </div>
+              </div>
+                <div class="row mt-4 mb-3">
+                  <div class="col  mt-3 text-center">
+                    <h1 class="bluelow hello">Mercredi + </h1>
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.GM}}
+                    <br>
+                    <input *ngIf="result.Quota1.GM !== 0" (change)="changeMer($event)" id="{{result.Nom}}" type="checkbox" name="GM" value="{{ObjectPrix['Prix_GM']*result.mercredi}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Accueil Matin</h1>
+                    <br>
+                    Place : {{result.Quota1.AM}}
+                    <br>
+                    <input *ngIf="result.Quota1.AM !== 0" (change)="changeMer($event)" id="{{result.Nom}}"  type="checkbox" name="AM" value="{{ObjectPrix['Accueil_Matin']*result.mercredi}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Cantine</h1>
+                    <br>
+                    Place : {{result.Quota1.CANT}}
+                    <br>
+                    <input *ngIf="result.Quota1.CANT !== 0" (change)="changeMer($event)" id="{{result.Nom}}"  type="checkbox" name="CANT" value="{{ObjectPrix['Prix_Cantine']*result.mercredi}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Accueil Après-midi</h1>
+                    <br>
+                    Place : {{result.Quota1.AAM}}
+                    <br>
+                    <input *ngIf="result.Quota1.AAM !== 0" (change)="changeMer($event)" id="{{result.Nom}}"  type="checkbox" name="AAM" value="{{ObjectPrix['Accueil_AM']*result.mercredi}}" [disabled]="secu">
+                  </div>
+                  <div class="col text-center">
+                    <h1 class="bluelow">Garderie Soir</h1>
+                    <br>
+                    Place : {{result.Quota1.GS}}
+                    <br>
+                    <input *ngIf="result.Quota1.GS !== 0" (change)="changeMer($event)"  id="{{result.Nom}}" type="checkbox" name="GS" value="{{ObjectPrix['Prix_GS']*result.mercredi}}" [disabled]="secu">
+                  </div>
+                </div>
+                <hr class="hr2">
+               
+                <button *ngIf="semaine2" class="btn btn-primary mb-2 ml-2 float-right" (click)="this.etape=this.etape+1">Semaine suivante</button>
+                <button class="btn btn-success mb-2 ml-2 float-right" (click)="monInsri2()">Terminer</button>
+                <button *ngIf="!secu"  class="btn btn-danger mb-2 ml-2 float-right" (click)="cancel()">Annuler</button>
+                
+               
+            </div>
+
+          </div>
+      
+
+      </div>
+
+      <div *ngIf="alreadyOn">
+
+       <h1 class="bluefin3 hello ml-2"> Vous avez déjà une inscription pour cette date avec {{aInscrire}}. </h1>
+       <br>
+       <h1 class="bluefin3 hello ml-2"> Contactez le centre social pour modifier votre inscription </h1>
+       <br>
+            <button class="btn btn-primary float-right" (click)="cancel()">Retour</button>
+            <br>
+            <div></div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #myTemplate7>
+
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-3">Modifier mon profil</h1>
+
+      <hr>
+
+      <div class="ml-3">
+
+
+        <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="sexe">
+          <mat-radio-button class="example-radio-button" *ngFor="let season of sexes" [value]="season">
+            {{season}}
+          </mat-radio-button>
+        </mat-radio-group>
+
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Prénom du responsable</mat-label>
+            <input matInput type="text" name="name" [(ngModel)]="prenom" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Nom du responsable</mat-label>
+            <input matInput type="text" name="surname" [(ngModel)]="nom" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Âge du responsable</mat-label>
+            <input matInput type="text" name="ages" [(ngModel)]="age" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre adresse</mat-label>
+            <input matInput type="text" name="add" [(ngModel)]="adresse" required>
+          </mat-form-field>
+        </form>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre téléphone</mat-label>
+            <input matInput type="text" name="tel" [(ngModel)]="telephone" required>
+          </mat-form-field>
+        </form> 
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Votre Quotient Familiale</mat-label>
+              <mat-select name="first"  [(ngModel)]="qf" required>
+                <mat-option  *ngFor="let month of quof" [value]="month.viewValue">
+                  {{month.value}}
+                </mat-option>
+              </mat-select>
+      
+          </mat-form-field>
+        </form>
+        <br>
+        <mat-checkbox required>Je confirme être le responsable de ce compte et à ce titre <br>j'exerce la
+          "responsabilité parentale"
+          concernant les données <br>que je fourni</mat-checkbox>
+
+        <br>
+      </div>
+    </div>
+    <br>
+    <div *ngIf="prenom && nom && age && adresse && telephone && qf">
+      <button  (click)="addToArray3()" class="btn btn-primary mt-3 float-right">Valider</button>
+    </div>
+
+  </ng-template>
+  
+  <ng-template #myTemplateAcc>
+
+  
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+    <br>
+    <br>
+    <div class="neu3">
+      <div *ngIf="nlieu == false">
+      <h1 class=" blue ml-2 mt-4 mr-3">Les lieux <h1 class="yellow">d'accueil</h1> </h1>
+      <hr>
+      <div class="col ml-3">
+        <!-- <p class="bluelow">Ecole Maternelle Branly</p>
+        <br>
+        <p class="bluelow">Ecole Racine</p>
+        <br>
+        <p class="bluelow">CSC Belencontre</p>
+        <br>
+        <p class="bluelow">CSC Phalempins</p>
+        <br>
+        <p class="bluelow">Paul Bert </p> -->
+        <br>
+        <div class="mb-3 card" *ngFor="let l of getnewLieu2">
+          <div *ngIf="l[0]">
+            <p class="bluelowi">{{l[0]}}   <i class="material-icons mr-5" style="font-size: 35px;cursor: pointer;color: #ffc400;" (click)="deleteAcc(l[0])">
+              delete
+            </i> </p>
+          
+          </div>
+          <div *ngIf="l[1]">
+            <p class="bluelowi">{{l[1]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[1])">
+             delete
+            </i> </p>
+       
+          </div>
+          <div *ngIf="l[2]">
+            <p class="bluelowi">{{l[2]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[2])">
+              delete
+            </i> </p>
+          
+          </div>
+          <div *ngIf="l[3]">
+            <p class="bluelowi">{{l[3]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[3])">
+              delete
+            </i> </p>
+    
+          </div>
+          <div *ngIf="l[4]">
+            <p class="bluelowi">{{l[4]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[4])">
+              delete
+            </i> </p>
+        
+          </div>
+          <div *ngIf="l[5]">
+            <p class="bluelowi">{{l[5]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[5])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[6]">
+            <p class="bluelowi">{{l[6]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[6])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[7]">
+            <p class="bluelowi">{{l[7]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[7])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[8]">
+            <p class="bluelowi">{{l[8]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[8])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[9]">
+            <p class="bluelowi">{{l[9]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[9])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[10]">
+            <p class="bluelowi">{{l[10]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[10])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[11]">
+            <p class="bluelowi">{{l[11]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[11])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[12]">
+            <p class="bluelowi">{{l[12]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[12])">
+              delete
+            </i> </p>
+          </div>
+          <div *ngIf="l[13]">
+            <p class="bluelowi">{{l[13]}}   <i class="material-icons mr-5" style="font-size:  35px;cursor: pointer;color: #ffc400;"(click)="deleteAcc(l[13])">
+              delete
+            </i> </p>
+          </div>
+          <br>
+        </div>
+    
+      </div>
+      <div class="ml-3">
+        <button class="btn btn-primary bluelow float-right" style="color: whitesmoke;" (click)="nlieu=true">+ Ajouter un lieu d'accueil</button>
+      </div>
+    </div>
+    <div *ngIf="nlieu == true">
+      <h1 class=" blue ml-2 mt-4 mr-3">Nouveau lieu <h1 class="yellow">d'accueil</h1> </h1>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nouveau lieu d'accueil</mat-label>
+          <input matInput type="text" name="nlieuacc" [(ngModel)]="newlieu" required>
+        </mat-form-field>
+      </form>
+
+
+      <div class="row">
+        <div class="col mb-2 ml-3">
+          <div *ngIf="!newlieu">
+            <button class="btn btn-primary" (click)="nlieu=false">Retour</button>
+          </div>
+        </div>
+        <div class="col">
+          <button class="btn btn-success" (click)="addLieu()">Valider</button>
+        </div>
+    
+<br>
+    
+      </div>
+  
+    </div>
+  </div>
+  </ng-template>
+
+
+  <ng-template #myTemplateAcc2>
+
+
+    <div class="neu3">
+      <div class="mb-2">
+        <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+      </div>
+      <br>
+      <br>
+      <div *ngIf="nlieu2 == false">
+      <h1 class=" blue ml-2 mt-4 mr-3">Les grilles <h1 class="yellow">forfaitaires</h1> </h1>
+      <hr>
+      <div class="ml-3">
+        <mat-form-field class=" ml-5">
+          <mat-select (selectionChange)="reset()" [(ngModel)]="choixTab" >
+            <mat-option    *ngFor="let result of nameBdd" [value]="result">
+                {{result}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button style="margin-left:60px" class="btn btn-primary" (click)="getTab2(choixTab)">Valider</button>
+        <!-- <table class="table" *ngIf="data2">
+          <thead>
+            <tr class="text-center">
+              <th  *ngFor="let thecol of columnsToDisplay | keyvalue;let i = index" scope="col">{{columnsToDisplay[i]}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let data of data2">
+            <tr class="text-center" *ngIf="modif===false">
+              <td>{{data[0]}}</td>
+              <td>{{data[1]}}</td>
+              <td contenteditable class="colo 3" *ngIf="data[2]">{{data[2]}}</td>
+              <td *ngIf="data[3]">{{data[3]}}</td>
+              <td *ngIf="data[4]">{{data[4]}}</td>
+              <td *ngIf="data[5]">{{data[5]}}</td>
+            </tr>
+            <tr class="text-center" *ngIf="modif===true">
+              <td><input class="{{data[0]}}" value="{{data[0]}}"></td>
+              <td><input class="{{data[1]}}" value="{{data[1]}}"></td>
+              <td class="{{data[0]}}" *ngIf="data[2]"><input value="{{data[2]}}"></td>
+              <td *ngIf="data[3]"  class="{{data[3]}}"><input value="{{data[3]}}"></td>
+              <td *ngIf="data[4]" class="{{data[4]}}"><input value="{{data[4]}}"></td>
+              <td *ngIf="data[5]" class="{{data[5]}}"><input value="{{data[5]}}"></td>
+            </tr>
+          </ng-container>
+          </tbody>
+        </table> -->
+      
+        <div *ngIf="data">
+          <json-table 
+          [dataSource]="dataFromServer"
+          [headers]="customHeaders"
+          [update]="true"
+          (deleteRow)="deleteByIdS($event)"
+          (updateRow)="updateChanges($event)"></json-table>
+        </div>
+    
+      
+
+     
+        <br>
+ 
+
+      </div>
+      <div class="ml-3" *ngIf="data">
+     
+        <button *ngIf="data" (click)="dupli()" class="btn btn-primary mb-1 ml-2">Dupliquer</button>
+        <button (click)="suppDocNameBDD()" class="btn btn-danger ml-2 mb-1">Supprimer</button>
+  
+      </div>
+
+      <div class="float-right">
+
+        <button *ngIf="data" class="btn btn-success mb-1 mt-2" (click)="showModif()">Sauvegarder</button>
+      </div>
+      
+    </div>
+    <div *ngIf="nlieu == true">
+      <h1 class=" blue ml-2 mt-4 mr-3">Nouveau lieu <h1 class="yellow">d'accueil</h1> </h1>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nouveau lieu d'accueil</mat-label>
+          <input matInput type="text" name="nlieuacc" [(ngModel)]="newlieu" required>
+        </mat-form-field>
+      </form>
+
+
+      <div class="row">
+        <div class="col mb-2 ml-3">
+          <div *ngIf="!newlieu">
+            <button class="btn btn-primary" (click)="nlieu2=false">Retour</button>
+          </div>
+        </div>
+        <div class="col">
+          <button class="btn btn-success" (click)="addLieu()">Valider</button>
+        </div>
+    
+<br>
+    
+      </div>
+  
+    </div>
+  </div>
+  </ng-template>
+
+  <ng-template #myTemplatehome>
+
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="bluefin2 hello ml-2 mt-3">Modifier l'écran d'accueil</h1>
+
+      <hr>
+
+      <div class="col">
+        <br>
+        <h1 class="bluefin2 hello ml-3"> Nouveau  : <h1 class="yelfin3 hello"> texte </h1> </h1>
+        <br>
+        <mat-form-field class="ml-5 mt-2">
+          <mat-label>Message d'accueil</mat-label>
+          <textarea [(ngModel)]="msg"   matInput placeholder="Bienvenue sur ..." ></textarea>
+        </mat-form-field>
+
+      </div>
+
+      <div class="col ">
+
+        <br>
+                      <h1 class="bluefin2 hello ml-3"> Nouveau  : <h1 class="yelfin3 hello"> logo </h1> </h1>
+                      <br>
+                              <mat-form-field class="ml-5 mt-2">
+                                <mat-label> Choisir </mat-label>
+                                <mat-select name="first"  [(ngModel)]="newimg"  required>
+                                  <mat-option  *ngFor="let month of logo" [value]="month.value">
+                                    {{month.viewValue}}
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                                <button (click)="sethome()" class="btn btn-primary ml-5" >Valider</button>
+                     
+                            </div>
+    </div>
+
+  </ng-template>
+
+
+  <ng-template #myTemplatewhy>
+
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="bluefin2 hello ml-2 mt-3">Pourquoi ce refus ?</h1>
+
+      <hr>
+
+       <h1 class="bluefin2 hello ml-2 mr-2"> Le centre social qui gère les documents d'attestations de la CAF a trouvé une anomalie concernant votre quotient familiale.</h1>
+       <br>
+       <br>
+       <p class="bluefin3 hello ml-4 mt-2">
+        Vous pouvez : 
+      </p>
+      <br>
+      <p class="bluefin3 hello ml-4">
+        - Renvoyer un nouveau document CAF sur votre espace (le statut sera de nouveau en attente de validation).
+      </p>
+      <br>
+      <p class="bluefin3 hello ml-4">
+        - Remettre le document CAF au moment de payé au chargé d'accueil.
+        </p>
+     <br>
+     <br>
+    </div>
+    
+  </ng-template>
+
+
+  <ng-template #myTemplate2bis>
+
+    <div class="mb-2">
+      <button class="btn btn-danger float-right" (click)='croixRouge()'> X </button>
+    </div>
+
+    <div class="neu3">
+      <h1 class="ml-2 mt-3 text-center">Ajouter un responsable légal</h1>
+      <hr>
+
+      <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" [(ngModel)]="sexe2">
+        <mat-radio-button class="example-radio-button" *ngFor="let season of sexes" [value]="season">
+          {{season}}
+        </mat-radio-button>
+      </mat-radio-group>
+
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Prénom du membre de la famille</mat-label>
+          <input matInput type="text" name="name2" [(ngModel)]="prenom2" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Nom du membre de la famille</mat-label>
+          <input matInput type="text" name="name2" [(ngModel)]="nom2" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+          <mat-label>Âge du membre de la famille</mat-label>
+          <input matInput type="number" min="0" max="99" name="ages" [(ngModel)]="age2" required>
+        </mat-form-field>
+      </form>
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>Votre téléphone</mat-label>
+          <input matInput type="text" name="tel" [(ngModel)]="telephone" required>
+        </mat-form-field>
+      </form> 
+      <form class="example-form ml-2">
+        <mat-form-field class="example-full-width">
+
+          <input matInput type="text" name="nbenf" [(ngModel)]="info">
+          <mat-placeholder>Lien de parenté</mat-placeholder>
+        </mat-form-field>
+      </form>
+
+      <mat-checkbox  required>Je confirme être le responsable de ce compte et à ce titre <br>j'exerce la "responsabilité
+        parentale"
+        concernant les données <br>que je fourni</mat-checkbox>
+
+    </div>
+    <button (click)="addToBase2()" class="btn btn-primary mt-3 float-right">Valider</button>
+
+  </ng-template>
