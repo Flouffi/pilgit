@@ -26,7 +26,8 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
+import { firestore } from 'firebase';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 // SERVICES
 
@@ -59,6 +60,18 @@ import { MoteurComponent } from './components/moteur/moteur.component';
 
 import { JSONTableModule } from 'angular-json-table';
 
+const key = {
+  production: true,
+  apiKey: "AIzaSyCnW_edot5NfQa9Gci6S620YVoxP3tWdM0",
+    authDomain: "pil59-2fddf.firebaseapp.com",
+    databaseURL: "https://pil59-2fddf.firebaseio.com",
+    projectId: "pil59-2fddf",
+    storageBucket: "pil59-2fddf.appspot.com",
+    messagingSenderId: "577957227659",
+    appId: "1:577957227659:web:5d75baa817cb60dc26788e",
+    measurementId: "G-746B2P248Z"
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,8 +93,9 @@ import { JSONTableModule } from 'angular-json-table';
     BrowserAnimationsModule,
     MatIconModule,
     MatDialogModule,
-    AngularFireModule.initializeApp(environment),
+    AngularFireModule.initializeApp(key),
     AngularFireAuthModule,
+    AngularFireDatabaseModule,
     MatInputModule,
     MatSidenavModule,
     AngularFirestoreModule,
@@ -109,7 +123,7 @@ import { JSONTableModule } from 'angular-json-table';
     MatCheckboxModule,
     MatInputModule,
     MatBadgeModule,
-    JSONTableModule
+    JSONTableModule,
 
   ],
   providers: [AuthService, AngularFirestoreModule, AngularFireStorage],
