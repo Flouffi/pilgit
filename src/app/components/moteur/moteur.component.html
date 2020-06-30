@@ -6,7 +6,7 @@
       </i></a>
     </div>
   
-    <img src="../assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
+    <img src="assets/graph/TITRE.png" height="50" class="d-inline-block align-top logo" alt="">
   
     <i style="cursor: pointer;" class="material-icons" (click)="SignOut()">
         power_settings_new
@@ -249,9 +249,9 @@
     <td> {{r.Lieu}}</td>
     <td> {{r.Semaine }} de {{r.Mois}}</td>
     <td>{{r.total}}€</td>
-    <td><div class="col mb-1 " *ngIf="r.IsValid === 'wait'"><img id="{{r.unique}}" width="45px" height="45px" src="../../../assets/graph/orange.png">En attente</div>
-      <div class="col mb-1" *ngIf="r.IsValid === 'yes'"><img width="45px" height="45px" src="../../../assets/graph/vert.png">Validé</div>
-      <div class="col mb-1" *ngIf="r.IsValid === 'no'"><img width="45px" height="45px" src="../../../assets/graph/rouge.png">Refusé</div></td>
+    <td><div class="col mb-1 " *ngIf="r.IsValid === 'wait'"><img id="{{r.unique}}" width="45px" height="45px" src="assets/graph/orange.png">En attente</div>
+      <div class="col mb-1" *ngIf="r.IsValid === 'yes'"><img width="45px" height="45px" src="assets/graph/vert.png">Validé</div>
+      <div class="col mb-1" *ngIf="r.IsValid === 'no'"><img width="45px" height="45px" src="assets/graph/rouge.png">Refusé</div></td>
       <td><button class="mt-1" id="{{r.eveNom}}" (click)="openDialogId(myTemplateDetail,r.unique)"  class="btn btn-primary btn-sm">Detail</button></td>
       <td><button class="mt-1" id="{{r.eveNom}}" (click)="openDialogId(myTemplate,$event)" class="btn btn-primary btn-sm">Modifier</button></td>
   </tr>
