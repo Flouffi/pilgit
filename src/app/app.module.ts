@@ -27,6 +27,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { firestore } from 'firebase';
+import 'firebase/storage';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 // SERVICES
